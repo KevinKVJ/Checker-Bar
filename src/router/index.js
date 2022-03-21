@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import Login from '@/pages/Login.vue'
 import Base from '@/components/Base.vue';
 
 const router = createRouter({
@@ -8,7 +9,7 @@ const router = createRouter({
             path: '/',
             name: 'index',
             title: 'Index',
-            component: Base,
+            component: Login,
         },
         {
             path: '/base',

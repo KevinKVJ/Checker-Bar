@@ -1,5 +1,8 @@
 <template>
-    <div class="ccc"></div>
+    <div class="ccc">
+        <SvgIcon name="left"></SvgIcon>
+
+    </div>
 </template>
 
 <style lang="scss">
