@@ -1,0 +1,10 @@
+{
+    "emmet.includeLanguages": {
+        "javascript": "javascriptreact",
+        "vue-html": "html",
+        "vue": "html"
+    },
+    "volar.completion.preferredAttrNameCase": "auto-camel",
+    "editor.detectIndentation": false,
+    "emmet.triggerExpansionOnTab": true
+}
