@@ -23,6 +23,12 @@ const router = createRouter({
             title: 'compete',
             component: () => import('@/pages/Compete.vue'),
         },
+        {
+            path: '/login',
+            name: 'login',
+            title: 'login',
+            component: () => import('@/pages/LoginWindow.vue'),
+        },
         { path: '/:pathMatch(.*)*', name: 'NotFound', component: () => import('@/pages/NotFound.vue'), },
     ],
 });
