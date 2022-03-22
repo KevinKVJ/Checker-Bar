@@ -20,7 +20,7 @@ const router = createRouter({
         {
             path: '/compete',
             name: 'compete',
-            title: 'compete',
+            title: 'Compete',
             component: () => import('@/pages/Compete.vue'),
         },
         { path: '/:pathMatch(.*)*', name: 'NotFound', component: () => import('@/pages/NotFound.vue'), },
