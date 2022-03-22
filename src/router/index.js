@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+// import Login from '@/pages/Login.vue'
 import Base from '@/components/Base.vue';
 
 const router = createRouter({

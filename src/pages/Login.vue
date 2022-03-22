@@ -1,5 +1,8 @@
 <template>
-    <div class="ccc"></div>
+    <div class="ccc">
+        <SvgIcon name="left" class="cccc"></SvgIcon>
+
+    </div>
 </template>
 
 <style lang="scss">
@@ -8,6 +11,14 @@
     width: 400px;
     height: 400px;
 }
+.cccc{
+    width: 20px;
+    use{
+        fill: #ffffff;
+    }
+}
 </style>
 
-<script setup></script>
+<script setup>
+import SvgIcon from '@/components/SvgIcon.vue'
+</script>
