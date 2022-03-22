@@ -29,6 +29,12 @@ const router = createRouter({
             title: 'login',
             component: () => import('@/pages/LoginWindow.vue'),
         },
+        {
+            path: '/signup',
+            name: 'signup',
+            title: 'signup',
+            component: () => import('@/pages/SignUpPage.vue'),
+        },
         { path: '/:pathMatch(.*)*', name: 'NotFound', component: () => import('@/pages/NotFound.vue'), },
     ],
 });
