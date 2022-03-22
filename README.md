@@ -2,7 +2,7 @@
 
 > ### **SvgIcon：**
 > 这个组件是用来使用svg图的，要在你的组件里引入他，并且在标签的name选项上写上你的文件名（不带后缀名），详见看现在的 **Login** 组件    
-
+> This component is for adding SVG to your components, import it into your component and write the svg file name (without suffix) on the "name" props, as shown in the current **Login component**
 
 <br>
 <br>
