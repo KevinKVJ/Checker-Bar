@@ -18,9 +18,7 @@
        width: 3.3em;
        margin-bottom: 1.6em;
    }
-   p{
-       font-size: 16px;
-   }
+
 </style>
 
 

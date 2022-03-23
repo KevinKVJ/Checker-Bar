@@ -35,6 +35,12 @@ const router = createRouter({
             title: 'signup',
             component: () => import('@/pages/SignUpPage.vue'),
         },
+        {
+            path: '/profile',
+            name: 'profile',
+            title: 'profile',
+            component: () => import('@/pages/ProfilePage.vue'),
+        },
         { path: '/:pathMatch(.*)*', name: 'NotFound', component: () => import('@/pages/NotFound.vue'), },
     ],
 });

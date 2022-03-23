@@ -1,6 +1,6 @@
 <script setup>
 import Base from '@/components/Base.vue';
-import InputForm from '@/components/InputForm.vue';
+import LoginForm from '@/components/LoginForm.vue';
 import SmallButton from '../components/SmallButton.vue';
 import SelectAvatar from '../components/SelectAvatar.vue';
 </script>
@@ -13,7 +13,7 @@ import SelectAvatar from '../components/SelectAvatar.vue';
                <h4> Welcome to the Checker Bar</h4>
                <p>Select Your Avatar</p>
                <SelectAvatar/>
-               <InputForm />
+               <LoginForm />
                <SmallButton fontSize="15px" title="Sign Up"/>
                <SmallButton fontSize="15px" title="Login In"/>
            </div>
