@@ -1,24 +1,44 @@
+<script setup>
+import Base from '@/components/Base.vue';
+import LoginForm from '@/components/LoginForm.vue';
+import SmallButton from '../components/SmallButton.vue';
+</script>
 <template>
-    <div class="ccc">
-        <SvgIcon name="left" class="cccc"></SvgIcon>
+    <Base>
+       <div class="content">
+           <div class="small-window">
+               <h4> Welcome to the Checker Bar</h4>
+               <LoginForm />
+               <SmallButton fontSize="15px" title="Login In"/>
+               <SmallButton fontSize="15px" title="Sign Up"/>
+           </div>
+        </div>
+    </Base>
 
-    </div>
 </template>
 
-<style lang="scss">
-.ccc {
-    background-color: red;
-    width: 400px;
-    height: 400px;
-}
-.cccc{
-    width: 20px;
-    use{
-        fill: #ffffff;
+<style>
+    .content{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
     }
-}
-</style>
 
-<script setup>
-import SvgIcon from '@/components/SvgIcon.vue'
-</script>
+    .small-window{
+        width:350px;
+        height: 320px;
+        background: white;
+        display: flex;
+        align-items: center; 
+        justify-content: center;
+        flex-direction: column;
+    }
+    h4{
+        font-size: 23px;
+        font-weight: bolder;
+    }
+
+
+
+</style>
