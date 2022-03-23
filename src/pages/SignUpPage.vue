@@ -2,19 +2,23 @@
 import Base from '@/components/Base.vue';
 import LoginForm from '@/components/LoginForm.vue';
 import SmallButton from '../components/SmallButton.vue';
+import SelectAvatar from '../components/SelectAvatar.vue';
 </script>
+
+
 <template>
     <Base>
        <div class="content">
            <div class="small-window">
                <h4> Welcome to the Checker Bar</h4>
+               <p>Select Your Avatar</p>
+               <SelectAvatar/>
                <LoginForm />
-               <SmallButton fontSize="15px" title="Login In"/>
                <SmallButton fontSize="15px" title="Sign Up"/>
+               <SmallButton fontSize="15px" title="Login In"/>
            </div>
         </div>
     </Base>
-
 </template>
 
 <style>
@@ -27,7 +31,7 @@ import SmallButton from '../components/SmallButton.vue';
 
     .small-window{
         width:350px;
-        height: 320px;
+        height: 500px;
         background: white;
         display: flex;
         align-items: center; 
@@ -38,7 +42,7 @@ import SmallButton from '../components/SmallButton.vue';
         font-size: 23px;
         font-weight: bolder;
     }
-
-
-
+    p{
+        font-weight: 700;
+    }
 </style>
