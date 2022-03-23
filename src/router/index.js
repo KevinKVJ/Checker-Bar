@@ -12,9 +12,9 @@ const router = createRouter({
             component: Base,
         },
         {
-            path: '/base',
-            name: 'base',
-            title: 'Base',
+            path: '/selectMode',
+            name: 'selectMode',
+            title: 'selectMode',
             component: () => import('@/pages/SelectMode.vue'),
         },
         {
@@ -27,7 +27,7 @@ const router = createRouter({
             path: '/login',
             name: 'login',
             title: 'login',
-            component: () => import('@/pages/LoginWindow.vue'),
+            component: () => import('@/pages/Login.vue'),
         },
         {
             path: '/signup',

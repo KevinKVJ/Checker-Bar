@@ -20,7 +20,7 @@ export default defineConfig({
              * 自定义插入位置
              * @default: body-last
              */
-            inject: 'body-last' | 'body-first',
+            // inject: 'body-last' | 'body-first',
     
             /**
              * custom dom id

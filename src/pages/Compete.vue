@@ -17,11 +17,9 @@ import BigButton from '../components/BigButton.vue';
             </div>
         </div>
     </Base>
-
 </template>
 
 <style lang="scss" scoped>
-
    .content{
         height: 100%;
         display: flex;
@@ -44,7 +42,4 @@ import BigButton from '../components/BigButton.vue';
             }
         }
    }
-    
-
-
 </style>

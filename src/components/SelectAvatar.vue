@@ -1,6 +1,6 @@
 <template>
     <div class="selectSection">
-        <div class="imageSction">
+        <div class="imageSection">
            <img src="@/assets/icons/Avatar1.svg" alt="Avatar1" class="avatarImages">
            <img src="@/assets/icons/Avatar2.svg" alt="Avatar2" class="avatarImages">
            <img src="@/assets/icons/Avatar3.svg" alt="Avatar3" class="avatarImages">
