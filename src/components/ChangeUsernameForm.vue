@@ -1,9 +1,9 @@
 <template>
     <div class="profileForm">
         <form>
-            <label for="fname">Change Username:</label><br>
+            <label for="username">Change Username:</label><br>
             <input type="text" id="username" name="username" placeholder="Enter here"><br>
-            <label for="lname">Change Password:</label><br>
+            <label for="psw">Change Password:</label><br>
             <input type="text" id="psw" name="psw" placeholder="Enter here"><br><br>
         </form>
     </div>
