@@ -11,8 +11,6 @@
     </div>
 </template>
 
-
-
 <style>
    .avatarImages{
        width: 3.3em;
