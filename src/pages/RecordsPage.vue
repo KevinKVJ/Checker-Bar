@@ -10,12 +10,14 @@ import BigButton from '../components/BigButton.vue';
             <div class="main">
                 <h4>Alice's Records</h4>
                 <div class="divide-line"></div>
-                <p> Total Wins: </p>
-                <p> Games Played: </p>
-                <p> Win Rate: </p>
-                <p> Current Streak: </p>
-                <p> Highest Streak: </p>
-                <p> Last Played: </p>
+                <div class="gameInfo">
+                    <p> Total Wins: </p>
+                    <p> Games Played: </p>
+                    <p> Win Rate: </p>
+                    <p> Current Streak: </p>
+                    <p> Highest Streak: </p>
+                    <p> Last Played: </p>
+                </div>
             </div>
             <div class="button">
                 <BigButton @click="toHomePage()" fontSize="18px" title="Home"/>
@@ -54,7 +56,7 @@ import BigButton from '../components/BigButton.vue';
         font-weight: bolder;
     }
     p{
-        font-weight: 600;
+        line-height:32px
     }
 
 </style>

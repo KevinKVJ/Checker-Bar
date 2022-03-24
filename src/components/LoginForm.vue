@@ -4,7 +4,7 @@
             <p> Please Enter Your Username &#38; Password </p>
         </div>
         <!-- login form -->
-        <form>
+        <!-- <form>
         <table>
             <tr>
                 <td><label for="username">Username:</label></td>
@@ -19,7 +19,17 @@
                 </td>
             </tr>
         </table>
-        </form>
+        </form> -->
+        <div class="form">
+            <div class="userName">
+                <label >Username:</label>
+                <input type="text" v-model="username" placeholder="Enter here" />
+            </div>
+            <div class="password">
+                <label>Password: </label>
+                <input type="text" v-model="psw" placeholder="Enter here" />
+            </div>
+        </div>
     </div>
 </template>
 
@@ -28,6 +38,13 @@
        font-size:15px;
        font-weight:900;
    }
+    .userName{
+        margin-bottom: 10px;
+    }
+    .userName{
+        margin-bottom: 20px;
+    }
+        
 </style>
 
 
