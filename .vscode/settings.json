@@ -6,5 +6,8 @@
     },
     "volar.completion.preferredAttrNameCase": "auto-camel",
     "editor.detectIndentation": false,
-    "emmet.triggerExpansionOnTab": true
+    "emmet.triggerExpansionOnTab": true,
+    "path-intellisense.mappings": {
+        "@": "${workspaceRoot}/src"
+     }
 }
