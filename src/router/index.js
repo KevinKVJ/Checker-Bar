@@ -47,6 +47,12 @@ const router = createRouter({
             title: 'records',
             component: () => import('@/pages/RecordsPage.vue'),
         },
+        {
+            path: '/compete',
+            name: 'compete',
+            title: 'compete',
+            component: () => import('@/pages/Compete.vue'),
+        },
         { path: '/:pathMatch(.*)*', name: 'NotFound', component: () => import('@/pages/NotFound.vue'), },
     ],
 });
