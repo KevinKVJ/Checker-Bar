@@ -9,8 +9,8 @@ import SmallButton from '../components/SmallButton.vue';
            <div class="small-window">
                <h4> Welcome to the Checker Bar</h4>
                <LoginForm />
-               <SmallButton fontSize="15px" title="Login In"/>
-               <SmallButton fontSize="15px" title="Sign Up"/>
+               <SmallButton @click="toHomePage()" fontSize="15px" title="Login In"/>
+               <SmallButton @click="toSignUpPage()" fontSize="15px" title="Sign Up"/>
            </div>
         </div>
     </Base>
@@ -42,3 +42,16 @@ import SmallButton from '../components/SmallButton.vue';
 
 
 </style>
+
+<script>
+export default{
+    methods:{
+        toSignUpPage(){
+            this.$router.push({ path: '/signup' })
+        },
+        toHomePage(){
+            this.$router.push({ path: '/homePage' })
+        }
+    }
+}
+</script>

@@ -18,7 +18,7 @@ import BigButton from '../components/BigButton.vue';
                 <p> Last Played: </p>
             </div>
             <div class="button">
-                <BigButton fontSize="18px" title="Home"/>
+                <BigButton @click="toHomePage()" fontSize="18px" title="Home"/>
             </div>
         </div>
     </Base>
@@ -57,6 +57,15 @@ import BigButton from '../components/BigButton.vue';
         font-weight: 600;
     }
 
-
-
 </style>
+
+<script>
+export default{
+    methods:{
+        toHomePage(){
+            this.$router.push({ path: '/homePage' })
+        }
+    }
+}
+</script>
+

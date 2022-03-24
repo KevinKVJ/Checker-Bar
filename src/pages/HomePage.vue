@@ -8,11 +8,11 @@ import BigButton from '../components/BigButton.vue';
         <div class="content">
             <div class="abc">
                 <div class="contentOne">
-                    <BigButton id="button_one" fontSize="90px" title="Play!"/>
+                    <BigButton @click="toSelectModePage()" id="button_one" fontSize="90px" title="Play!"/>
                 </div>
                 <div class="contentTwo">
-                    <BigButton id="button_two" fontSize="20px" title="Profile"/>
-                    <BigButton id="button_two" fontSize="20px" title="Records"/>
+                    <BigButton @click="toProfilePage()" id="button_two" fontSize="20px" title="Profile"/>
+                    <BigButton @click="toRecordsPage()" id="button_two" fontSize="20px" title="Records"/>
                 </div>
             </div>
         </div>
@@ -43,3 +43,20 @@ import BigButton from '../components/BigButton.vue';
         }
    }
 </style>
+
+<script>
+export default{
+    methods:{
+        toSelectModePage(){
+            this.$router.push({ path: '/selectMode' })
+        },
+        toProfilePage(){
+            this.$router.push({ path: '/profile' })
+        },
+        toRecordsPage(){
+            this.$router.push({ path: '/records' })
+        }
+    }
+    
+}
+</script>

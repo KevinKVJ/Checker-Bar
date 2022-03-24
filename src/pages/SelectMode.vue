@@ -5,7 +5,7 @@ import BigButton from '../components/BigButton.vue';
 <template>
     <Base>
         <div class="content">
-            <BigButton fontSize="40px" title="Compete"/>
+            <BigButton @click="toCompete()" fontSize="40px" title="Compete"/>
             <BigButton fontSize="40px" title="Spectate"/>
         </div>
     </Base>
@@ -26,3 +26,15 @@ import BigButton from '../components/BigButton.vue';
         }
     }
 </style>
+
+<script>
+// import { defineComponent } from '@vue/composition-api'
+
+export default{
+    methods:{
+        toCompete(){
+            this.$router.push({ path: '/Compete' })
+        }
+    }
+}
+</script>

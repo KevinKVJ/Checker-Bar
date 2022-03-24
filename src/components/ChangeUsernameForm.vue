@@ -11,12 +11,12 @@
 
 <style>
     #username{
-        margin-top:10px;
-        margin-bottom: 30px;
+        margin-top:8px;
+        margin-bottom: 18px;
     }
     #psw{
-        margin-top:10px;
-        margin-bottom: 30px;
+        margin-top:8px;
+        margin-bottom: 10px;
     }
 </style>
 

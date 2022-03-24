@@ -7,13 +7,13 @@
         <form>
         <table>
             <tr>
-                <td>Username:</td>
+                <td><label for="username">Username:</label></td>
                 <td>
                     <input type="text" id="username" name="username">
                 </td>
             </tr>
             <tr>
-                <td>Password:</td>
+                <td><label for="psw">Password:</label><br></td>
                 <td>
                     <input type="text" id="psw" name="psw">
                 </td>

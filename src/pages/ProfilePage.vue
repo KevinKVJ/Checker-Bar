@@ -18,7 +18,7 @@ import ChangeUsernameForm from '../components/ChangeUsernameForm.vue';
                 <ChangeUsernameForm />
             </div>
             <div class="button">
-                <BigButton fontSize="18px" title="Home"/>
+                <BigButton @click="toHomePage()" fontSize="18px" title="Home"/>
             </div>
         </div>
     </Base>
@@ -46,15 +46,29 @@ import ChangeUsernameForm from '../components/ChangeUsernameForm.vue';
     }
     .divide-line{
         width:350px;
-        height:3px;
+        height:6px;
         background: black;
     }
     h4{
         font-size: 23px;
         font-weight: bolder;
+        margin-top:10px;
+        margin-bottom: 20px;
     }
-
-
-
+    p{
+        margin-bottom:0px;
+        margin-top:18px;
+    }
 </style>
 
+
+
+<script>
+export default{
+    methods:{
+        toHomePage(){
+            this.$router.push({ path: '/homePage' })
+        }
+    }
+}
+</script>

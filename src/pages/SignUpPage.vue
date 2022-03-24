@@ -15,7 +15,7 @@ import SelectAvatar from '../components/SelectAvatar.vue';
                <SelectAvatar/>
                <LoginForm />
                <SmallButton fontSize="15px" title="Sign Up"/>
-               <SmallButton fontSize="15px" title="Login In"/>
+               <SmallButton @click="toLoginPage()" fontSize="15px" title="Login In"/>
            </div>
         </div>
     </Base>
@@ -46,3 +46,14 @@ import SelectAvatar from '../components/SelectAvatar.vue';
         font-weight: 700;
     }
 </style>
+
+<script>
+
+export default{
+    methods:{
+        toLoginPage(){
+            this.$router.push({ path: '/login' })
+        }
+    }
+}
+</script>

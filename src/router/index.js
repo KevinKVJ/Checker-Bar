@@ -18,10 +18,10 @@ const router = createRouter({
             component: () => import('@/pages/SelectMode.vue'),
         },
         {
-            path: '/compete',
-            name: 'compete',
-            title: 'compete',
-            component: () => import('@/pages/Compete.vue'),
+            path: '/homePage',
+            name: 'homePage',
+            title: 'homePage',
+            component: () => import('@/pages/HomePage.vue'),
         },
         {
             path: '/login',
