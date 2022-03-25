@@ -1,6 +1,6 @@
 <template>
     <div class="fightWith">
-        <div>You are fight with</div>
+        <div>You are fighting with</div>
         <div class="fightWithName">Lucy</div>
     </div>
 </template>
@@ -8,7 +8,7 @@
 <style>
     .fightWith{
         width:100%;
-        height:65px;
+        height:100%;
         background:white;
         border-radius: 10px;
         display:flex;

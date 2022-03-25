@@ -5,8 +5,8 @@ import BigButton from '../components/BigButton.vue';
 <template>
     <Base>
         <div class="content">
-            <BigButton fontSize="40px" title="Compete"/>
-            <BigButton fontSize="40px" title="Spectate"/>
+            <BigButton @click="toCompetePage()" fontSize="40px" title="Compete"/>
+            <BigButton @click="toCompetePage()" fontSize="40px" title="Spectate"/>
         </div>
     </Base>
 </template>
@@ -28,5 +28,11 @@ import BigButton from '../components/BigButton.vue';
 </style>
 
 <script>
-
+export default{
+    methods:{
+        toCompetePage(){
+            this.$router.push({ path: '/compete' })
+        }
+    }
+}
 </script>

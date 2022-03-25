@@ -3,28 +3,39 @@ import Base from '@/components/Base.vue';
 import FightWith from '../components/FightWith.vue';
 import LeftMessage from '../components/LeftMessage.vue';
 import RightMessage from '../components/RightMessage.vue';
+import MessageInputForm from '../components/MessageInputForm.vue';
+
 
 </script>
 <template>
     <Base>
         <div class="main">
+
             <div class="left">
                 <div class="checkerboard"></div>
             </div>
+
             <div class="middle">
-                <FightWith />
-                <LeftMessage />
-                <RightMessage />
-                <RightMessage />
-                <LeftMessage />
-                <RightMessage />
-                <LeftMessage />
-                <RightMessage />
-                <RightMessage />
-                <LeftMessage />
-                <RightMessage />
-                <RightMessage />
+                <div class="sectionOne">
+                    <FightWith />
+                </div>
+                <div class="sectionTwo">
+                    <LeftMessage />
+                    <RightMessage />
+                    <RightMessage />
+                    <LeftMessage />
+                    <RightMessage />
+                    <RightMessage />
+                    <RightMessage />
+                    <LeftMessage />
+                    <RightMessage />
+                    <LeftMessage />
+                </div>
+                <div class="sectionThree">
+                    <MessageInputForm/>
+                </div>
             </div>
+
             <div class="right">
                 <div class="moveHistory">
                     <div class="moveHistoryContent">
@@ -35,11 +46,14 @@ import RightMessage from '../components/RightMessage.vue';
                         </ul>
                     </div>
                     <div class="buttonSection">
+                        <!-- <vs-button @click="popupActivo=true" color="primary" type="border" class="buttons" id="buttonOne" >Rules</vs-button>
+                        <Popup /> -->
                         <button class="buttons" id="buttonOne">Rules</button>
                         <button @click="toHomePage()" class="buttons">Home</button>
                     </div>
                 </div>
             </div>
+
         </div>
     </Base>
 </template>
@@ -77,8 +91,27 @@ import RightMessage from '../components/RightMessage.vue';
         padding:10px;
         margin-top: 10px;
         background-color: rgba(255,255,255,0.5);
-        overflow:scroll;
         border-radius: 8px;
+    }
+    .sectionOne{
+        float:left;
+        width: 100%;
+        height: 13%;
+    }
+    .sectionTwo{
+        float:left;
+        width: 100%;
+        height: 80%;
+        padding-bottom:10px;
+        padding-top:10px;
+        overflow:scroll;
+    }
+    .sectionThree{
+        float:left;
+        width: 100%;
+        height: 7%;
+        background: white;
+        padding: 5px;
     }
     /* ------ move history ------ */
     .right{
@@ -113,6 +146,7 @@ import RightMessage from '../components/RightMessage.vue';
         padding: 10px;
         margin-top: 8px;
         border: none;
+        background: white;
     }
     #buttonOne{
         margin-left: 10px;
@@ -124,6 +158,7 @@ import RightMessage from '../components/RightMessage.vue';
 </style>
 
 <script>
+
 export default{
     methods:{
         toHomePage(){

@@ -1,7 +1,7 @@
 <template>
     <div class="messageLeft">
         <div class="userName"> name </div>
-        <div class="msg"></div>
+        <div class="usermsg"></div>
     </div>
 </template>
 
@@ -10,7 +10,7 @@
         left:0;
         float: left;
     }
-    .msg{
+    .usermsg{
         height: 30px;
         width: 180px;
         background: white;
