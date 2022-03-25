@@ -11,8 +11,8 @@ import BigButton from '../components/BigButton.vue';
                     <BigButton @click="toSelectModePage()" id="button_one" fontSize="90px" title="Play!"/>
                 </div>
                 <div class="contentTwo">
-                    <BigButton @click="toProfilePage()" id="button_two" fontSize="20px" title="Profile"/>
-                    <BigButton @click="toRecordsPage()" id="button_two" fontSize="20px" title="Records"/>
+                    <BigButton @click="toProfilePage()" id="button_two" fontSize="18px" title="Profile"/>
+                    <BigButton @click="toRecordsPage()" id="button_two" fontSize="18px" title="Records"/>
                 </div>
             </div>
         </div>
