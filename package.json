@@ -9,9 +9,14 @@
     },
     "dependencies": {
         "axios": "^0.26.1",
+        "ciao-vue-popup": "^1.0.20",
+        "koa": "^2.13.4",
         "normalize.css": "^8.0.1",
+        "socket.io": "^4.4.1",
         "socket.io-client": "^4.4.1",
+        "vant": "^3.4.7",
         "vue": "^3.2.25",
+        "vue-mq": "^1.0.1",
         "vue-router": "^4.0.14"
     },
     "devDependencies": {

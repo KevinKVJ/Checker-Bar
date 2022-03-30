@@ -1,6 +1,8 @@
 <template>
     <div class="inputMsg">
-        <input id="input" type="text" v-model="message" placeholder="Enter Your Messages...">
+        <form @submit.prevent="getFormValues">
+        <input id="input" type="text" v-model="message" placeholder="Enter Your Messages..." @input="$emit('update:modelValue', $event.target.value)">
+        </form>
     </div>
 </template>
 
@@ -17,5 +19,13 @@
 </style>
 
 
-<script setup>
+<script>
+import { ref } from "vue";
+export default {
+  setup() {
+    const input = ref("");
+    return { input };
+  },
+};
+
 </script>
