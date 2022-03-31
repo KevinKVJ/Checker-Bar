@@ -4,6 +4,7 @@ import router from '@/router/index.js';
 import 'normalize.css';
 import 'virtual:svg-icons-register';
 import {Popup} from 'vant';
+import '@vant/touch-emulator'
 
 
 if (import.meta.hot) {

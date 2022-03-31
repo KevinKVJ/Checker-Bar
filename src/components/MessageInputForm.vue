@@ -1,7 +1,7 @@
 <template>
     <div class="inputMsg">
         <form @submit.prevent="getFormValues">
-        <input id="input" type="text" v-model="message" placeholder="Enter Your Messages..." @input="$emit('update:modelValue', $event.target.value)">
+        <input id="input" type="text" placeholder="Enter Your Messages..." @input="$emit('update:modelValue', $event.target.value)">
         </form>
     </div>
 </template>

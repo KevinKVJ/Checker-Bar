@@ -29,7 +29,7 @@ import MessageInputForm from '../components/MessageInputForm.vue';
                     <LeftMessage />
                 </div>
                 <div class="sectionThree">
-                    <MessageInputForm v-model="message" />
+                    <MessageInputForm />
                 </div>
             </div>
 
@@ -44,9 +44,24 @@ import MessageInputForm from '../components/MessageInputForm.vue';
                     </div>
                     <div class="buttonSection">
                         <!-- <button class="buttons" id="buttonOne">Rules</button> -->
-                        <van-cell is-link @click="showPopup">Rules</van-cell>
-                        <van-popup v-model:show="show">Content</van-popup>
-                        
+                        <!-- <van-cell is-link @click="showPopup">Rules</van-cell> -->
+                        <!-- <NButton>LALALAL</NButton> -->
+                        <n-button @click="showModal = true"> 来吧 </n-button>
+                        <n-modal v-model:show="showModal">
+                            <!-- <n-card
+                                style="width: 600px"
+                                title="模态框"
+                                :bordered="false"
+                                size="huge"
+                                role="dialog"
+                                aria-modal="true"
+                            >
+                                <template #header-extra> 噢！ </template>
+                                内容
+                                <template #footer> 尾部 </template>
+                            </n-card> -->
+                            <div class="lalala"></div>
+                        </n-modal>
                         <button @click="toHomePage()" class="buttons">Home</button>
                     </div>
                 </div>
@@ -56,6 +71,13 @@ import MessageInputForm from '../components/MessageInputForm.vue';
 </template>
 
 <style>
+.lalala{
+    width: 400px;
+    height: 400px;
+    background: #fff;
+    border-radius: 10px;
+}
+
 .main {
     position: fixed;
     top: 75px;
@@ -155,17 +177,21 @@ h4 {
 // import { io } from 'socket.io-client';
 // import Vue from 'vue';
 // import VueMq from 'vue-mq';
+// import { defineComponent } from 'vue'
+import { NButton,NModal } from 'naive-ui';
 
 export default {
     data() {
-        
         return {
-            show: false,
+            // show: false,
             popupActivo: false,
+            showModal: true
         };
     },
     components: {
         MessageInputForm,
+        NButton,
+        NModal,
     },
 
     mounted() {
@@ -176,9 +202,9 @@ export default {
         toHomePage() {
             this.$router.push({ path: '/homePage' });
         },
-        showPopup() {
-            this.show = true;
-        },
+        // showPopup() {
+        //     this.show = true;
+        // },
     },
 };
 </script>
