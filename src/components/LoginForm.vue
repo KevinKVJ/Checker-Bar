@@ -17,6 +17,10 @@
 </template>
 
 <style>
+    .loginForm{
+        padding-bottom: 20px;
+    }
+
    .header{
        font-size:15px;
        font-weight:900;

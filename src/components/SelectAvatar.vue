@@ -12,14 +12,18 @@
 <style>
    .avatarImages{
        width: 50px;
+       height: 50px;
        margin-bottom: 0px;
        padding-top:0px;
        padding-bottom: 0px;
    }
    .imageSection{
        display: flex;
-       flex: row;
+       flex-direction: row;
+       padding-bottom: 25px;
    }
+
+
 
 </style>
 

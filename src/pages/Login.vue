@@ -9,7 +9,7 @@ import SmallButton from '../components/SmallButton.vue';
            <div class="small-window">
                <h4> Welcome to the Checker Bar</h4>
                <LoginForm />
-               <SmallButton @click="toHomePage()" fontSize="15px" title="Login In"/>
+               <SmallButton @click="toHomePage()" fontSize="18px" title="Login In"/>
                <SmallButton @click="toSignUpPage()" fontSize="15px" title="Sign Up"/>
            </div>
         </div>
@@ -27,7 +27,7 @@ import SmallButton from '../components/SmallButton.vue';
 
     .small-window{
         width:350px;
-        height: 320px;
+        height: 340px;
         background: white;
         display: flex;
         align-items: center; 

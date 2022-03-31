@@ -14,7 +14,7 @@ import SelectAvatar from '../components/SelectAvatar.vue';
                <p>Select Your Avatar</p>
                <SelectAvatar/>
                <LoginForm />
-               <SmallButton fontSize="15px" title="Sign Up"/>
+               <SmallButton fontSize="18px" title="Sign Up"/>
                <SmallButton @click="toLoginPage()" fontSize="15px" title="Login In"/>
            </div>
         </div>

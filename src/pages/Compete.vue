@@ -13,24 +13,34 @@ import MessageInputForm from '../components/MessageInputForm.vue';
             </div>
 
             <div class="middle">
+
                 <div class="sectionOne">
                     <FightWith />
                 </div>
+
                 <div class="sectionTwo">
-                    <LeftMessage />
-                    <RightMessage />
-                    <RightMessage />
-                    <LeftMessage />
-                    <RightMessage />
-                    <RightMessage />
-                    <RightMessage />
-                    <LeftMessage />
-                    <RightMessage />
-                    <LeftMessage />
+                    <ul id="messageArray">
+                        <li v-for="item in items" :key="item.message">
+                            
+                            <RightMessage  v-if="isMe">
+                                <div>
+                                    {{ item.message }}
+                                </div>
+                            </RightMessage>
+                            <LeftMessage  v-if="notMe">
+                                <div>
+                                    {{ item.message }}
+                                </div>
+                            </LeftMessage>
+
+                        </li>
+                    </ul>
                 </div>
+
                 <div class="sectionThree">
-                    <MessageInputForm />
+                    <MessageInputForm :sendFunc='sendMessage'/>
                 </div>
+
             </div>
 
             <div class="right">
@@ -44,9 +54,13 @@ import MessageInputForm from '../components/MessageInputForm.vue';
                     </div>
                     <div class="buttonSection">
                         <!-- <button class="buttons" id="buttonOne">Rules</button> -->
-                        <!-- <van-cell is-link @click="showPopup">Rules</van-cell> -->
-                        <!-- <NButton>LALALAL</NButton> -->
-                        <n-button @click="showModal = true"> 来吧 </n-button>
+                        <n-button
+                            @click="showModal = true"
+                            class="buttons"
+                            id="buttonOne"
+                        >
+                            Rules
+                        </n-button>
                         <n-modal v-model:show="showModal">
                             <!-- <n-card
                                 style="width: 600px"
@@ -60,9 +74,21 @@ import MessageInputForm from '../components/MessageInputForm.vue';
                                 内容
                                 <template #footer> 尾部 </template>
                             </n-card> -->
-                            <div class="lalala"></div>
+                            <div class="lalala">
+                                <ul id="ruleList">
+                                    <li>This game is for two players. Each player starts with 12 colored discs (of the same color). </li>
+                                    <li>Players place their discs (pieces) on the dark squares on their side of the board. Black has first play, after turns alternate.</li>
+                                    <li>Moves can only be made on black squares, so the pieces move diagonally. Pieces can only move in a forward direction, toward their opponent.</li>
+                                    <li>If you are moving your disc forward, and not capturing your opponent’s piece in the move, you may only move it forward one square.</li>
+                                    <li>After a piece is captured, it is removed from the board, and collected by the opponent.</li>
+                                    <li>If you have the ability to jump your opponents pieces, you must. However, in the even there are more than one capture possible from a single square, you may jump whichever piece is preferable.</li>
+                                    <li>The game is won when the opponent is unable to make a move, which means the entirety of a player’s pieces were captured by the opponent. </li>
+                                </ul>
+                            </div>
                         </n-modal>
-                        <button @click="toHomePage()" class="buttons">Home</button>
+                        <button @click="toHomePage()" class="buttons" id="buttonTwo">
+                            Home
+                        </button>
                     </div>
                 </div>
             </div>
@@ -71,11 +97,15 @@ import MessageInputForm from '../components/MessageInputForm.vue';
 </template>
 
 <style>
-.lalala{
+.lalala {
     width: 400px;
     height: 400px;
     background: #fff;
     border-radius: 10px;
+    overflow: scroll;
+}
+#ruleList{
+    padding-right: 20px;
 }
 
 .main {
@@ -125,6 +155,9 @@ import MessageInputForm from '../components/MessageInputForm.vue';
     padding-top: 10px;
     overflow: scroll;
 }
+#messageArray {
+    list-style-type: none;
+}
 .sectionThree {
     float: left;
     width: 100%;
@@ -162,30 +195,40 @@ h4 {
 }
 .buttons {
     font-size: 25px;
-    padding: 10px;
-    margin-top: 8px;
+    /* padding: 10px;
+    margin-top: 8px; */
     border: none;
     background: white;
 }
 #buttonOne {
     margin-left: 10px;
     margin-right: 40px;
+    height: 40px;
+    width: 90px;
+}
+#buttonTwo {
+    height: 40px;
+    width: 90px;
 }
 </style>
 
 <script>
-// import { io } from 'socket.io-client';
+import { io } from 'socket.io-client';
 // import Vue from 'vue';
 // import VueMq from 'vue-mq';
 // import { defineComponent } from 'vue'
-import { NButton,NModal } from 'naive-ui';
+import { NButton, NModal } from 'naive-ui';
 
 export default {
     data() {
         return {
             // show: false,
             popupActivo: false,
-            showModal: true
+            showModal: false,
+            isMe: true,
+            notMe: false,
+            items: [{ message: 'Foo' }, { message: 'Bar' }],
+            socket:{}
         };
     },
     components: {
@@ -195,16 +238,19 @@ export default {
     },
 
     mounted() {
-        // const socket = io('ws://localhost:3001');
+        const sock = io('http://192.168.239.194:8000');
+        this.socket = sock;
     },
 
     methods: {
         toHomePage() {
             this.$router.push({ path: '/homePage' });
         },
-        // showPopup() {
-        //     this.show = true;
-        // },
+
+        sendMessage(mess) {
+            this.socket.emit('boardmessage',mess);
+            console.log(mess);
+        }
     },
 };
 </script>
