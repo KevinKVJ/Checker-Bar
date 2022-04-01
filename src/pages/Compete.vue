@@ -1,19 +1,16 @@
 <script setup>
-import Base from '@/components/Base.vue';
-import FightWith from '../components/FightWith.vue';
-import LeftMessage from '../components/LeftMessage.vue';
-import RightMessage from '../components/RightMessage.vue';
 import MessageInputForm from '../components/MessageInputForm.vue';
 </script>
 <template>
     <Base>
         <div class="main">
             <div class="left">
-                <div class="checkerboard"></div>
+                <div class="checkerboardbase">
+                    <CheckerBoard></CheckerBoard>
+                </div>
             </div>
 
             <div class="middle">
-
                 <div class="sectionOne">
                     <FightWith />
                 </div>
@@ -21,26 +18,23 @@ import MessageInputForm from '../components/MessageInputForm.vue';
                 <div class="sectionTwo">
                     <ul id="messageArray">
                         <li v-for="item in items" :key="item.message">
-                            
-                            <RightMessage  v-if="isMe">
+                            <RightMessage v-if="isMe">
                                 <div>
                                     {{ item.message }}
                                 </div>
                             </RightMessage>
-                            <LeftMessage  v-if="notMe">
+                            <LeftMessage v-if="notMe">
                                 <div>
                                     {{ item.message }}
                                 </div>
                             </LeftMessage>
-
                         </li>
                     </ul>
                 </div>
 
                 <div class="sectionThree">
-                    <MessageInputForm :sendFunc='sendMessage'/>
+                    <MessageInputForm :sendFunc="sendMessage" />
                 </div>
-
             </div>
 
             <div class="right">
@@ -76,13 +70,41 @@ import MessageInputForm from '../components/MessageInputForm.vue';
                             </n-card> -->
                             <div class="lalala">
                                 <ul id="ruleList">
-                                    <li>This game is for two players. Each player starts with 12 colored discs (of the same color). </li>
-                                    <li>Players place their discs (pieces) on the dark squares on their side of the board. Black has first play, after turns alternate.</li>
-                                    <li>Moves can only be made on black squares, so the pieces move diagonally. Pieces can only move in a forward direction, toward their opponent.</li>
-                                    <li>If you are moving your disc forward, and not capturing your opponent’s piece in the move, you may only move it forward one square.</li>
-                                    <li>After a piece is captured, it is removed from the board, and collected by the opponent.</li>
-                                    <li>If you have the ability to jump your opponents pieces, you must. However, in the even there are more than one capture possible from a single square, you may jump whichever piece is preferable.</li>
-                                    <li>The game is won when the opponent is unable to make a move, which means the entirety of a player’s pieces were captured by the opponent. </li>
+                                    <li>
+                                        This game is for two players. Each player starts
+                                        with 12 colored discs (of the same color).
+                                    </li>
+                                    <li>
+                                        Players place their discs (pieces) on the dark
+                                        squares on their side of the board. Black has
+                                        first play, after turns alternate.
+                                    </li>
+                                    <li>
+                                        Moves can only be made on black squares, so the
+                                        pieces move diagonally. Pieces can only move in a
+                                        forward direction, toward their opponent.
+                                    </li>
+                                    <li>
+                                        If you are moving your disc forward, and not
+                                        capturing your opponent’s piece in the move, you
+                                        may only move it forward one square.
+                                    </li>
+                                    <li>
+                                        After a piece is captured, it is removed from the
+                                        board, and collected by the opponent.
+                                    </li>
+                                    <li>
+                                        If you have the ability to jump your opponents
+                                        pieces, you must. However, in the even there are
+                                        more than one capture possible from a single
+                                        square, you may jump whichever piece is
+                                        preferable.
+                                    </li>
+                                    <li>
+                                        The game is won when the opponent is unable to
+                                        make a move, which means the entirety of a
+                                        player’s pieces were captured by the opponent.
+                                    </li>
                                 </ul>
                             </div>
                         </n-modal>
@@ -104,7 +126,7 @@ import MessageInputForm from '../components/MessageInputForm.vue';
     border-radius: 10px;
     overflow: scroll;
 }
-#ruleList{
+#ruleList {
     padding-right: 20px;
 }
 
@@ -115,7 +137,7 @@ import MessageInputForm from '../components/MessageInputForm.vue';
     right: 0;
     left: 0;
 }
-/* ------ checkerboard float at left ------ */
+/* ------ checkerboardbase float at left ------ */
 .left {
     float: left;
     width: 50%;
@@ -124,14 +146,18 @@ import MessageInputForm from '../components/MessageInputForm.vue';
     align-items: center;
     justify-content: center;
 }
-.checkerboard {
+.checkerboardbase {
     width: 45vw;
     height: 45vw;
     max-width: 550px;
     max-height: 550px;
     background: rgb(141, 114, 81);
-    border-radius: 20px;
+    border-radius: 40px;
+
+    padding: 40px;
 }
+
+
 /* ------ message window ------ */
 .middle {
     float: left;
@@ -214,12 +240,26 @@ h4 {
 
 <script>
 import { io } from 'socket.io-client';
-// import Vue from 'vue';
-// import VueMq from 'vue-mq';
-// import { defineComponent } from 'vue'
+import { ref, onMounted } from 'vue'
+import Base from '@/components/Base.vue';
+import FightWith from '../components/FightWith.vue';
+import LeftMessage from '../components/LeftMessage.vue';
+import RightMessage from '../components/RightMessage.vue';
 import { NButton, NModal } from 'naive-ui';
-
+import CheckerBoard from '@/components/CheckerBoard.vue';
+// import { defineComponent } from 'vue'
 export default {
+    setup() {
+        const ckb = ref(null);
+        onMounted(() => {
+            console.log("lalala");
+            // DOM 元素将在初始渲染后分配给 ref
+            console.log(ckb.value); // <div>This is a root element</div>
+        });
+        return {
+            ckb
+        }
+    },
     data() {
         return {
             // show: false,
@@ -228,19 +268,22 @@ export default {
             isMe: true,
             notMe: false,
             items: [{ message: 'Foo' }, { message: 'Bar' }],
-            socket:{}
+            socket: {},
         };
     },
     components: {
         MessageInputForm,
         NButton,
         NModal,
+        Base,
+        FightWith,
+        LeftMessage,
+        RightMessage,
+        CheckerBoard
     },
 
-    mounted() {
-        const sock = io('http://192.168.239.194:8000');
-        this.socket = sock;
-    },
+        // const sock = io('http://192.168.239.194:8000');
+        // this.socket = sock;
 
     methods: {
         toHomePage() {
@@ -248,9 +291,9 @@ export default {
         },
 
         sendMessage(mess) {
-            this.socket.emit('boardmessage',mess);
+            this.socket.emit('boardmessage', mess);
             console.log(mess);
-        }
+        },
     },
 };
 </script>
