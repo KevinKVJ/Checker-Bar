@@ -1,6 +1,6 @@
 const io = require('socket.io-client');
 
-const socket = io('http://192.168.239.194:8000');
+const socket = io('http://192.168.0.10:8000');
 
 socket.emit('echo', "lalala");
 

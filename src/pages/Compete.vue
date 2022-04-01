@@ -13,34 +13,30 @@ import MessageInputForm from '../components/MessageInputForm.vue';
             </div>
 
             <div class="middle">
-
                 <div class="sectionOne">
                     <FightWith />
                 </div>
 
                 <div class="sectionTwo">
                     <ul id="messageArray">
-                        <li v-for="item in items" :key="item.message">
-                            
-                            <RightMessage  v-if="isMe">
+                        <li v-for="(item, index) in items" :key="index">
+                            <RightMessage v-if="item.name">
                                 <div>
                                     {{ item.message }}
                                 </div>
                             </RightMessage>
-                            <LeftMessage  v-if="notMe">
+                            <LeftMessage v-else>
                                 <div>
                                     {{ item.message }}
                                 </div>
                             </LeftMessage>
-
                         </li>
                     </ul>
                 </div>
 
                 <div class="sectionThree">
-                    <MessageInputForm :sendFunc='sendMessage'/>
+                    <MessageInputForm :sendFunc="sendMessage" />
                 </div>
-
             </div>
 
             <div class="right">
@@ -76,13 +72,41 @@ import MessageInputForm from '../components/MessageInputForm.vue';
                             </n-card> -->
                             <div class="lalala">
                                 <ul id="ruleList">
-                                    <li>This game is for two players. Each player starts with 12 colored discs (of the same color). </li>
-                                    <li>Players place their discs (pieces) on the dark squares on their side of the board. Black has first play, after turns alternate.</li>
-                                    <li>Moves can only be made on black squares, so the pieces move diagonally. Pieces can only move in a forward direction, toward their opponent.</li>
-                                    <li>If you are moving your disc forward, and not capturing your opponent’s piece in the move, you may only move it forward one square.</li>
-                                    <li>After a piece is captured, it is removed from the board, and collected by the opponent.</li>
-                                    <li>If you have the ability to jump your opponents pieces, you must. However, in the even there are more than one capture possible from a single square, you may jump whichever piece is preferable.</li>
-                                    <li>The game is won when the opponent is unable to make a move, which means the entirety of a player’s pieces were captured by the opponent. </li>
+                                    <li>
+                                        This game is for two players. Each player starts
+                                        with 12 colored discs (of the same color).
+                                    </li>
+                                    <li>
+                                        Players place their discs (pieces) on the dark
+                                        squares on their side of the board. Black has
+                                        first play, after turns alternate.
+                                    </li>
+                                    <li>
+                                        Moves can only be made on black squares, so the
+                                        pieces move diagonally. Pieces can only move in a
+                                        forward direction, toward their opponent.
+                                    </li>
+                                    <li>
+                                        If you are moving your disc forward, and not
+                                        capturing your opponent’s piece in the move, you
+                                        may only move it forward one square.
+                                    </li>
+                                    <li>
+                                        After a piece is captured, it is removed from the
+                                        board, and collected by the opponent.
+                                    </li>
+                                    <li>
+                                        If you have the ability to jump your opponents
+                                        pieces, you must. However, in the even there are
+                                        more than one capture possible from a single
+                                        square, you may jump whichever piece is
+                                        preferable.
+                                    </li>
+                                    <li>
+                                        The game is won when the opponent is unable to
+                                        make a move, which means the entirety of a
+                                        player’s pieces were captured by the opponent.
+                                    </li>
                                 </ul>
                             </div>
                         </n-modal>
@@ -104,7 +128,7 @@ import MessageInputForm from '../components/MessageInputForm.vue';
     border-radius: 10px;
     overflow: scroll;
 }
-#ruleList{
+#ruleList {
     padding-right: 20px;
 }
 
@@ -225,10 +249,9 @@ export default {
             // show: false,
             popupActivo: false,
             showModal: false,
-            isMe: true,
-            notMe: false,
-            items: [{ message: 'Foo' }, { message: 'Bar' }],
-            socket:{}
+            //items: [{ message: 'Foo', name: true}, { message: 'Bar', name: false }],
+            items: ['message', 'name'],
+            socket: {},
         };
     },
     components: {
@@ -238,8 +261,19 @@ export default {
     },
 
     mounted() {
-        const sock = io('http://192.168.239.194:8000');
+        const sock = io('http://192.168.0.10:8000');
         this.socket = sock;
+        
+        sock.on('echo',data =>{
+            console.log(data);
+            this.items.push({message: data, name: true} );
+        })
+
+        sock.on('data', data => {
+            console.log(data);
+            this.items.push({message: data, name: false} );
+        });
+        
     },
 
     methods: {
@@ -248,9 +282,9 @@ export default {
         },
 
         sendMessage(mess) {
-            this.socket.emit('boardmessage',mess);
-            console.log(mess);
-        }
+            this.socket.emit('boardmessage', mess);
+            console.log(mess);``
+        },
     },
 };
 </script>

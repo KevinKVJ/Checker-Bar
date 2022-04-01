@@ -1,5 +1,5 @@
 <template>
-    <div class="messageLeft">
+    <div class="messageLeft" >
         <div class="userName">name</div>
         <div class="usermsg">
             <slot></slot>
