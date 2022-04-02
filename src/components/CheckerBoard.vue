@@ -90,10 +90,8 @@
     </div>
 </template>
 
-<script>
-import { defineComponent } from 'vue';
+<script setup>
 import { ref, onMounted } from 'vue';
-
 /* 
 const ckb = ref(null);
         onMounted(() => {
@@ -105,20 +103,12 @@ const ckb = ref(null);
             ckb
         }
 */
-
-export default defineComponent({
-    setup() {
-        const ckb = ref(null);
-        onMounted(() => {
-            console.log('lalala');
-            let aaa = document.createElement('div');
-            aaa.className = 'light-grid';
-            ckb.value.appendChild(aaa);
-            // console.log(ckb.value.children);
-        });
-        return {
-            ckb,
-        };
-    },
+const ckb = ref(null);
+onMounted(() => {
+    console.log('lalala');
+    let aaa = document.createElement('div');
+    aaa.className = 'light-grid';
+    ckb.value.appendChild(aaa);
+    // console.log(ckb.value.children);
 });
 </script>
