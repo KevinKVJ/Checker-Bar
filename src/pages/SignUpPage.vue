@@ -13,8 +13,8 @@ import SelectAvatar from '../components/SelectAvatar.vue';
                <h4> Welcome to the Checker Bar</h4>
                <p>Select Your Avatar</p>
                <SelectAvatar/>
-               <LoginForm />
-               <SmallButton fontSize="18px" title="Sign Up"/>
+               <LoginForm v-model='value' v-model:passwordValue='passwordValue' />
+               <SmallButton @click="loadUserInfo()" fontSize="18px" title="Sign Up"/>
                <SmallButton @click="toLoginPage()" fontSize="15px" title="Login In"/>
            </div>
         </div>
@@ -48,11 +48,51 @@ import SelectAvatar from '../components/SelectAvatar.vue';
 </style>
 
 <script>
-
+import axios from 'axios';
 export default{
+
+    data(){
+        return{
+            value:'',
+            passwordValue:'',
+        };
+    },
+
+    components:{
+        LoginForm,
+    },
+
+
     methods:{
         toLoginPage(){
             this.$router.push({ path: '/login' })
+        },
+        loadUserInfo(){
+            console.log(this.value); 
+            console.log(this.passwordValue);
+            
+            axios.post('/api/signInApi',{
+                nickname: this.value,
+                password: this.passwordValue
+                //already exists---
+                // nickname: 'lalala9',
+                // password: 'password2'
+                // nickname: 'lalala99',
+                // password: 'password22'
+            })
+            .then((res)=>{
+                console.log(res.data);
+                var code = res.data[Object.keys(res.data)[0]];
+                console.log(code);
+                if(code === 200){
+                    alert("SignUp successful");
+                }else{
+                    alert("User already exists");
+                }
+            })
+            .catch((error)=>{
+                console.log(error);
+            })
         }
     }
 }

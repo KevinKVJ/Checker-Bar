@@ -8,8 +8,9 @@ import SmallButton from '../components/SmallButton.vue';
        <div class="content">
            <div class="small-window">
                <h4> Welcome to the Checker Bar</h4>
-               <LoginForm />
-               <SmallButton @click="toHomePage()" fontSize="18px" title="Login In"/>
+               <LoginForm  v-model='value' v-model:passwordValue='passwordValue' />
+               
+                <SmallButton @click="loadUserInfo()"  fontSize="18px" title="Login In"/>
                <SmallButton @click="toSignUpPage()" fontSize="15px" title="Sign Up"/>
            </div>
         </div>
@@ -44,14 +45,62 @@ import SmallButton from '../components/SmallButton.vue';
 </style>
 
 <script>
+import axios from 'axios';
 export default{
+
+    data(){
+        return{
+            value:'',
+            passwordValue:'',
+        };
+    },
+
+    components:{
+        LoginForm,
+    },
+
+    mounted(){
+
+    },
+
+
     methods:{
         toSignUpPage(){
             this.$router.push({ path: '/signup' })
         },
         toHomePage(){
             this.$router.push({ path: '/homePage' })
-        }
+        },
+        loadUserInfo(){
+            console.log(this.value); 
+            console.log(this.passwordValue);
+
+            axios.post('/api/loginApi',{
+                nickname: this.value,
+                password: this.passwordValue
+            })
+            .then((res)=>{
+                console.log(res.data);
+                var code = res.data[Object.keys(res.data)[0]];
+                console.log(code);
+                //if code = 200, go to homepage
+                //if code = 400 or 401, alert
+                if (code === 200){
+                    this.toHomePage();
+                    alert("successfully sign in");
+                }else if (code === 400){
+                    alret("cannot find the user");      
+                }else{
+                    alert("password incorrect");
+                }
+                
+            })
+            .catch((error)=>{
+                console.log(error);
+            });
+            
+            
+            }
     }
 }
 </script>

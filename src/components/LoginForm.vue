@@ -3,18 +3,21 @@
         <div class="header">
             <p>Please Enter Your Username &#38; Password</p>
         </div>
+
         <div class="form">
+
             <div class="userName">
                 <label>Username:</label>
-                {{username}}
-                <input type="text" v-model="username" placeholder="Enter here" />
+                <input type="text"  placeholder="Enter here" :value="modelValue" @input='$emit("update:modelValue", $event.target.value)' />
             </div>
+
             <div class="password">
                 <label>Password: </label>
-                {{psw}}
-                <input type="text" v-model="psw" placeholder="Enter here" />
+                <input type="text"  placeholder="Enter here" :value="passwordValue" @input='$emit("update:passwordValue", $event.target.value)' />
             </div>
+               
         </div>
+
     </div>
 </template>
 
@@ -35,9 +38,21 @@
 }
 </style>
 
-<script setup>
-import { ref } from 'vue';
+<!-- <script setup> 
+ import { ref } from 'vue';
 
-const username = ref('');
-const psw = ref('');
+ const username = ref('');
+ const password = ref('');
+
+
+</script> -->
+
+
+<script>
+export default {
+  props: {
+    modelValue: String,
+    passwordValue: String,
+  }
+}
 </script>

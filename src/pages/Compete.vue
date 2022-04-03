@@ -242,6 +242,7 @@ import { io } from 'socket.io-client';
 // import VueMq from 'vue-mq';
 // import { defineComponent } from 'vue'
 import { NButton, NModal } from 'naive-ui';
+import axios from 'axios';
 
 export default {
     data() {
@@ -261,19 +262,38 @@ export default {
     },
 
     mounted() {
-        const sock = io('http://192.168.0.10:8000');
-        this.socket = sock;
+        // const sock = io('http://192.168.0.10:8000');
+        // this.socket = sock;
         
-        sock.on('echo',data =>{
-            console.log(data);
-            this.items.push({message: data, name: true} );
-        })
+        // sock.on('echo',data =>{
+        //     console.log(data);
+        //     this.items.push({message: data, name: true} );
+        // })
 
-        sock.on('data', data => {
-            console.log(data);
-            this.items.push({message: data, name: false} );
-        });
-        
+        // sock.on('data', data => {
+        //     console.log(data);
+        //     this.items.push({message: data, name: false} );
+        // });
+        // axios.post('/api/loginApi',{
+        //     nickname: 'lalala9',
+        //     password: 'password2'
+        // })
+        // .then((res)=>{
+        //     console.log(res.data);
+        // })
+        // .catch((error)=>{
+        //     console.log(error);
+        // });
+        // axios.post('/api/signInApi',{
+        //     nickname: 'lalala2',
+        //     password: 'password2'
+        // })
+        // .then((res)=>{
+        //     console.log(res.data);
+        // })
+        // .catch((error)=>{
+        //     console.log(error);
+        // })
     },
 
     methods: {
