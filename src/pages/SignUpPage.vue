@@ -11,8 +11,6 @@ import SelectAvatar from '../components/SelectAvatar.vue';
        <div class="content">
            <div class="small-window">
                <h4> Welcome to the Checker Bar</h4>
-               <p>Select Your Avatar</p>
-               <SelectAvatar/>
                <LoginForm v-model='value' v-model:passwordValue='passwordValue' />
                <SmallButton @click="loadUserInfo()" fontSize="18px" title="Sign Up"/>
                <SmallButton @click="toLoginPage()" fontSize="15px" title="Login In"/>
@@ -31,7 +29,7 @@ import SelectAvatar from '../components/SelectAvatar.vue';
 
     .small-window{
         width:350px;
-        height: 500px;
+        height: 400px;
         background: white;
         display: flex;
         align-items: center; 
@@ -74,7 +72,6 @@ export default{
             axios.post('/api/signInApi',{
                 nickname: this.value,
                 password: this.passwordValue
-                //already exists---
                 // nickname: 'lalala9',
                 // password: 'password2'
                 // nickname: 'lalala99',

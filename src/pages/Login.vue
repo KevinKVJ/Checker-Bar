@@ -2,15 +2,17 @@
 import Base from '@/components/Base.vue';
 import LoginForm from '@/components/LoginForm.vue';
 import SmallButton from '../components/SmallButton.vue';
+import SelectAvatar from '../components/SelectAvatar.vue';
 </script>
 <template>
     <Base>
        <div class="content">
            <div class="small-window">
                <h4> Welcome to the Checker Bar</h4>
+               <p>Select Your Avatar</p>
+               <SelectAvatar/>
                <LoginForm  v-model='value' v-model:passwordValue='passwordValue' />
-               
-                <SmallButton @click="loadUserInfo()"  fontSize="18px" title="Login In"/>
+               <SmallButton @click="loadUserInfo()"  fontSize="18px" title="Login In"/>
                <SmallButton @click="toSignUpPage()" fontSize="15px" title="Sign Up"/>
            </div>
         </div>
@@ -28,7 +30,7 @@ import SmallButton from '../components/SmallButton.vue';
 
     .small-window{
         width:350px;
-        height: 340px;
+        height: 460px;
         background: white;
         display: flex;
         align-items: center; 
@@ -60,9 +62,7 @@ export default{
     },
 
     mounted(){
-
     },
-
 
     methods:{
         toSignUpPage(){
@@ -89,7 +89,7 @@ export default{
                     this.toHomePage();
                     alert("successfully sign in");
                 }else if (code === 400){
-                    alret("cannot find the user");      
+                    alert("cannot find the user");      
                 }else{
                     alert("password incorrect");
                 }
