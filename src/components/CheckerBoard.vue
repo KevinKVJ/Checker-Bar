@@ -9,11 +9,13 @@
     grid-template-columns: repeat(8, 12.5%);
 }
 
-.checkerboard div {
+.checkerboard > div {
     width: 100%;
     height: 100%;
 
     user-select: none;
+
+    overflow: hidden;
 }
 
 .dark-grid {
@@ -23,92 +25,88 @@
 
 <template>
     <div class="checkerboard" ref="ckb">
-        <!-- <div class="light-grid"></div> -->
-        <!-- <div class="dark-grid"></div> -->
+        <template v-for="(row, i) in InitialChessboard">
+            <template v-for="(grid, j) in row">
+                <template v-if="grid === 1">
+                    <div class="dark-grid" v-if="i * 8 + j < 24">
+                        <CheckerChess chessType="0" />
+                    </div>
+                    <div class="dark-grid" v-else-if="i * 8 + j > 39">
+                        <CheckerChess chessType="2" />
+                    </div>
+                    <div class="dark-grid" v-else></div>
+                </template>
+                <div class="light-grid" v-else-if="grid === 0"></div>
+            </template>
+        </template>
         <!-- <div class="light-grid"></div>
-                        <div class="dark-grid"></div>
-                        <div class="light-grid"></div>
-                        <div class="dark-grid"></div>
-                        <div class="light-grid"></div>
-                        <div class="dark-grid"></div>
-                        <div class="dark-grid"></div>
-                        <div class="light-grid"></div>
-                        <div class="dark-grid"></div>
-                        <div class="light-grid"></div>
-                        <div class="dark-grid"></div>
-                        <div class="light-grid"></div>
-                        <div class="dark-grid"></div>
-                        <div class="light-grid"></div>
-                        <div class="light-grid"></div>
-                        <div class="dark-grid"></div>
-                        <div class="light-grid"></div>
-                        <div class="dark-grid"></div>
-                        <div class="light-grid"></div>
-                        <div class="dark-grid"></div>
-                        <div class="light-grid"></div>
-                        <div class="dark-grid"></div>
-                        <div class="dark-grid"></div>
-                        <div class="light-grid"></div>
-                        <div class="dark-grid"></div>
-                        <div class="light-grid"></div>
-                        <div class="dark-grid"></div>
-                        <div class="light-grid"></div>
-                        <div class="dark-grid"></div>
-                        <div class="light-grid"></div>
-                        <div class="light-grid"></div>
-                        <div class="dark-grid"></div>
-                        <div class="light-grid"></div>
-                        <div class="dark-grid"></div>
-                        <div class="light-grid"></div>
-                        <div class="dark-grid"></div>
-                        <div class="light-grid"></div>
-                        <div class="dark-grid"></div>
-                        <div class="dark-grid"></div>
-                        <div class="light-grid"></div>
-                        <div class="dark-grid"></div>
-                        <div class="light-grid"></div>
-                        <div class="dark-grid"></div>
-                        <div class="light-grid"></div>
-                        <div class="dark-grid"></div>
-                        <div class="light-grid"></div>
-                        <div class="light-grid"></div>
-                        <div class="dark-grid"></div>
-                        <div class="light-grid"></div>
-                        <div class="dark-grid"></div>
-                        <div class="light-grid"></div>
-                        <div class="dark-grid"></div>
-                        <div class="light-grid"></div>
-                        <div class="dark-grid"></div>
-                        <div class="dark-grid"></div>
-                        <div class="light-grid"></div>
-                        <div class="dark-grid"></div>
-                        <div class="light-grid"></div>
-                        <div class="dark-grid"></div>
-                        <div class="light-grid"></div>
-                        <div class="dark-grid"></div>
-                        <div class="light-grid"></div> -->
+        <div class="dark-grid">
+            <CheckerChess />
+        </div>
+        <div class="light-grid"></div>
+        <div class="dark-grid">
+            <CheckerChess />
+        </div>
+        <div class="light-grid"></div>
+        <div class="dark-grid">
+            <CheckerChess />
+        </div>
+        <div class="light-grid"></div>
+        <div class="dark-grid">
+            <CheckerChess />
+        </div>
+        <div class="dark-grid">
+            <CheckerChess />
+        </div>
+        <div class="light-grid"></div>
+        <div class="dark-grid">
+            <CheckerChess />
+        </div>
+        <div class="light-grid"></div>
+        <div class="dark-grid">
+            <CheckerChess />
+        </div>
+        <div class="light-grid"></div>
+        <div class="dark-grid">
+            <CheckerChess />
+        </div>
+        <div class="light-grid"></div>
+        <div class="light-grid"></div>
+        <div class="dark-grid">
+            <CheckerChess />
+        </div>
+        <div class="light-grid"></div>
+        <div class="dark-grid">
+            <CheckerChess />
+        </div>
+        <div class="light-grid"></div>
+        <div class="dark-grid">
+            <CheckerChess />
+        </div>
+        <div class="light-grid"></div>
+        <div class="dark-grid">
+            <CheckerChess />
+        </div> -->
     </div>
 </template>
 
 <script setup>
+import CheckerChess from './CheckerChess.vue';
 import { ref, onMounted } from 'vue';
-/* 
 const ckb = ref(null);
-        onMounted(() => {
-            console.log("lalala");
-            // DOM 元素将在初始渲染后分配给 ref
-            console.log(ckb.value); // <div>This is a root element</div>
-        });
-        return {
-            ckb
-        }
-*/
-const ckb = ref(null);
+
+const InitialChessboard = ref([
+    [0, 1, 0, 1, 0, 1, 0, 1],
+    [1, 0, 1, 0, 1, 0, 1, 0],
+    [0, 1, 0, 1, 0, 1, 0, 1],
+    [1, 0, 1, 0, 1, 0, 1, 0],
+    [0, 1, 0, 1, 0, 1, 0, 1],
+    [1, 0, 1, 0, 1, 0, 1, 0],
+    [0, 1, 0, 1, 0, 1, 0, 1],
+    [1, 0, 1, 0, 1, 0, 1, 0],
+]);
+const RealChessboard = ref([])
 onMounted(() => {
-    console.log('lalala');
-    let aaa = document.createElement('div');
-    aaa.className = 'light-grid';
-    ckb.value.appendChild(aaa);
-    // console.log(ckb.value.children);
+    
 });
 </script>
