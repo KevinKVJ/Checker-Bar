@@ -75,6 +75,9 @@ export default{
             console.log(this.value); 
             console.log(this.passwordValue);
 
+            sessionStorage.setItem('username', this.value);
+            sessionStorage.setItem('password', this.passwordValue);
+
             axios.post('/api/loginApi',{
                 nickname: this.value,
                 password: this.passwordValue
@@ -93,6 +96,7 @@ export default{
                 }else{
                     alert("password incorrect");
                 }
+
                 
             })
             .catch((error)=>{

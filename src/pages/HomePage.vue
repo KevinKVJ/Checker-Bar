@@ -46,6 +46,12 @@ import BigButton from '../components/BigButton.vue';
 
 <script>
 export default{
+
+    mounted(){
+        let username = sessionStorage.getItem("username");
+        console.log(username);
+    },
+
     methods:{
         toSelectModePage(){
             this.$router.push({ path: '/selectMode' })

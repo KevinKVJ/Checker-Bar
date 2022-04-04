@@ -65,6 +65,12 @@ import ChangeUsernameForm from '../components/ChangeUsernameForm.vue';
 
 <script>
 export default{
+
+mounted(){
+        let username = sessionStorage.getItem("username");
+        console.log(username);
+    },
+
     methods:{
         toHomePage(){
             this.$router.push({ path: '/homePage' })
