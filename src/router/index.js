@@ -53,7 +53,17 @@ const router = createRouter({
             title: 'compete',
             component: () => import('@/pages/Compete.vue'),
         },
-        { path: '/:pathMatch(.*)*', name: 'NotFound', component: () => import('@/pages/NotFound.vue'), },
+        {
+            path: '/csb',
+            name: 'chessboard',
+            title: 'chessboard',
+            component: () => import('@/components/CheckerBoard.vue'),
+        },
+        {
+            path: '/:pathMatch(.*)*',
+            name: 'NotFound',
+            component: () => import('@/pages/NotFound.vue'),
+        },
     ],
 });
 

@@ -26,7 +26,6 @@
 
 <script setup>
 import SvgIcon from './SvgIcon.vue';
-import { defineProps } from 'vue';
 // import { ref, onMounted } from 'vue';
 
 const props = defineProps({
@@ -36,5 +35,5 @@ const props = defineProps({
         default: '0'
     }
 });
-console.log(props);
+// console.log(props);
 </script>
