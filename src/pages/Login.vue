@@ -77,17 +77,23 @@ export default{
 
             sessionStorage.setItem('username', this.value);
             sessionStorage.setItem('password', this.passwordValue);
-
+           
             axios.post('/api/loginApi',{
                 nickname: this.value,
                 password: this.passwordValue
             })
             .then((res)=>{
                 console.log(res.data);
+                //get login code and user id 
                 var code = res.data[Object.keys(res.data)[0]];
                 console.log(code);
-                //if code = 200, go to homepage
-                //if code = 400 or 401, alert
+                var id = res.data[Object.keys(res.data)[2]];
+                var userId = id[Object.keys(id)[0]]
+                console.log(userId);
+
+                // save userId into session
+                sessionStorage.setItem('userid', userId);
+
                 if (code === 200){
                     this.toHomePage();
                     alert("successfully sign in");
@@ -96,7 +102,6 @@ export default{
                 }else{
                     alert("password incorrect");
                 }
-
                 
             })
             .catch((error)=>{
@@ -104,7 +109,11 @@ export default{
             });
             
             
+
+
             }
+
+
     }
 }
 </script>
