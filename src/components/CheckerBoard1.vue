@@ -16,8 +16,6 @@
     height: 100%;
 
     user-select: none;
-
-    /* overflow: hidden; */
 }
 
 .darkgrid {
@@ -27,7 +25,6 @@
 .cactive {
     background-color: rgba(39, 245, 61, 0.43);
 }
-
 
 /* 动态设置跨度大小 */
 .rightupout-leave-active {
@@ -86,34 +83,63 @@
 
 <template>
     <div class="checkerboard">
-        <template v-for="row in InitialChessboard">
-            <template v-for="{ bkg, csIndex, cTrans } in row">
+        <template v-for="(row, rowIndex) in RealChessboard">
+            <template v-for="({ bkg, csIndex, cTrans }, eleIndex) in row">
                 <!-- 没加v-if 没有动画 -->
                 <template v-if="bkg === 1">
-                    <div class="darkgrid">
+                    <div class="darkgrid" @click="getGridIndex([rowIndex, eleIndex])">
                         <transition :name="cTrans">
-                            <CheckerChess v-if="csIndex !== null" :chessType="chessArr[csIndex].cType" />
+                            <CheckerChess
+                                v-if="csIndex !== null"
+                                :chessType="chessArr[csIndex].cType"
+                                :csIndex="csIndex"
+                                :row="rowIndex"
+                                :column="eleIndex"
+                                @change-color="setChessActive"
+                                :chessActive="chessArr[csIndex].cActive"
+                            />
                         </transition>
                     </div>
                 </template>
                 <template v-if="bkg === 0">
                     <div class="lightgrid">
                         <transition :name="cTrans">
-                            <CheckerChess v-if="csIndex !== null" :chessType="chessArr[csIndex].cType" />
+                            <CheckerChess
+                                v-if="csIndex !== null"
+                                :chessType="chessArr[csIndex].cType"
+                                :csIndex="csIndex"
+                                :row="rowIndex"
+                                :column="eleIndex"
+                                @change-color="moves"
+                            />
                         </transition>
                     </div>
                 </template>
                 <template v-if="bkg === 2">
                     <div class="greengrid">
                         <transition :name="cTrans">
-                            <CheckerChess v-if="csIndex !== null" :chessType="chessArr[csIndex].cType" />
+                            <CheckerChess
+                                v-if="csIndex !== null"
+                                :chessType="chessArr[csIndex].cType"
+                                :csIndex="csIndex"
+                                :row="rowIndex"
+                                :column="eleIndex"
+                                @change-color="moves"
+                            />
                         </transition>
                     </div>
                 </template>
                 <template v-if="bkg === 3">
                     <div class="redgrid">
                         <transition :name="cTrans">
-                            <CheckerChess v-if="csIndex !== null" :chessType="chessArr[csIndex].cType" />
+                            <CheckerChess
+                                v-if="csIndex !== null"
+                                :chessType="chessArr[csIndex].cType"
+                                :csIndex="csIndex"
+                                :row="rowIndex"
+                                :column="eleIndex"
+                                @change-color="moves"
+                            />
                         </transition>
                     </div>
                 </template>
@@ -156,107 +182,122 @@
 
 <script setup>
 import CheckerChess from './CheckerChess.vue';
-import { ref, onMounted, reactive, toRaw } from 'vue';
-const chessActive = ref(false);
+import { ref, onMounted, reactive, toRaw, computed } from 'vue';
+import lodash from 'lodash';
 
-const isChessActive = () => {
-    chessActive.value = !chessActive.value;
-    console.log(111);
+const getGridIndex = gIndex => {
+    // if(RealChessboard[row][column].gridActive === true){
+    console.log(gIndex[0], gIndex[1]);
+    const { row, column } = activeChess.value;
+
+    moves([row, column], gIndex);
+    // }
 };
 
-// const InitialChessboard1 = [
-//     [0, 1, 0, 1, 0, 1, 0, 1],
-//     [1, 0, 1, 0, 1, 0, 1, 0],
-//     [0, 1, 0, 1, 0, 1, 0, 1],
-//     [1, 0, 1, 0, 1, 0, 1, 0],
-//     [0, 1, 0, 1, 0, 1, 0, 1],
-//     [1, 0, 1, 0, 1, 0, 1, 0],
-//     [0, 1, 0, 1, 0, 1, 0, 1],
-//     [1, 0, 1, 0, 1, 0, 1, 0],
-// ];
+const activeGrids = reactive([]);
+const activeChess = ref(null);
 
-const InitialChessboard = reactive([
+const setChessActive = chessAttrs => {
+    const { chessType, csIndex, row, column } = chessAttrs;
+    if (activeChess.value !== null) {
+        if (csIndex === activeChess.value.csIndex) {
+            activeChess.value = null;
+            chessArr[csIndex].cActive = false;
+        } else {
+            chessArr[activeChess.value.csIndex].cActive = false;
+            activeChess.value = chessAttrs;
+            chessArr[csIndex].cActive = true;
+        }
+    } else {
+        activeChess.value = chessAttrs;
+        chessArr[csIndex].cActive = true;
+    }
+};
+
+const InitialChessboard = [
     [
-        { bkg: 0, csIndex: null, cTrans: 'rightup' },
-        { bkg: 1, csIndex: 0, cTrans: 'rightup' },
-        { bkg: 0, csIndex: null, cTrans: 'rightup' },
-        { bkg: 1, csIndex: 1, cTrans: 'rightup' },
-        { bkg: 0, csIndex: null, cTrans: 'rightup' },
-        { bkg: 1, csIndex: 2, cTrans: 'rightup' },
-        { bkg: 0, csIndex: null, cTrans: 'rightup' },
-        { bkg: 1, csIndex: 3, cTrans: 'rightup' },
+        { bkg: 0, csIndex: null, cTrans: 'rightup', gridActive: false },
+        { bkg: 1, csIndex: 0, cTrans: 'rightup', gridActive: false },
+        { bkg: 0, csIndex: null, cTrans: 'rightup', gridActive: false },
+        { bkg: 1, csIndex: 1, cTrans: 'rightup', gridActive: false },
+        { bkg: 0, csIndex: null, cTrans: 'rightup', gridActive: false },
+        { bkg: 1, csIndex: 2, cTrans: 'rightup', gridActive: false },
+        { bkg: 0, csIndex: null, cTrans: 'rightup', gridActive: false },
+        { bkg: 1, csIndex: 3, cTrans: 'rightup', gridActive: false },
     ],
     [
-        { bkg: 1, csIndex: 4, cTrans: 'rightup' },
-        { bkg: 0, csIndex: null, cTrans: 'rightup' },
-        { bkg: 1, csIndex: 5, cTrans: 'rightup' },
-        { bkg: 0, csIndex: null, cTrans: 'rightup' },
-        { bkg: 1, csIndex: 6, cTrans: 'rightup' },
-        { bkg: 0, csIndex: null, cTrans: 'rightup' },
-        { bkg: 1, csIndex: 7, cTrans: 'rightup' },
-        { bkg: 0, csIndex: null, cTrans: 'rightup' },
+        { bkg: 1, csIndex: 4, cTrans: 'rightup', gridActive: false },
+        { bkg: 0, csIndex: null, cTrans: 'rightup', gridActive: false },
+        { bkg: 1, csIndex: 5, cTrans: 'rightup', gridActive: false },
+        { bkg: 0, csIndex: null, cTrans: 'rightup', gridActive: false },
+        { bkg: 1, csIndex: 6, cTrans: 'rightup', gridActive: false },
+        { bkg: 0, csIndex: null, cTrans: 'rightup', gridActive: false },
+        { bkg: 1, csIndex: 7, cTrans: 'rightup', gridActive: false },
+        { bkg: 0, csIndex: null, cTrans: 'rightup', gridActive: false },
     ],
     [
-        { bkg: 0, csIndex: null, cTrans: 'rightup' },
-        { bkg: 1, csIndex: null, cTrans: 'rightup' },
-        { bkg: 0, csIndex: null, cTrans: 'rightup' },
-        { bkg: 1, csIndex: 9, cTrans: 'rightup' },
-        { bkg: 0, csIndex: null, cTrans: 'rightup' },
-        { bkg: 1, csIndex: 10, cTrans: 'rightup' },
-        { bkg: 0, csIndex: null, cTrans: 'rightup' },
-        { bkg: 1, csIndex: 11, cTrans: 'rightup' },
+        { bkg: 0, csIndex: null, cTrans: 'rightup', gridActive: false },
+        { bkg: 1, csIndex: null, cTrans: 'rightup', gridActive: false },
+        { bkg: 0, csIndex: null, cTrans: 'rightup', gridActive: false },
+        { bkg: 1, csIndex: 9, cTrans: 'rightup', gridActive: false },
+        { bkg: 0, csIndex: null, cTrans: 'rightup', gridActive: false },
+        { bkg: 1, csIndex: 10, cTrans: 'rightup', gridActive: false },
+        { bkg: 0, csIndex: null, cTrans: 'rightup', gridActive: false },
+        { bkg: 1, csIndex: 11, cTrans: 'rightup', gridActive: false },
     ],
     [
-        { bkg: 1, csIndex: null, cTrans: 'rightup' },
-        { bkg: 0, csIndex: null, cTrans: 'rightup' },
-        { bkg: 1, csIndex: null, cTrans: 'rightup' },
-        { bkg: 0, csIndex: null, cTrans: 'rightup' },
-        { bkg: 1, csIndex: null, cTrans: 'rightup' },
-        { bkg: 0, csIndex: null, cTrans: 'rightup' },
-        { bkg: 1, csIndex: null, cTrans: 'rightup' },
-        { bkg: 0, csIndex: null, cTrans: 'rightup' },
+        { bkg: 1, csIndex: null, cTrans: 'rightup', gridActive: false },
+        { bkg: 0, csIndex: null, cTrans: 'rightup', gridActive: false },
+        { bkg: 1, csIndex: null, cTrans: 'rightup', gridActive: false },
+        { bkg: 0, csIndex: null, cTrans: 'rightup', gridActive: false },
+        { bkg: 1, csIndex: null, cTrans: 'rightup', gridActive: false },
+        { bkg: 0, csIndex: null, cTrans: 'rightup', gridActive: false },
+        { bkg: 1, csIndex: null, cTrans: 'rightup', gridActive: false },
+        { bkg: 0, csIndex: null, cTrans: 'rightup', gridActive: false },
     ],
     [
-        { bkg: 0, csIndex: null, cTrans: 'rightup' },
-        { bkg: 1, csIndex: 8, cTrans: 'rightup' },
-        { bkg: 0, csIndex: null, cTrans: 'rightup' },
-        { bkg: 1, csIndex: null, cTrans: 'rightup' },
-        { bkg: 0, csIndex: null, cTrans: 'rightup' },
-        { bkg: 1, csIndex: null, cTrans: 'rightup' },
-        { bkg: 0, csIndex: null, cTrans: 'rightup' },
-        { bkg: 1, csIndex: null, cTrans: 'rightup' },
+        { bkg: 0, csIndex: null, cTrans: 'rightup', gridActive: false },
+        { bkg: 1, csIndex: 8, cTrans: 'rightup', gridActive: false },
+        { bkg: 0, csIndex: null, cTrans: 'rightup', gridActive: false },
+        { bkg: 1, csIndex: null, cTrans: 'rightup', gridActive: false },
+        { bkg: 0, csIndex: null, cTrans: 'rightup', gridActive: false },
+        { bkg: 1, csIndex: null, cTrans: 'rightup', gridActive: false },
+        { bkg: 0, csIndex: null, cTrans: 'rightup', gridActive: false },
+        { bkg: 1, csIndex: null, cTrans: 'rightup', gridActive: false },
     ],
     [
-        { bkg: 1, csIndex: 12, cTrans: 'rightup' },
-        { bkg: 0, csIndex: null, cTrans: 'rightup' },
-        { bkg: 1, csIndex: 13, cTrans: 'rightup' },
-        { bkg: 0, csIndex: null, cTrans: 'rightup' },
-        { bkg: 1, csIndex: 14, cTrans: 'rightup' },
-        { bkg: 0, csIndex: null, cTrans: 'rightup' },
-        { bkg: 1, csIndex: 15, cTrans: 'rightup' },
-        { bkg: 0, csIndex: null, cTrans: 'rightup' },
+        { bkg: 1, csIndex: 12, cTrans: 'rightup', gridActive: false },
+        { bkg: 0, csIndex: null, cTrans: 'rightup', gridActive: false },
+        { bkg: 1, csIndex: 13, cTrans: 'rightup', gridActive: false },
+        { bkg: 0, csIndex: null, cTrans: 'rightup', gridActive: false },
+        { bkg: 1, csIndex: 14, cTrans: 'rightup', gridActive: false },
+        { bkg: 0, csIndex: null, cTrans: 'rightup', gridActive: false },
+        { bkg: 1, csIndex: 15, cTrans: 'rightup', gridActive: false },
+        { bkg: 0, csIndex: null, cTrans: 'rightup', gridActive: false },
     ],
     [
-        { bkg: 0, csIndex: null, cTrans: 'rightup' },
-        { bkg: 1, csIndex: 16, cTrans: 'rightup' },
-        { bkg: 0, csIndex: null, cTrans: 'rightup' },
-        { bkg: 1, csIndex: 17, cTrans: 'rightup' },
-        { bkg: 0, csIndex: null, cTrans: 'rightup' },
-        { bkg: 1, csIndex: 18, cTrans: 'rightup' },
-        { bkg: 0, csIndex: null, cTrans: 'rightup' },
-        { bkg: 1, csIndex: 19, cTrans: 'rightup' },
+        { bkg: 0, csIndex: null, cTrans: 'rightup', gridActive: false },
+        { bkg: 1, csIndex: 16, cTrans: 'rightup', gridActive: false },
+        { bkg: 0, csIndex: null, cTrans: 'rightup', gridActive: false },
+        { bkg: 1, csIndex: 17, cTrans: 'rightup', gridActive: false },
+        { bkg: 0, csIndex: null, cTrans: 'rightup', gridActive: false },
+        { bkg: 1, csIndex: 18, cTrans: 'rightup', gridActive: false },
+        { bkg: 0, csIndex: null, cTrans: 'rightup', gridActive: false },
+        { bkg: 1, csIndex: 19, cTrans: 'rightup', gridActive: false },
     ],
     [
-        { bkg: 1, csIndex: 20, cTrans: 'rightup' },
-        { bkg: 0, csIndex: null, cTrans: 'rightup' },
-        { bkg: 1, csIndex: 21, cTrans: 'rightup' },
-        { bkg: 0, csIndex: null, cTrans: 'rightup' },
-        { bkg: 1, csIndex: 22, cTrans: 'rightup' },
-        { bkg: 0, csIndex: null, cTrans: 'rightup' },
-        { bkg: 1, csIndex: 23, cTrans: 'rightup' },
-        { bkg: 0, csIndex: null, cTrans: 'rightup' },
+        { bkg: 1, csIndex: 20, cTrans: 'rightup', gridActive: false },
+        { bkg: 0, csIndex: null, cTrans: 'rightup', gridActive: false },
+        { bkg: 1, csIndex: 21, cTrans: 'rightup', gridActive: false },
+        { bkg: 0, csIndex: null, cTrans: 'rightup', gridActive: false },
+        { bkg: 1, csIndex: 22, cTrans: 'rightup', gridActive: false },
+        { bkg: 0, csIndex: null, cTrans: 'rightup', gridActive: false },
+        { bkg: 1, csIndex: 23, cTrans: 'rightup', gridActive: false },
+        { bkg: 0, csIndex: null, cTrans: 'rightup', gridActive: false },
     ],
-]);
+];
+
+const RealChessboard = reactive(lodash.cloneDeep(InitialChessboard));
 
 const chessArrInitial = () => {
     const initialArr = [];
@@ -264,7 +305,7 @@ const chessArrInitial = () => {
     //     i < 12 ? initialArr.push({ cType: '0', cActive: 0 }) : initialArr.push({ cType: '2', cActive: 0 });
     // }
     for (let i = 0; i < 24; i++) {
-        i < 12 ? initialArr.push({ cType: '0', cActive: 0 }) : initialArr.push({ cType: '2', cActive: 0 });
+        i < 12 ? initialArr.push({ cType: '0', cActive: false }) : initialArr.push({ cType: '2', cActive: false });
     }
 
     return initialArr;
@@ -302,28 +343,52 @@ onMounted(() => {
     console.log('chessArr', toRaw(chessArr));
 });
 
-const moves = () => {
-    if (InitialChessboard[5][2].csIndex !== null) {
-        InitialChessboard[4][3].cTrans = 'rightupin';
-        InitialChessboard[5][2].cTrans = 'rightupout';
+// const moves = () => {
+//     if (RealChessboard[5][2].csIndex !== null) {
+//         RealChessboard[4][3].cTrans = 'rightupin';
+//         RealChessboard[5][2].cTrans = 'rightupout';
 
-        InitialChessboard[4][3].csIndex = InitialChessboard[5][2].csIndex;
-        InitialChessboard[5][2].csIndex = null;
-    }
-    // chessArr[InitialChessboard[5][2].csIndex].cType = '0';
-    // chessArr[InitialChessboard[5][2].csIndex] = '0';
+//         RealChessboard[4][3].csIndex = RealChessboard[5][2].csIndex;
+//         RealChessboard[5][2].csIndex = null;
+//     }
+//     // chessArr[RealChessboard[5][2].csIndex].cType = '0';
+//     // chessArr[RealChessboard[5][2].csIndex] = '0';
+// };
+// const moves = ([cRowOri,cColumnOri],[cRowTo,cColumnTo]) => {
+//     // if (row !== 0 && column !== 0 RealChessboard[row][column].csIndex !== null) {
+//     RealChessboard[row][column].cTrans = 'rightupout';
+//     RealChessboard[row - 1][column + 1].cTrans = 'rightupin';
+
+//     RealChessboard[row - 1][column + 1].csIndex = RealChessboard[row][column].csIndex;
+//     RealChessboard[row][column].csIndex = null;
+//     // }
+//     // chessArr[RealChessboard[5][2].csIndex].cType = '0';
+//     // chessArr[RealChessboard[5][2].csIndex] = '0';
+// };
+const moves = ([cRowOri, cColumnOri], [cRowTo, cColumnTo]) => {
+    // if (row !== 0 && column !== 0 RealChessboard[row][column].csIndex !== null) {
+    RealChessboard[cRowTo][cColumnTo].cTrans = 'rightupin';
+    RealChessboard[cRowOri][cColumnOri].cTrans = 'rightupout';
+
+    RealChessboard[cRowTo][cColumnTo].csIndex = RealChessboard[cRowOri][cColumnOri].csIndex;
+    RealChessboard[cRowOri][cColumnOri].csIndex = null;
+    // }
+    // chessArr[RealChessboard[5][2].csIndex].cType = '0';
+    // chessArr[RealChessboard[5][2].csIndex] = '0';
+    chessArr[activeChess.value.csIndex].cActive = false;
+    activeChess.value = null;
 };
 const eat = () => {
-    if (InitialChessboard[5][2].csIndex !== null) {
-        InitialChessboard[3][0].cTrans = 'leftupin';
-        InitialChessboard[4][1].cTrans = 'disappear';
-        InitialChessboard[5][2].cTrans = 'leftupout';
+    if (RealChessboard[5][2].csIndex !== null) {
+        RealChessboard[3][0].cTrans = 'leftupin';
+        RealChessboard[4][1].cTrans = 'disappear';
+        RealChessboard[5][2].cTrans = 'leftupout';
 
-        InitialChessboard[3][0].csIndex = InitialChessboard[5][2].csIndex;
-        InitialChessboard[4][1].csIndex = null;
-        InitialChessboard[5][2].csIndex = null;
+        RealChessboard[3][0].csIndex = RealChessboard[5][2].csIndex;
+        RealChessboard[4][1].csIndex = null;
+        RealChessboard[5][2].csIndex = null;
     }
-    // chessArr[InitialChessboard[5][2].csIndex].cType = '0';
-    // chessArr[InitialChessboard[5][2].csIndex] = '0';
+    // chessArr[RealChessboard[5][2].csIndex].cType = '0';
+    // chessArr[RealChessboard[5][2].csIndex] = '0';
 };
 </script>
