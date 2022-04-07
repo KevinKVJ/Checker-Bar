@@ -17,13 +17,13 @@ import MessageInputForm from '../components/MessageInputForm.vue';
 
                 <div class="sectionTwo">
                     <ul id="messageArray">
-                        <li v-for="item in items" :key="item.message">
-                            <RightMessage v-if="isMe">
+                        <li v-for="(item, index) in items" :key="index">
+                            <RightMessage v-if="item.name">
                                 <div>
                                     {{ item.message }}
                                 </div>
                             </RightMessage>
-                            <LeftMessage v-if="notMe">
+                            <LeftMessage v-else>
                                 <div>
                                     {{ item.message }}
                                 </div>
@@ -246,8 +246,8 @@ import FightWith from '../components/FightWith.vue';
 import LeftMessage from '../components/LeftMessage.vue';
 import RightMessage from '../components/RightMessage.vue';
 import { NButton, NModal } from 'naive-ui';
-import CheckerBoard from '@/components/CheckerBoard.vue';
-// import { defineComponent } from 'vue'
+import axios from 'axios';
+
 export default {
     setup() {
         const ckb = ref(null);
@@ -265,9 +265,8 @@ export default {
             // show: false,
             popupActivo: false,
             showModal: false,
-            isMe: true,
-            notMe: false,
-            items: [{ message: 'Foo' }, { message: 'Bar' }],
+            //items: [{ message: 'Foo', name: true}, { message: 'Bar', name: false }],
+            items: ['message', 'name'],
             socket: {},
         };
     },
@@ -282,8 +281,40 @@ export default {
         CheckerBoard
     },
 
-        // const sock = io('http://192.168.239.194:8000');
+    mounted() {
+        // const sock = io('http://192.168.0.10:8000');
         // this.socket = sock;
+        
+        // sock.on('echo',data =>{
+        //     console.log(data);
+        //     this.items.push({message: data, name: true} );
+        // })
+
+        // sock.on('data', data => {
+        //     console.log(data);
+        //     this.items.push({message: data, name: false} );
+        // });
+        // axios.post('/api/loginApi',{
+        //     nickname: 'lalala9',
+        //     password: 'password2'
+        // })
+        // .then((res)=>{
+        //     console.log(res.data);
+        // })
+        // .catch((error)=>{
+        //     console.log(error);
+        // });
+        // axios.post('/api/signInApi',{
+        //     nickname: 'lalala2',
+        //     password: 'password2'
+        // })
+        // .then((res)=>{
+        //     console.log(res.data);
+        // })
+        // .catch((error)=>{
+        //     console.log(error);
+        // })
+    },
 
     methods: {
         toHomePage() {
@@ -292,7 +323,7 @@ export default {
 
         sendMessage(mess) {
             this.socket.emit('boardmessage', mess);
-            console.log(mess);
+            console.log(mess);``
         },
     },
 };
