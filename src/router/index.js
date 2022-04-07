@@ -57,7 +57,13 @@ const router = createRouter({
             path: '/csb',
             name: 'chessboard',
             title: 'chessboard',
-            component: () => import('@/components/CheckerBoard1.vue'),
+            component: () => import('@/components/Checker/CheckerBoard1.vue'),
+        },
+        {
+            path: '/csb2',
+            name: 'chessboard',
+            title: 'chessboard',
+            component: () => import('@/components/Checker/CheckerBoard2.vue'),
         },
         {
             path: '/:pathMatch(.*)*',

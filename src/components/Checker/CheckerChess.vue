@@ -6,8 +6,6 @@
         width: 100%;
         height: 100%;
         transform: scale(130%);
-        /* border: #fff 3px solid; */
-        /* box-sizing: content-box; */
         border: v-bind(chessStatus);
 
         use {
@@ -26,10 +24,10 @@
 
 <template>
     <div class="chess" @click.stop="setActive" >
-        <SvgIcon name="bcred" class="chess-icon" v-if="cType === '0'"/>
-        <SvgIcon name="bkred" class="chess-icon" v-else-if="cType === '1'"/>
-        <SvgIcon name="bcblue" class="chess-icon" v-else-if="cType === '2'"/>
-        <SvgIcon name="bkblue" class="chess-icon" v-else-if="cType === '3'"/>
+        <SvgIcon name="bcred" class="chess-icon" v-if="cType === 0"/>
+        <SvgIcon name="bkred" class="chess-icon" v-else-if="cType === 1"/>
+        <SvgIcon name="bcblue" class="chess-icon" v-else-if="cType === 2"/>
+        <SvgIcon name="bkblue" class="chess-icon" v-else-if="cType === 3"/>
     </div>
         <!-- <div class="testBlock" @click="$emit('changeColor', '#666')" ></div> -->
         <!-- <div class="testBlock" @click="onColorChange(`lalala`)"></div> -->
@@ -37,12 +35,12 @@
 </template>
 
 <script setup>
-import SvgIcon from './SvgIcon.vue';
+import SvgIcon from '../SvgIcon.vue';
 import { ref, onMounted,toRaw,computed } from 'vue';
 
 const setActive = (e) => {
     // chessStatus.value = !chessStatus.value;
-    emits(`changeColor`,toRaw(props));
+    emits(`setActive`,toRaw(props));
 }
 
 let chessStatus = computed(()=>{
@@ -51,9 +49,9 @@ let chessStatus = computed(()=>{
 const cType = ref(props.chessType);
 const props = defineProps({
     chessType: {
-        type: String,
+        type: Number,
         required: true,
-        default: '0',
+        default: 0,
     },
     csIndex:{
         type: Number,
@@ -70,7 +68,7 @@ const props = defineProps({
 });
 
 
-const emits = defineEmits(['changeColor']);
+const emits = defineEmits(['setActive']);
 
 
 </script>
