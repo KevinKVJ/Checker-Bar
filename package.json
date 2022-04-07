@@ -10,8 +10,8 @@
     },
     "dependencies": {
         "@vant/touch-emulator": "^1.3.2",
+        "animate.css": "^4.1.1",
         "axios": "^0.26.1",
-        "ciao-vue-popup": "^1.0.20",
         "koa": "^2.13.4",
         "normalize.css": "^8.0.1",
         "socket.io": "^4.4.1",

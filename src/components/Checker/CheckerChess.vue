@@ -7,12 +7,17 @@
         height: 100%;
         transform: scale(130%);
         border: v-bind(chessStatus);
-
+        /* overflow: hidden; */
         use {
             width: 150%;
             height: 150%;
         }
     }
+
+    /* &:hover{
+        transform: translate(20px, 20px);
+        transition: all 1s linear;
+    } */
 }
 
 .testBlock {

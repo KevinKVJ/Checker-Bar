@@ -8,7 +8,7 @@
 </style>
 
 <template>
-    <div class="checkerGrid" @click="emits('emitGridCoord',[row,column])">
+    <div class="checkerGrid" @click="activeG && emits('emitGridCoord',[row,column])">
         <slot></slot>
     </div>
 </template>
