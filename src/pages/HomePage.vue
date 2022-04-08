@@ -1,8 +1,3 @@
-<script setup>
-import Base from '@/components/Base.vue';
-import BigButton from '../components/BigButton.vue';
-
-</script>
 <template>
     <Base>
         <div class="content">
@@ -45,6 +40,9 @@ import BigButton from '../components/BigButton.vue';
 </style>
 
 <script>
+import Base from '@/components/Base.vue';
+import BigButton from '@/components/BigButton.vue';
+
 export default{
 
     mounted(){
@@ -56,7 +54,10 @@ export default{
         console.log(id);
         console.log(userAvatar);
     },
-
+    components:{
+        Base,
+        BigButton
+    },
     methods:{
         toSelectModePage(){
             this.$router.push({ path: '/selectMode' })
