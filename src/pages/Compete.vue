@@ -120,9 +120,10 @@
     bottom: 65px;
     right: 0;
     left: 0; */
+    
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 /* ------ checkerboardbase float at left ------ */
 .left {
@@ -134,6 +135,7 @@
     justify-content: center; */
     width: 50%;
     flex-direction: row;
+    
 }
 .checkerboardbase {
     width: 45vw;
@@ -156,6 +158,7 @@
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: 8px; */
     width: 28%;
+    background-color: rgba(255, 255, 255, 0.5);
 }
 .sectionOne {
     float: left;
