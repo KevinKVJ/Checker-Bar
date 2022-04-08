@@ -10,9 +10,9 @@ import SelectAvatar from '../components/SelectAvatar.vue';
            <div class="small-window">
                <h4> Welcome to the Checker Bar</h4>
                <p>Select Your Avatar</p>
-               <SelectAvatar/>
+               <SelectAvatar @selectedAvatar="updateAvatar"/>
                <LoginForm  v-model='value' v-model:passwordValue='passwordValue' />
-               <SmallButton @click="loadUserInfo()"  fontSize="18px" title="Login In"/>
+               <SmallButton @click="loadUserInfo()"  fontSize="18px" title="Login"/>
                <SmallButton @click="toSignUpPage()" fontSize="15px" title="Sign Up"/>
            </div>
         </div>
@@ -54,6 +54,7 @@ export default{
         return{
             value:'',
             passwordValue:'',
+            activatedAvatar:'',
         };
     },
 
@@ -71,12 +72,16 @@ export default{
         toHomePage(){
             this.$router.push({ path: '/homePage' })
         },
+        updateAvatar(activeAvatar) {
+            this.activatedAvatar = activeAvatar;
+            console.log(this.activatedAvatar);
+            sessionStorage.setItem('userAvatar', this.activatedAvatar);
+        },
         loadUserInfo(){
             console.log(this.value); 
             console.log(this.passwordValue);
 
             sessionStorage.setItem('username', this.value);
-            sessionStorage.setItem('password', this.passwordValue);
            
             axios.post('/api/loginApi',{
                 nickname: this.value,
@@ -96,7 +101,7 @@ export default{
 
                 if (code === 200){
                     this.toHomePage();
-                    alert("successfully sign in");
+                    alert("successfully login");
                 }else if (code === 400){
                     alert("cannot find the user");      
                 }else{

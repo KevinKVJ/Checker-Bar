@@ -1,9 +1,9 @@
 <style lang="scss" scoped>
 .checkerboard {
-    /* width: 100%;
-    height: 100%; */
-    width: 500px;
-    height: 500px;
+    width: 100%;
+    height: 100%;
+    /* width: 500px; */
+    /* height: 500px; */
     background: #fff;
 
     display: grid;

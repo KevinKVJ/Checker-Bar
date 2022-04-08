@@ -1,6 +1,6 @@
 <template>
     <div class="messageLeft" >
-        <div class="userName">name</div>
+        <div class="userName">otherusers</div>
         <div class="usermsg">
             <slot></slot>
         </div>
@@ -14,7 +14,7 @@
 }
 .usermsg {
     height: 30px;
-    width: 180px;
+    width: 150px;
     background: white;
     border-radius: 10px;
     font-size: 17px;

@@ -1,6 +1,3 @@
-<script setup>
-import MessageInputForm from '../components/MessageInputForm.vue';
-</script>
 <template>
     <Base>
         <div class="main">
@@ -13,6 +10,14 @@ import MessageInputForm from '../components/MessageInputForm.vue';
             <div class="middle">
                 <div class="sectionOne">
                     <FightWith />
+                </div>
+
+                <div class="sectionAvatar">
+                    <ul id="userAvatarArray">
+                        <li v-for="(value, key) in avatarList" :key="key">
+                            <UserAvatarList :iconName="value"> </UserAvatarList>
+                        </li>
+                    </ul>
                 </div>
 
                 <div class="sectionTwo">
@@ -48,13 +53,7 @@ import MessageInputForm from '../components/MessageInputForm.vue';
                     </div>
                     <div class="buttonSection">
                         <!-- <button class="buttons" id="buttonOne">Rules</button> -->
-                        <n-button
-                            @click="showModal = true"
-                            class="buttons"
-                            id="buttonOne"
-                        >
-                            Rules
-                        </n-button>
+                        <n-button @click="showModal = true" class="buttons" id="buttonOne"> Rules </n-button>
                         <n-modal v-model:show="showModal">
                             <!-- <n-card
                                 style="width: 600px"
@@ -70,47 +69,32 @@ import MessageInputForm from '../components/MessageInputForm.vue';
                             </n-card> -->
                             <div class="lalala">
                                 <ul id="ruleList">
+                                    <li>This game is for two players. Each player starts with 12 colored discs (of the same color).</li>
                                     <li>
-                                        This game is for two players. Each player starts
-                                        with 12 colored discs (of the same color).
+                                        Players place their discs (pieces) on the dark squares on their side of the board. Black has first
+                                        play, after turns alternate.
                                     </li>
                                     <li>
-                                        Players place their discs (pieces) on the dark
-                                        squares on their side of the board. Black has
-                                        first play, after turns alternate.
-                                    </li>
-                                    <li>
-                                        Moves can only be made on black squares, so the
-                                        pieces move diagonally. Pieces can only move in a
+                                        Moves can only be made on black squares, so the pieces move diagonally. Pieces can only move in a
                                         forward direction, toward their opponent.
                                     </li>
                                     <li>
-                                        If you are moving your disc forward, and not
-                                        capturing your opponent’s piece in the move, you
-                                        may only move it forward one square.
+                                        If you are moving your disc forward, and not capturing your opponent’s piece in the move, you may
+                                        only move it forward one square.
+                                    </li>
+                                    <li>After a piece is captured, it is removed from the board, and collected by the opponent.</li>
+                                    <li>
+                                        If you have the ability to jump your opponents pieces, you must. However, in the even there are more
+                                        than one capture possible from a single square, you may jump whichever piece is preferable.
                                     </li>
                                     <li>
-                                        After a piece is captured, it is removed from the
-                                        board, and collected by the opponent.
-                                    </li>
-                                    <li>
-                                        If you have the ability to jump your opponents
-                                        pieces, you must. However, in the even there are
-                                        more than one capture possible from a single
-                                        square, you may jump whichever piece is
-                                        preferable.
-                                    </li>
-                                    <li>
-                                        The game is won when the opponent is unable to
-                                        make a move, which means the entirety of a
-                                        player’s pieces were captured by the opponent.
+                                        The game is won when the opponent is unable to make a move, which means the entirety of a player’s
+                                        pieces were captured by the opponent.
                                     </li>
                                 </ul>
                             </div>
                         </n-modal>
-                        <button @click="toHomePage()" class="buttons" id="buttonTwo">
-                            Home
-                        </button>
+                        <button @click="toHomePage()" class="buttons" id="buttonTwo">Home</button>
                     </div>
                 </div>
             </div>
@@ -131,20 +115,25 @@ import MessageInputForm from '../components/MessageInputForm.vue';
 }
 
 .main {
-    position: fixed;
+    /* position: fixed;
     top: 75px;
     bottom: 65px;
     right: 0;
-    left: 0;
+    left: 0; */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 /* ------ checkerboardbase float at left ------ */
 .left {
-    float: left;
+    /* float: left;
     width: 50%;
     height: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center; */
+    width: 50%;
+    flex-direction: row;
 }
 .checkerboardbase {
     width: 45vw;
@@ -157,25 +146,25 @@ import MessageInputForm from '../components/MessageInputForm.vue';
     padding: 40px;
 }
 
-
 /* ------ message window ------ */
 .middle {
-    float: left;
-    width: 25%;
+    /* float: left;
+    width: 28%;
     height: 96%;
     padding: 10px;
     margin-top: 10px;
     background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 8px;
+    border-radius: 8px; */
+    width: 28%;
 }
 .sectionOne {
     float: left;
-    width: 100%;
+    width: 80%;
     height: 13%;
 }
 .sectionTwo {
     float: left;
-    width: 100%;
+    width: 80%;
     height: 80%;
     padding-bottom: 10px;
     padding-top: 10px;
@@ -186,19 +175,34 @@ import MessageInputForm from '../components/MessageInputForm.vue';
 }
 .sectionThree {
     float: left;
-    width: 100%;
+    width: 80%;
     height: 7%;
     background: white;
     padding: 5px;
 }
+.sectionAvatar {
+    float: right;
+    width: 18%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    overflow: scroll;
+}
+#userAvatarArray {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
 /* ------ move history ------ */
 .right {
-    float: left;
-    width: 25%;
+    /* float: left;
+    width: 22%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 100%; */
     height: 100%;
 }
 .moveHistoryContent {
@@ -240,34 +244,41 @@ h4 {
 
 <script>
 import { io } from 'socket.io-client';
-import { ref, onMounted } from 'vue'
+import { ref, onMounted } from 'vue';
 import Base from '@/components/Base.vue';
 import FightWith from '../components/FightWith.vue';
 import LeftMessage from '../components/LeftMessage.vue';
 import RightMessage from '../components/RightMessage.vue';
+import MessageInputForm from '../components/MessageInputForm.vue';
+import CheckerBoard from '../components/Checker/CheckerBoard2.vue';
 import { NButton, NModal } from 'naive-ui';
-import axios from 'axios';
+import SvgIcon from '../components/SvgIcon.vue';
+import UserAvatarList from '../components/UserAvatarList.vue';
 
 export default {
     setup() {
         const ckb = ref(null);
         onMounted(() => {
-            console.log("lalala");
+            console.log('lalala');
             // DOM 元素将在初始渲染后分配给 ref
             console.log(ckb.value); // <div>This is a root element</div>
         });
         return {
-            ckb
-        }
+            ckb,
+        };
     },
     data() {
         return {
             // show: false,
             popupActivo: false,
             showModal: false,
-            //items: [{ message: 'Foo', name: true}, { message: 'Bar', name: false }],
-            items: ['message', 'name'],
-            socket: {},
+            items: [
+                { message: 'Foo', name: true },
+                { message: 'Bar', name: false },
+            ],
+            //items: ['message', 'name'],
+            socket: null,
+            avatarList: [],
         };
     },
     components: {
@@ -278,42 +289,44 @@ export default {
         FightWith,
         LeftMessage,
         RightMessage,
-        CheckerBoard
+        CheckerBoard,
+        UserAvatarList,
+        SvgIcon,
     },
 
     mounted() {
-        // const sock = io('http://192.168.0.10:8000');
-        // this.socket = sock;
-        
-        // sock.on('echo',data =>{
-        //     console.log(data);
-        //     this.items.push({message: data, name: true} );
-        // })
+        let userid = sessionStorage.getItem('userid');
+        let username = sessionStorage.getItem('username');
+        let userAvatar = sessionStorage.getItem('userAvatar');
+        var userObj = { myname: username, myid: userid, myavatar: userAvatar };
 
-        // sock.on('data', data => {
-        //     console.log(data);
-        //     this.items.push({message: data, name: false} );
-        // });
-        // axios.post('/api/loginApi',{
-        //     nickname: 'lalala9',
-        //     password: 'password2'
-        // })
-        // .then((res)=>{
-        //     console.log(res.data);
-        // })
-        // .catch((error)=>{
-        //     console.log(error);
-        // });
-        // axios.post('/api/signInApi',{
-        //     nickname: 'lalala2',
-        //     password: 'password2'
-        // })
-        // .then((res)=>{
-        //     console.log(res.data);
-        // })
-        // .catch((error)=>{
-        //     console.log(error);
-        // })
+        const sock = io('http://10.12.187.218:8000');
+        this.socket = sock;
+
+        sock.on('echo', data => {
+            console.log(data);
+            this.items.push({ message: data, name: true });
+        });
+
+        sock.on('data', data => {
+            console.log(data);
+            this.items.push({ message: data, name: false });
+        });
+
+        sock.emit('avatarInfor', userObj);
+
+        sock.on('returnInf', data => {
+            //console.log(data);
+            this.avatarList = data.map(obj => {
+                return obj.myavatar;
+            });
+            //console.log(this.avatarList);
+        });
+    },
+
+    unmounted() {
+        !!this.socket && this.socket.disconnect();
+        console.log('lalala');
     },
 
     methods: {
@@ -323,7 +336,7 @@ export default {
 
         sendMessage(mess) {
             this.socket.emit('boardmessage', mess);
-            console.log(mess);``
+            console.log(mess);
         },
     },
 };

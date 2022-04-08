@@ -9,7 +9,7 @@ import axios from 'axios';
     <Base>
         <div class="content">
             <div class="main">
-                <h4>Alice's Records</h4>
+                <h4>{{titleName}}'s Records</h4>
                 <div class="divide-line"></div>
                 <div class="gameInfo">
                     <p> Total Wins: {{totalWins}} </p>
@@ -67,6 +67,7 @@ export default{
 
     data(){
         return{
+            titleName:"abc",
             totalWins:0,
             gamesPlayed:0,
             winRate: 0.0,
@@ -79,8 +80,9 @@ export default{
     mounted(){
         let username = sessionStorage.getItem("username");
         let userid = sessionStorage.getItem("userid");
-        console.log(username);
-        console.log(userid);
+        // console.log(username);
+        // console.log(userid);
+        this.titleName = username;
 
 
        axios.get('/api/statusInfo',{
