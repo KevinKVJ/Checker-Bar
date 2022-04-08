@@ -248,15 +248,16 @@ h4 {
 <script>
 import { io } from 'socket.io-client';
 import { ref, onMounted } from 'vue';
-import Base from '@/components/Base.vue';
-import FightWith from '../components/FightWith.vue';
-import LeftMessage from '../components/LeftMessage.vue';
-import RightMessage from '../components/RightMessage.vue';
-import MessageInputForm from '../components/MessageInputForm.vue';
-import CheckerBoard from '../components/Checker/CheckerBoard2.vue';
 import { NButton, NModal } from 'naive-ui';
-import SvgIcon from '../components/SvgIcon.vue';
-import UserAvatarList from '../components/UserAvatarList.vue';
+
+import Base from '@/components/Base.vue';
+import SvgIcon from '@/components/SvgIcon.vue';
+import UserAvatarList from '@/components/UserAvatarList.vue';
+import FightWith from './Components/FightWith.vue';
+import LeftMessage from './Components/LeftMessage.vue';
+import RightMessage from './Components/RightMessage.vue';
+import MessageInputForm from './Components/MessageInputForm.vue';
+import CheckerBoard from '@/components/Checker/CheckerBoard2.vue';
 
 export default {
     setup() {

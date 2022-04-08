@@ -1,8 +1,5 @@
 <script setup>
-import Base from '@/components/Base.vue';
-import LoginForm from '@/components/LoginForm.vue';
-import SmallButton from '../components/SmallButton.vue';
-import SelectAvatar from '../components/SelectAvatar.vue';
+
 </script>
 <template>
     <Base>
@@ -48,6 +45,13 @@ import SelectAvatar from '../components/SelectAvatar.vue';
 
 <script>
 import axios from 'axios';
+
+import Base from '@/components/Base.vue';
+import SmallButton from '@/components/SmallButton.vue';
+
+import LoginForm from './Components/LoginForm.vue';
+import SelectAvatar from './Components/SelectAvatar.vue';
+
 export default{
 
     data(){
@@ -59,7 +63,10 @@ export default{
     },
 
     components:{
+        Base,
         LoginForm,
+        SmallButton,
+        SelectAvatar,
     },
 
     mounted(){

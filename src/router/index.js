@@ -27,7 +27,7 @@ const router = createRouter({
             path: '/login',
             name: 'login',
             title: 'login',
-            component: () => import('@/pages/Login.vue'),
+            component: () => import('@/pages/Login/Login.vue'),
         },
         {
             path: '/signup',
@@ -39,7 +39,7 @@ const router = createRouter({
             path: '/profile',
             name: 'profile',
             title: 'profile',
-            component: () => import('@/pages/ProfilePage.vue'),
+            component: () => import('@/pages/ProfilePage/ProfilePage.vue'),
         },
         {
             path: '/records',
@@ -51,7 +51,7 @@ const router = createRouter({
             path: '/compete',
             name: 'compete',
             title: 'compete',
-            component: () => import('@/pages/Compete.vue'),
+            component: () => import('@/pages/Compete/Compete.vue'),
         },
         {
             path: '/csb',

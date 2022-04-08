@@ -1,8 +1,5 @@
 <script setup>
-import Base from '@/components/Base.vue';
-import LoginForm from '@/components/LoginForm.vue';
-import SmallButton from '../components/SmallButton.vue';
-import SelectAvatar from '../components/SelectAvatar.vue';
+
 </script>
 
 
@@ -47,24 +44,28 @@ import SelectAvatar from '../components/SelectAvatar.vue';
 
 <script>
 import axios from 'axios';
-export default{
 
+import Base from '@/components/Base.vue';
+import LoginForm from '@/components/LoginForm.vue';
+import SmallButton from '@/components/SmallButton.vue';
+
+export default{
     data(){
         return{
             value:'',
             passwordValue:'',
         };
     },
-
     components:{
+        Base,
         LoginForm,
+        SmallButton,
     },
-
-
     methods:{
         toLoginPage(){
             this.$router.push({ path: '/login' })
         },
+
         loadUserInfo(){
             console.log(this.value); 
             console.log(this.passwordValue);
