@@ -29,10 +29,10 @@
 
 <template>
     <div class="chess" @click.stop="setActive" >
-        <SvgIcon name="bcred" class="chess-icon" v-if="cType === 0"/>
-        <SvgIcon name="bkred" class="chess-icon" v-else-if="cType === 1"/>
-        <SvgIcon name="bcblue" class="chess-icon" v-else-if="cType === 2"/>
-        <SvgIcon name="bkblue" class="chess-icon" v-else-if="cType === 3"/>
+        <SvgIcon name="bcred" class="chess-icon" v-if="cType === 0" key="chess1"/>
+        <SvgIcon name="bkred" class="chess-icon" v-else-if="cType === 1" key="chess2"/>
+        <SvgIcon name="bcblue" class="chess-icon" v-else-if="cType === 2" key="chess3"/>
+        <SvgIcon name="bkblue" class="chess-icon" v-else-if="cType === 3" key="chess4"/>
     </div>
         <!-- <div class="testBlock" @click="$emit('changeColor', '#666')" ></div> -->
         <!-- <div class="testBlock" @click="onColorChange(`lalala`)"></div> -->

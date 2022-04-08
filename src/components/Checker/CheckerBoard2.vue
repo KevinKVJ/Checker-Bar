@@ -1,4 +1,4 @@
-<style>
+<style lang="scss" scoped>
 .checkerboard {
     /* width: 100%;
     height: 100%; */
@@ -19,26 +19,36 @@
     background-color: rgba(39, 245, 61, 0.43);
 }
 
-/* .rightupout-leave-from{
-    transform: translate(0px, 0px);
-} */
 /* 动态设置跨度大小 */
-.rightUpOut-leave-active {
+.v-leave-from {
+    opacity: 1;
+    /* transform: translate(0px, 0px); */
+    /* left: 62.5px;
+    bottom: -62.5px; */
+    /* left: 0; */
+    /* bottom: 0; */
+}
+.v-leave-active {
     transition: all 0.3s linear;
-    transform: translate(0px, 0px);
 }
 
-.rightUpOut-leave-to {
-    transform: translate(62.5px, -62.5px);
-    /* opacity: 0; */
-}
-.rightupin-enter-active {
-    transition: opacity;
-    transition-delay: 0.3s;
-}
-
-.rightupin-enter-from {
+.v-leave-to {
+    /* transform: translate(62.5px, -62.5px); */
     opacity: 0;
+    /* left: 62.5px; */
+    /* bottom: -62.5px; */
+}
+.v-enter-active {
+    transition: opacity 0.3s ease;
+    transition-delay: 0.2s;
+}
+
+.v-enter-from {
+    opacity: 0;
+}
+
+.v-enter-to {
+    opacity: 1;
 }
 
 .slide-fade-enter-active {
@@ -62,14 +72,22 @@
 .disappear-leave-to {
     opacity: 0;
 }
+
+.cgrid{
+    position: relative;
+}
+
+.cchess{
+    position: absolute;
+}
 </style>
 
 <template>
     <div class="checkerboard">
-        <template v-for="(row, rowIndex) in RealChessboard" :key="-1 * rowIndex">
+        <!-- <transition-group class="checkerboard" tag="div"> -->
+        <template v-for="(row, rowIndex) in RealChessboard">
             <!-- <template v-for="({ gridType, chessObj, cAnima, gridActive }, colIndex) in row" :key="rowIndex * 8 + colIndex"> -->
             <!-- mode="in-out" appear -->
-            <!-- <transition-group name="slide-fade"> -->
             <ChessGrid
                 :gridType="gridType"
                 :activeG="gridActive"
@@ -77,9 +95,10 @@
                 :column="colIndex"
                 @emit-grid-coord="moveByGridCoord"
                 v-for="({ gridType, chessObj, cAnima, gridActive }, colIndex) in row"
-                :key="rowIndex * 8 + colIndex"
+                class="cgrid"                
             >
-                <transition :name="cAnima" mode="out-in" appear>
+                <!-- :key="rowIndex * 8 + colIndex" -->
+                <transition>
                     <CheckerChess
                         v-if="chessObj"
                         :csIndex="chessObj[0]"
@@ -88,19 +107,20 @@
                         :column="colIndex"
                         :chessActive="!!activeChess && chessObj[0] === activeChess.csIndex"
                         @set-active="setChessActive"
-                        :key="chessObj"
+                        :key="chessObj[0]"
+                        class="cchess"
                     />
                 </transition>
             </ChessGrid>
-            <!-- </transition-group> -->
             <!-- </template> -->
         </template>
     </div>
+    <!-- </transition-group> -->
 </template>
 
 <script setup>
 import ChessGrid from './ChessGrid.vue';
-import { ref, reactive, watch } from 'vue';
+import { ref, reactive, watch,onUpdated,onMounted,onBeforeUpdate } from 'vue';
 import lodash from 'lodash';
 import CheckerChess from './CheckerChess.vue';
 
@@ -261,22 +281,36 @@ watch(activeChess, (newAC, OriAC) => {
         }
     } else {
         // console.log('lalala');
-        for (const rows of RealChessboard) {
-            for (let col of rows) {
-                !!col.gridActive && (col.gridActive = false);
+        // setTimeout(() => {
+            for (const rows of RealChessboard) {
+                for (let col of rows) {
+                    !!col.gridActive && (col.gridActive = false);
+                }
             }
-        }
+        // },300)
     }
     // console.log(newAC === null);
 });
 
 const moveChess = ([oriRow, oriCol], [newRow, newCol]) => {
-    RealChessboard[newRow][newCol].cAnima = 'rightupin';
-    RealChessboard[oriRow][oriCol].cAnima = 'rightUpOut';
+    activeChess.value = null;
+
+    RealChessboard[newRow][newCol].cAnima = 'rightup';
+    RealChessboard[oriRow][oriCol].cAnima = 'rightup';
 
     RealChessboard[newRow][newCol].chessObj = RealChessboard[oriRow][oriCol].chessObj;
-    RealChessboard[oriRow][oriCol].chessObj = null;
-
-    activeChess.value = null;
+    // setTimeout(() => {
+        RealChessboard[oriRow][oriCol].chessObj = null;
+    // },300)
 };
+
+onUpdated(() => {
+    console.log("lalala");
+})
+
+onBeforeUpdate(() => {
+    console.log("beforelalala")
+})
+
+
 </script>
