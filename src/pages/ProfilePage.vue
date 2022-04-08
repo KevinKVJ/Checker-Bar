@@ -11,7 +11,7 @@ import ChangeUsernameForm from '../components/ChangeUsernameForm.vue';
     <Base>
         <div class="content">
             <div class="main">
-                <h4>Alice's Profile</h4>
+                <h4>{{titleName}}'s Profile</h4>
                 <div class="divide-line"></div>
                 <p>Change Avatar</p>
                 <SelectAvatar />
@@ -66,9 +66,16 @@ import ChangeUsernameForm from '../components/ChangeUsernameForm.vue';
 <script>
 export default{
 
+data(){
+        return{
+            titleName:"abc",
+        };
+    },
+
 mounted(){
         let username = sessionStorage.getItem("username");
         console.log(username);
+        this.titleName = username;
     },
 
     methods:{

@@ -13,7 +13,7 @@ import SelectAvatar from '../components/SelectAvatar.vue';
                <h4> Welcome to the Checker Bar</h4>
                <LoginForm v-model='value' v-model:passwordValue='passwordValue' />
                <SmallButton @click="loadUserInfo()" fontSize="18px" title="Sign Up"/>
-               <SmallButton @click="toLoginPage()" fontSize="15px" title="Login In"/>
+               <SmallButton @click="toLoginPage()" fontSize="15px" title="Login"/>
            </div>
         </div>
     </Base>

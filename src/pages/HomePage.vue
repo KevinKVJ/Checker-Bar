@@ -51,8 +51,10 @@ export default{
         //load username and userid from session
         let username = sessionStorage.getItem("username");
         let id = sessionStorage.getItem("userid");
+        let userAvatar = sessionStorage.getItem("userAvatar");
         console.log(username);
         console.log(id);
+        console.log(userAvatar);
     },
 
     methods:{
@@ -65,7 +67,7 @@ export default{
         toRecordsPage(){
             this.$router.push({ path: '/records' })
         }
-    }
+    },
     
 }
 </script>

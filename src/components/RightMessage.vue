@@ -15,7 +15,7 @@
     
     .mymsg{
         height: 30px;
-        width: 180px;
+        width: 150px;
         background: white;
         border-radius: 10px;
         font-size: 17px;
