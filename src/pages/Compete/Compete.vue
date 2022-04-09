@@ -102,7 +102,7 @@
     </Base>
 </template>
 
-<style>
+<style scoped>
 .lalala {
     width: 400px;
     height: 400px;
