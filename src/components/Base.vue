@@ -18,21 +18,6 @@
 </template>
 
 <style lang="scss" scoped>
-.test1 {
-    width: 400px;
-    height: 400px;
-    background: red;
-}
-.test2 {
-    width: 400px;
-    height: 400px;
-    background: skyblue;
-}
-.test3 {
-    width: 400px;
-    height: 400px;
-    background: grey;
-}
 .wrapper {
     height: 100%;
 }
@@ -61,7 +46,7 @@
 }
 
 .contentarea {
-    /* height: calc(100% - 75px); */
+    min-height: calc(100% - 75px);
     padding-bottom: 65px;
 
     background: url('@/assets/img/bkg.png') center center;
