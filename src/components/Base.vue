@@ -6,9 +6,6 @@
             </div>
             <div class="contentarea">
                 <slot></slot>
-                <div class="test1"></div>
-                <div class="test2"></div>
-                <div class="test3"></div>
             </div>
             <div class="footer">
                 <div class="prompts">
