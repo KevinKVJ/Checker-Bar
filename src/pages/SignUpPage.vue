@@ -1,8 +1,5 @@
 <script setup>
-import Base from '@/components/Base.vue';
-import LoginForm from '@/components/LoginForm.vue';
-import SmallButton from '../components/SmallButton.vue';
-import SelectAvatar from '../components/SelectAvatar.vue';
+
 </script>
 
 
@@ -13,13 +10,13 @@ import SelectAvatar from '../components/SelectAvatar.vue';
                <h4> Welcome to the Checker Bar</h4>
                <LoginForm v-model='value' v-model:passwordValue='passwordValue' />
                <SmallButton @click="loadUserInfo()" fontSize="18px" title="Sign Up"/>
-               <SmallButton @click="toLoginPage()" fontSize="15px" title="Login In"/>
+               <SmallButton @click="toLoginPage()" fontSize="15px" title="Login"/>
            </div>
         </div>
     </Base>
 </template>
 
-<style>
+<style scoped>
     .content{
         display: flex;
         align-items: center;
@@ -47,24 +44,28 @@ import SelectAvatar from '../components/SelectAvatar.vue';
 
 <script>
 import axios from 'axios';
-export default{
 
+import Base from '@/components/Base.vue';
+import LoginForm from '@/components/LoginForm.vue';
+import SmallButton from '@/components/SmallButton.vue';
+
+export default{
     data(){
         return{
             value:'',
             passwordValue:'',
         };
     },
-
     components:{
+        Base,
         LoginForm,
+        SmallButton,
     },
-
-
     methods:{
         toLoginPage(){
             this.$router.push({ path: '/login' })
         },
+
         loadUserInfo(){
             console.log(this.value); 
             console.log(this.passwordValue);

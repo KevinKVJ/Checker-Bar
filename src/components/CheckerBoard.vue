@@ -64,7 +64,7 @@
 </template>
 
 <script setup>
-import CheckerChess from './CheckerChess.vue';
+// import CheckerChess from './Checker/CheckerChess.vue';
 import { ref, onMounted, reactive, toRaw } from 'vue';
 const ckb = ref(null);
 const chessActive = ref(false);
