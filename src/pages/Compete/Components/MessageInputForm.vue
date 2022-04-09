@@ -16,6 +16,8 @@
 <style>
 .inputMsg {
     color: black;
+    width:100%;
+    height: 100%;
 }
 #input {
     width: 100%;
