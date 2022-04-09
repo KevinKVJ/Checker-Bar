@@ -47,9 +47,14 @@
 
 .contentarea {
     min-height: calc(100% - 75px);
-    padding-bottom: 65px;
+    padding-bottom: 75px;
+    padding-top: 10px;
 
     background: url('@/assets/img/bkg.png') center center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 .footer {
     /* width: 100%; */
