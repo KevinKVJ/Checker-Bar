@@ -6,6 +6,9 @@
             </div>
             <div class="contentarea">
                 <slot></slot>
+                <div class="test1"></div>
+                <div class="test2"></div>
+                <div class="test3"></div>
             </div>
             <div class="footer">
                 <div class="prompts">
@@ -18,11 +21,27 @@
 </template>
 
 <style lang="scss" scoped>
-.wrapper{
+.test1 {
+    width: 400px;
+    height: 400px;
+    background: red;
+}
+.test2 {
+    width: 400px;
+    height: 400px;
+    background: skyblue;
+}
+.test3 {
+    width: 400px;
+    height: 400px;
+    background: grey;
+}
+.wrapper {
     height: 100%;
 }
-.container{
+.container {
     height: 100%;
+    overflow: auto;
 }
 
 .header {
@@ -44,12 +63,11 @@
     }
 }
 
-
-.contentarea{
-    height: calc(100% - 75px);
+.contentarea {
+    /* height: calc(100% - 75px); */
     padding-bottom: 65px;
 
-    background: url("@/assets/img/bkg.png") center center;
+    background: url('@/assets/img/bkg.png') center center;
 }
 .footer {
     /* width: 100%; */
@@ -66,21 +84,21 @@
     .prompts {
         color: #fff;
         display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
     }
 
     .copyright {
         margin-right: 30px;
     }
 
-    .groupmember{
+    /* .groupmember {
         white-space: pre;
-    }
+    } */
 }
 </style>
 
 <script setup>
 import { ref } from 'vue';
-const groupmembers = ref(
-    'From Group 26: Karim Beyk   Boxiao Li   Kaiwen Jia   Shude Li'
-);
+const groupmembers = ref('From Group 26: Karim Beyk   Boxiao Li   Kaiwen Jia   Shude Li');
 </script>

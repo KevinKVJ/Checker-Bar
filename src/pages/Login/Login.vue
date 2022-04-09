@@ -49,7 +49,7 @@ import axios from 'axios';
 import Base from '@/components/Base.vue';
 import SmallButton from '@/components/SmallButton.vue';
 
-import LoginForm from './Components/LoginForm.vue';
+import LoginForm from '@/components/LoginForm.vue';
 import SelectAvatar from './Components/SelectAvatar.vue';
 
 export default{
