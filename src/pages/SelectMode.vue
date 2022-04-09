@@ -2,8 +2,8 @@
 <template>
     <Base>
         <div class="content">
-            <BigButton @click="toCompetePage()" fontSize="40px" title="Compete" />
-            <BigButton @click="toCompetePage()" fontSize="40px" title="Spectate" />
+            <BigButton @click="this.$router.push({ path: '/compete' })" fontSize="40px" title="Compete" />
+            <BigButton @click="this.$router.push({ path: '/compete' })" fontSize="40px" title="Spectate" />
         </div>
     </Base>
 </template>
@@ -32,11 +32,6 @@ export default {
     components: {
         Base,
         BigButton,
-    },
-    methods: {
-        toCompetePage() {
-            this.$router.push({ path: '/compete' });
-        },
     },
 };
 </script>

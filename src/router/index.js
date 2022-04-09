@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router';
-// import Login from '@/pages/Login.vue'
 import Base from '@/components/Base.vue';
 
 const router = createRouter({
@@ -20,37 +19,43 @@ const router = createRouter({
         {
             path: '/homePage',
             name: 'homePage',
-            title: 'homePage',
+            title: 'HomePage',
             component: () => import('@/pages/HomePage.vue'),
         },
         {
             path: '/login',
             name: 'login',
-            title: 'login',
+            title: 'Login',
             component: () => import('@/pages/Login/Login.vue'),
         },
         {
             path: '/signup',
             name: 'signup',
-            title: 'signup',
+            title: 'Signup',
             component: () => import('@/pages/SignUpPage.vue'),
         },
         {
             path: '/profile',
             name: 'profile',
-            title: 'profile',
+            title: 'Profile',
             component: () => import('@/pages/ProfilePage/ProfilePage.vue'),
         },
         {
             path: '/records',
             name: 'records',
-            title: 'records',
+            title: 'Records',
             component: () => import('@/pages/RecordsPage.vue'),
         },
         {
             path: '/compete',
             name: 'compete',
-            title: 'compete',
+            title: 'Compete',
+            component: () => import('@/pages/Compete/Compete.vue'),
+        },
+        {
+            path: '/spectate',
+            name: 'spectate',
+            title: 'Spectate',
             component: () => import('@/pages/Compete/Compete.vue'),
         },
         {
