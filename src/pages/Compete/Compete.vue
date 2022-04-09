@@ -120,7 +120,7 @@
     bottom: 65px;
     right: 0; */
     left: 0;
-    height: 100%;
+    /* height: 100%; */
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -198,7 +198,7 @@
 }
 
 /* ------ move history ------ */
-.right {
+/* .right { */
     /* float: left;
     width: 22%;
     height: 100%;
@@ -207,7 +207,7 @@
     justify-content: center;
     height: 100%; */
 
-}
+/* } */
 .moveHistoryContent {
     width: 35vmin;
     height: 68vmin;
@@ -250,7 +250,7 @@ h4 {
         flex-direction: column;
         overflow:scroll;
         align-items: center;
-        align-content:space-between;
+        justify-content: center;
     }
     .left{
         width: 100%;
