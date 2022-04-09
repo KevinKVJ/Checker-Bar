@@ -12,10 +12,40 @@ const router = createRouter({
             component: Base,
         },
         {
-            path: '/base',
-            name: 'base',
-            title: 'Base',
+            path: '/selectMode',
+            name: 'selectMode',
+            title: 'selectMode',
             component: () => import('@/pages/SelectMode.vue'),
+        },
+        {
+            path: '/homePage',
+            name: 'homePage',
+            title: 'homePage',
+            component: () => import('@/pages/HomePage.vue'),
+        },
+        {
+            path: '/login',
+            name: 'login',
+            title: 'login',
+            component: () => import('@/pages/Login.vue'),
+        },
+        {
+            path: '/signup',
+            name: 'signup',
+            title: 'signup',
+            component: () => import('@/pages/SignUpPage.vue'),
+        },
+        {
+            path: '/profile',
+            name: 'profile',
+            title: 'profile',
+            component: () => import('@/pages/ProfilePage.vue'),
+        },
+        {
+            path: '/records',
+            name: 'records',
+            title: 'records',
+            component: () => import('@/pages/RecordsPage.vue'),
         },
         {
             path: '/compete',
@@ -23,7 +53,29 @@ const router = createRouter({
             title: 'Compete',
             component: () => import('@/pages/Compete.vue'),
         },
-        { path: '/:pathMatch(.*)*', name: 'NotFound', component: () => import('@/pages/NotFound.vue'), },
+        {
+            path: '/csb',
+            name: 'chessboard1',
+            title: 'chessboard',
+            component: () => import('@/components/Checker/CheckerBoard1.vue'),
+        },
+        {
+            path: '/csb2',
+            name: 'chessboard2',
+            title: 'chessboard',
+            component: () => import('@/components/Checker/CheckerBoard2.vue'),
+        },
+        {
+            path: '/csb3',
+            name: 'chessboard3',
+            title: 'chessboard',
+            component: () => import('@/components/Checker/CheckerBoard3.vue'),
+        },
+        {
+            path: '/:pathMatch(.*)*',
+            name: 'NotFound',
+            component: () => import('@/pages/NotFound.vue'),
+        },
     ],
 });
 

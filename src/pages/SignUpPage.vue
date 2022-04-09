@@ -4,20 +4,19 @@ import LoginForm from '@/components/LoginForm.vue';
 import SmallButton from '../components/SmallButton.vue';
 import SelectAvatar from '../components/SelectAvatar.vue';
 </script>
+
+
 <template>
     <Base>
        <div class="content">
            <div class="small-window">
                <h4> Welcome to the Checker Bar</h4>
-               <p>Select Your Avatar</p>
-               <SelectAvatar/>
-               <LoginForm  v-model='value' v-model:passwordValue='passwordValue' />
-               <SmallButton @click="loadUserInfo()"  fontSize="18px" title="Login In"/>
-               <SmallButton @click="toSignUpPage()" fontSize="15px" title="Sign Up"/>
+               <LoginForm v-model='value' v-model:passwordValue='passwordValue' />
+               <SmallButton @click="loadUserInfo()" fontSize="18px" title="Sign Up"/>
+               <SmallButton @click="toLoginPage()" fontSize="15px" title="Login In"/>
            </div>
         </div>
     </Base>
-
 </template>
 
 <style>
@@ -30,7 +29,7 @@ import SelectAvatar from '../components/SelectAvatar.vue';
 
     .small-window{
         width:350px;
-        height: 460px;
+        height: 400px;
         background: white;
         display: flex;
         align-items: center; 
@@ -41,9 +40,9 @@ import SelectAvatar from '../components/SelectAvatar.vue';
         font-size: 23px;
         font-weight: bolder;
     }
-
-
-
+    p{
+        font-weight: 700;
+    }
 </style>
 
 <script>
@@ -61,59 +60,37 @@ export default{
         LoginForm,
     },
 
-    mounted(){
-    },
 
     methods:{
-        toSignUpPage(){
-            this.$router.push({ path: '/signup' })
-        },
-        toHomePage(){
-            this.$router.push({ path: '/homePage' })
+        toLoginPage(){
+            this.$router.push({ path: '/login' })
         },
         loadUserInfo(){
             console.log(this.value); 
             console.log(this.passwordValue);
-
-            sessionStorage.setItem('username', this.value);
-            sessionStorage.setItem('password', this.passwordValue);
-           
-            axios.post('/api/loginApi',{
+            
+            axios.post('/api/signInApi',{
                 nickname: this.value,
                 password: this.passwordValue
+                // nickname: 'lalala9',
+                // password: 'password2'
+                // nickname: 'lalala99',
+                // password: 'password22'
             })
             .then((res)=>{
                 console.log(res.data);
-                //get login code and user id 
                 var code = res.data[Object.keys(res.data)[0]];
                 console.log(code);
-                var id = res.data[Object.keys(res.data)[2]];
-                var userId = id[Object.keys(id)[0]]
-                console.log(userId);
-
-                // save userId into session
-                sessionStorage.setItem('userid', userId);
-
-                if (code === 200){
-                    this.toHomePage();
-                    alert("successfully sign in");
-                }else if (code === 400){
-                    alert("cannot find the user");      
+                if(code === 200){
+                    alert("SignUp successful");
                 }else{
-                    alert("password incorrect");
+                    alert("User already exists");
                 }
-                
             })
             .catch((error)=>{
                 console.log(error);
-            });
-            
-            
-
-
-            }
-
-
+            })
+        }
     }
 }
 </script>

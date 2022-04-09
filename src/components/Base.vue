@@ -81,6 +81,6 @@
 <script setup>
 import { ref } from 'vue';
 const groupmembers = ref(
-    'From Group 26: Karim Beyk   Boxiao Li   Shude Li   Kaiwen Jia'
+    'From Group 26: Karim Beyk   Boxiao Li   Kaiwen Jia   Shude Li'
 );
 </script>
