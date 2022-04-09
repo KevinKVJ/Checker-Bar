@@ -56,7 +56,7 @@ const router = createRouter({
             path: '/spectate',
             name: 'spectate',
             title: 'Spectate',
-            component: () => import('@/pages/Compete/Compete.vue'),
+            component: () => import('@/pages/Spectate/Spectate.vue'),
         },
         {
             path: '/csb',
