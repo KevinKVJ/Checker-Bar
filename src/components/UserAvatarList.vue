@@ -6,8 +6,8 @@
 
 <style>
     .avatarImages{
-       width: 65px;
-       height: 65px;
+       width: 56px;
+       height: 56px;
    }
 </style>
 

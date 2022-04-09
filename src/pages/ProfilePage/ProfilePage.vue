@@ -4,8 +4,7 @@
             <div class="main">
                 <h4>{{ titleName }}'s Profile</h4>
                 <div class="divide-line"></div>
-                <p>Change Avatar</p>
-                <SelectAvatar />
+                <!-- <SelectAvatar /> -->
                 <ChangeUsernameForm />
             </div>
             <div class="button">
@@ -25,8 +24,8 @@
 }
 
 .main {
-    width: 350px;
-    height: 420px;
+    width: 300px;
+    height: 350px;
     background: white;
     display: flex;
     align-items: center;
@@ -35,9 +34,10 @@
     margin-bottom: 5px;
 }
 .divide-line {
-    width: 350px;
-    height: 6px;
+    width: 300px;
+    height: 3px;
     background: black;
+    margin-bottom: 40px;
 }
 h4 {
     font-size: 23px;
