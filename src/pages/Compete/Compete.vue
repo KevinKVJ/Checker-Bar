@@ -2,37 +2,25 @@
     <Base>
         <div class="main">
             <div class="mobileButtonSection">
-                        <n-button @click="showModal = true" class="buttons" id="buttonOne"> Rules </n-button>
-                        <n-modal v-model:show="showModal">
-                            <div class="lalala">
-                                <ul id="ruleList">
-                                    <li>This game is for two players. Each player starts with 12 colored discs (of the same color).</li>
-                                    <li>
-                                        Players place their discs (pieces) on the dark squares on their side of the board. Black has first
-                                        play, after turns alternate.
-                                    </li>
-                                    <li>
-                                        Moves can only be made on black squares, so the pieces move diagonally. Pieces can only move in a
-                                        forward direction, toward their opponent.
-                                    </li>
-                                    <li>
-                                        If you are moving your disc forward, and not capturing your opponent’s piece in the move, you may
-                                        only move it forward one square.
-                                    </li>
-                                    <li>After a piece is captured, it is removed from the board, and collected by the opponent.</li>
-                                    <li>
-                                        If you have the ability to jump your opponents pieces, you must. However, in the even there are more
-                                        than one capture possible from a single square, you may jump whichever piece is preferable.
-                                    </li>
-                                    <li>
-                                        The game is won when the opponent is unable to make a move, which means the entirety of a player’s
-                                        pieces were captured by the opponent.
-                                    </li>
-                                </ul>
-                            </div>
-                        </n-modal>
-                        <button @click="toHomePage()" class="buttons" id="buttonTwo">Home</button>
+                <n-button @click="showModal = true" class="buttons" id="buttonOne"> Rules </n-button>
+                <n-modal v-model:show="showModal">
+                    <div class="lalala">
+                        <ul id="ruleList">
+                            <li>This game is for two players. Each player starts with 12 colored discs (of the same color).</li>
+                            <li>Players place their discs (pieces) on the dark squares on their side of the board. Black has first play, after turns alternate.</li>
+                            <li>Moves can only be made on black squares, so the pieces move diagonally. Pieces can only move in a forward direction, toward their opponent.</li>
+                            <li>If you are moving your disc forward, and not capturing your opponent’s piece in the move, you may only move it forward one square.</li>
+                            <li>After a piece is captured, it is removed from the board, and collected by the opponent.</li>
+                            <li>
+                                If you have the ability to jump your opponents pieces, you must. However, in the even there are more than one capture possible from a single square,
+                                you may jump whichever piece is preferable.
+                            </li>
+                            <li>The game is won when the opponent is unable to make a move, which means the entirety of a player’s pieces were captured by the opponent.</li>
+                        </ul>
                     </div>
+                </n-modal>
+                <button @click="toHomePage()" class="buttons">Home</button>
+            </div>
             <div class="left">
                 <div class="checkerboardbase">
                     <CheckerBoard></CheckerBoard>
@@ -53,16 +41,17 @@
                 </div>
 
                 <div class="sectionTwo">
-                    <ul id="messageArray">
-                        <li v-for="(item, index) in items" :key="index">
-                            <RightMessage v-if="item.name">
+                    <ul class="messageArray">
+                        <li v-for="({ message, name }, index) in messages" :key="index" class="messageArrayList">
+                            <!-- <RightMessage v-if="name === " :chatterName="name"> -->
+                            <RightMessage v-if="name === 'Nina'" :chatterName="name">
                                 <div>
-                                    {{ item.message }}
+                                    {{ message }}
                                 </div>
                             </RightMessage>
-                            <LeftMessage v-else>
+                            <LeftMessage v-else :chatterName="name">
                                 <div>
-                                    {{ item.message }}
+                                    {{ message }}
                                 </div>
                             </LeftMessage>
                         </li>
@@ -79,8 +68,10 @@
                     <div class="moveHistoryContent">
                         <h4>Move History</h4>
                         <div class="divide-line"></div>
-                        <ul id="moveHistoryList">
-                            ..............
+                        <ul v-for="({ name, oriCoord: [oriRow, oriCol], newCoord: [newRow, newCol] }, index) in moveHistoryList" :key="index">
+                            <li>
+                                <pre>{{ `${name} : [${oriRow},${oriCol}]  ==>  [${newRow},${newCol}]` }}</pre>
+                            </li>
                         </ul>
                     </div>
                     <div class="buttonSection">
@@ -89,31 +80,23 @@
                             <div class="lalala">
                                 <ul id="ruleList">
                                     <li>This game is for two players. Each player starts with 12 colored discs (of the same color).</li>
+                                    <li>Players place their discs (pieces) on the dark squares on their side of the board. Black has first play, after turns alternate.</li>
                                     <li>
-                                        Players place their discs (pieces) on the dark squares on their side of the board. Black has first
-                                        play, after turns alternate.
+                                        Moves can only be made on black squares, so the pieces move diagonally. Pieces can only move in a forward direction, toward their opponent.
                                     </li>
-                                    <li>
-                                        Moves can only be made on black squares, so the pieces move diagonally. Pieces can only move in a
-                                        forward direction, toward their opponent.
-                                    </li>
-                                    <li>
-                                        If you are moving your disc forward, and not capturing your opponent’s piece in the move, you may
-                                        only move it forward one square.
-                                    </li>
+                                    <li>If you are moving your disc forward, and not capturing your opponent’s piece in the move, you may only move it forward one square.</li>
                                     <li>After a piece is captured, it is removed from the board, and collected by the opponent.</li>
                                     <li>
-                                        If you have the ability to jump your opponents pieces, you must. However, in the even there are more
-                                        than one capture possible from a single square, you may jump whichever piece is preferable.
+                                        If you have the ability to jump your opponents pieces, you must. However, in the even there are more than one capture possible from a single
+                                        square, you may jump whichever piece is preferable.
                                     </li>
                                     <li>
-                                        The game is won when the opponent is unable to make a move, which means the entirety of a player’s
-                                        pieces were captured by the opponent.
+                                        The game is won when the opponent is unable to make a move, which means the entirety of a player’s pieces were captured by the opponent.
                                     </li>
                                 </ul>
                             </div>
                         </n-modal>
-                        <button @click="toHomePage()" class="buttons" id="buttonTwo">Home</button>
+                        <button @click="toHomePage()" class="buttons">Home</button>
                     </div>
                 </div>
             </div>
@@ -121,7 +104,41 @@
     </Base>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+.moveHistoryContent {
+    width: 30vmin;
+    height: 68vmin;
+    background: rgb(204, 177, 128);
+    border-radius: 10px;
+
+    h4 {
+        font-size: 20px;
+        text-align: center;
+        margin-top: 0;
+        padding-top: 10px;
+        margin-bottom: 3px;
+    }
+    .divide-line {
+        height: 2px;
+        width: 100%;
+        background: black;
+    }
+
+    overflow: auto;
+    ul {
+        padding: 0 10px;
+        li {
+            list-style: none;
+            pre {
+                text-align: center;
+                font-family: Avenir, Helvetica, Arial, sans-serif;
+                font-size: 18px;
+                font-weight: 600;
+            }
+        }
+    }
+}
+
 .lalala {
     width: 400px;
     height: 400px;
@@ -146,7 +163,7 @@
     justify-content: space-around;
 }
 /* ------ checkerboardbase float at left ------ */
-.mobileButtonSection{
+.mobileButtonSection {
     display: none;
 }
 .left {
@@ -157,7 +174,6 @@
     align-items: center;
     justify-content: center; */
     width: 40%;
-    
 }
 .checkerboardbase {
     width: 36vw;
@@ -178,7 +194,7 @@
     margin-top: 10px;
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: 8px; */
-    width: 25%;
+    width: 30%;
     background-color: rgba(255, 255, 255, 0.5);
     height: 72vmin;
 }
@@ -195,8 +211,16 @@
     padding-top: 10px;
     overflow: scroll;
 }
-#messageArray {
-    list-style-type: none;
+.messageArray {
+    list-style: none;
+    padding: 0 10px;
+
+    margin: 0;
+
+    &List {
+        width: 100%;
+        margin-bottom: 10px;
+    }
 }
 .sectionThree {
     float: left;
@@ -221,55 +245,56 @@
 
 /* ------ move history ------ */
 
-.moveHistoryContent {
+/* .moveHistoryContent {
     width: 35vmin;
     height: 68vmin;
     background: rgb(204, 177, 128);
     border-radius: 10px;
-}
-h4 {
-    font-size: 20px;
-    text-align: center;
-    margin-top: 0;
-    padding-top: 10px;
-    margin-bottom: 3px;
-}
-.divide-line {
-    height: 2px;
-    width: 100%;
-    background: black;
-}
+
+    h4 {
+        font-size: 20px;
+        text-align: center;
+        margin-top: 0;
+        padding-top: 10px;
+        margin-bottom: 3px;
+    }
+    .divide-line {
+        height: 2px;
+        width: 100%;
+        background: black;
+    }
+} */
 .buttons {
+    height: 40px;
+    width: 90px;
     font-size: 25px;
     border: none;
     background: white;
-}
-#buttonOne {
-    margin-left: 10px;
+
     margin-right: 40px;
-    height: 40px;
-    width: 90px;
-}
-#buttonTwo {
-    height: 40px;
-    width: 90px;
+
+    border-radius: 4px;
 }
 
+@media (max-width: 800px) {
+    .main {
+        margin-bottom: 10px;
 
-
-@media (max-width: 700px) {
-   .main {
         display: flex;
         flex-direction: column;
-        overflow:scroll;
+        overflow: scroll;
         align-items: center;
         justify-content: center;
     }
-    .mobileButtonSection{
-        display:block;
+    .mobileButtonSection {
+        display: block;
         margin-bottom: 10px;
+
+        button:last-child {
+            margin: 0;
+        }
     }
-    .left{
+    .left {
         width: 100%;
         /* height: 100vw; */
     }
@@ -277,13 +302,14 @@ h4 {
         width: 95vw;
         height: 95vw;
         background: rgb(141, 114, 81);
-        border-radius: 40px;   
-        margin:0 auto;
+        border-radius: 40px;
+        margin: 0 auto;
+        padding: 9vmin;
     }
 
-    .middle{
-        width: 80%;
-        height: 120vmin;
+    .middle {
+        width: 100%;
+        height: 70vmin;
         background-color: rgba(255, 255, 255, 0.5);
         margin-top: 10px;
     }
@@ -309,12 +335,17 @@ h4 {
         float: left;
         width: 80%;
         height: 80%;
-        padding-bottom: 10px;
-        padding-top: 10px;
+        padding: 10px;
         overflow: scroll;
     }
-    #messageArray {
-        list-style-type: none;
+    .messageArray {
+        list-style: none;
+        padding: 0 10px;
+        margin: 0;
+
+        &List {
+            margin-bottom: 8px;
+        }
     }
     .sectionThree {
         float: left;
@@ -324,35 +355,42 @@ h4 {
         padding: 5px;
     }
 
-    .right{
+    .right {
         margin-top: 10px;
-        height: 120vw;
-        width: 80%;
+        height: 100vw;
+        width: 100%;
+
+        .moveHistory {
+            width: 100%;
+            height: 100%;
+        }
     }
     .moveHistoryContent {
         width: 100%;
-        height: 120vw;
+        height: 100%;
         background: rgb(204, 177, 128);
         border-radius: 10px;
     }
-    h4 {
+    /* h4 {
         font-size: 20px;
         text-align: center;
         margin-top: 0;
         padding-top: 10px;
         margin-bottom: 3px;
-    }
+    } */
     .divide-line {
         height: 2px;
         width: 100%;
         background: black;
     }
     .buttons {
-        font-size: 25px;
+        font-size: 4.4vmin;
         border: none;
         background: white;
+        height: 7vmin;
+        width: 15.75vmin;
     }
-    .buttonSection{
+    .buttonSection {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -360,9 +398,7 @@ h4 {
         margin-top: 10px;
         display: none;
     }
-
 }
-
 </style>
 
 <script>
@@ -384,13 +420,34 @@ export default {
             // show: false,
             popupActivo: false,
             showModal: false,
-            items: [
-                { message: 'Foo', name: true },
-                { message: 'Bar', name: false },
+            messages: [
+                { message: 'FooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFoo', name: 'Nina' },
+                { message: 'FooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFoo', name: 'Nina' },
+                { message: 'FooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFoo', name: 'Nina' },
+                { message: 'FooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFoo', name: 'Nina' },
+                { message: 'BarBarBarBar', name: 'Boxiao' },
             ],
             //items: ['message', 'name'],
             socket: null,
             avatarList: [],
+            moveHistoryList: [
+                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
+                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
+                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
+                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
+                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
+                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
+                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
+                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
+                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
+                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
+                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
+                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
+                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
+                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
+                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
+                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
+            ], //method: addMoveHistory(moveHistory)
         };
     },
     components: {
@@ -449,6 +506,12 @@ export default {
         sendMessage(mess) {
             this.socket.emit('boardmessage', mess);
             console.log(mess);
+        },
+
+        addMoveHistory(moveHistory) {
+            // Type:Object:
+            // {name:String,oriCoord: [oriRow, oriCol], newCoord:[newRow, newCol]}
+            this.moveHistoryList.push(moveHistory);
         },
     },
 };
