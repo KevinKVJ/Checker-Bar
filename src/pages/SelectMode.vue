@@ -22,6 +22,16 @@
         }
     }
 }
+@media (max-width: 700px){
+    .content {
+        display: flex;
+        flex-direction: column;
+        div {
+            margin: 0px;
+            margin-bottom: 25px;
+        }
+    } 
+}
 </style>
 
 <script>

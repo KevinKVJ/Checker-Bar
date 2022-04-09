@@ -4,7 +4,7 @@
         </div>
 </template>
 
-<style>
+<style scoped>
     .avatarImages{
        width: 56px;
        height: 56px;

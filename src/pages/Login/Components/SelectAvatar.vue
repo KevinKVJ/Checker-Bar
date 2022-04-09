@@ -6,14 +6,14 @@
     </div>
 </template>
 
-<style>
-.avatarImages {
+<style scoped>
+/* .avatarImages {
     width: 50px;
     height: 50px;
     margin-bottom: 0px;
     padding-top: 0px;
     padding-bottom: 0px;
-}
+} */
 
 .imageSection {
     display: flex;

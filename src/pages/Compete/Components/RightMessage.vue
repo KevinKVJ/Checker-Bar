@@ -7,7 +7,7 @@
     </div>
 </template>
 
-<style>
+<style scoped>
     .messageRight{
         right:0; 
         float: right;

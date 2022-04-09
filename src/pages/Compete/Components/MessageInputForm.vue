@@ -13,7 +13,7 @@
     </div>
 </template>
 
-<style>
+<style scoped>
 .inputMsg {
     color: black;
     width:100%;
