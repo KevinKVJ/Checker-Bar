@@ -1,8 +1,3 @@
-<script setup>
-import Base from '@/components/Base.vue';
-import BigButton from '../components/BigButton.vue';
-
-</script>
 <template>
     <Base>
         <div class="content">
@@ -25,6 +20,7 @@ import BigButton from '../components/BigButton.vue';
         display: flex;
         justify-content: center;
         align-items: center;
+        flex-direction: column;
    }
    .contentOne{
        display: block;
@@ -45,16 +41,24 @@ import BigButton from '../components/BigButton.vue';
 </style>
 
 <script>
+import Base from '@/components/Base.vue';
+import BigButton from '@/components/BigButton.vue';
+
 export default{
 
     mounted(){
         //load username and userid from session
         let username = sessionStorage.getItem("username");
         let id = sessionStorage.getItem("userid");
+        let userAvatar = sessionStorage.getItem("userAvatar");
         console.log(username);
         console.log(id);
+        console.log(userAvatar);
     },
-
+    components:{
+        Base,
+        BigButton
+    },
     methods:{
         toSelectModePage(){
             this.$router.push({ path: '/selectMode' })
@@ -65,7 +69,7 @@ export default{
         toRecordsPage(){
             this.$router.push({ path: '/records' })
         }
-    }
+    },
     
 }
 </script>

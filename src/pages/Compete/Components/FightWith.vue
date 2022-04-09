@@ -5,7 +5,7 @@
     </div>
 </template>
 
-<style>
+<style scoped>
     .fightWith{
         width:100%;
         height:100%;

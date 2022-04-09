@@ -1,8 +1,5 @@
 <script setup>
-import Base from '@/components/Base.vue';
-import LoginForm from '@/components/LoginForm.vue';
-import SmallButton from '../components/SmallButton.vue';
-import SelectAvatar from '../components/SelectAvatar.vue';
+
 </script>
 <template>
     <Base>
@@ -10,9 +7,9 @@ import SelectAvatar from '../components/SelectAvatar.vue';
            <div class="small-window">
                <h4> Welcome to the Checker Bar</h4>
                <p>Select Your Avatar</p>
-               <SelectAvatar/>
+               <SelectAvatar @selectedAvatar="updateAvatar"/>
                <LoginForm  v-model='value' v-model:passwordValue='passwordValue' />
-               <SmallButton @click="loadUserInfo()"  fontSize="18px" title="Login In"/>
+               <SmallButton @click="loadUserInfo()"  fontSize="18px" title="Login"/>
                <SmallButton @click="toSignUpPage()" fontSize="15px" title="Sign Up"/>
            </div>
         </div>
@@ -48,17 +45,28 @@ import SelectAvatar from '../components/SelectAvatar.vue';
 
 <script>
 import axios from 'axios';
+
+import Base from '@/components/Base.vue';
+import SmallButton from '@/components/SmallButton.vue';
+
+import LoginForm from '@/components/LoginForm.vue';
+import SelectAvatar from './Components/SelectAvatar.vue';
+
 export default{
 
     data(){
         return{
             value:'',
             passwordValue:'',
+            activatedAvatar:'',
         };
     },
 
     components:{
+        Base,
         LoginForm,
+        SmallButton,
+        SelectAvatar,
     },
 
     mounted(){
@@ -71,12 +79,16 @@ export default{
         toHomePage(){
             this.$router.push({ path: '/homePage' })
         },
+        updateAvatar(activeAvatar) {
+            this.activatedAvatar = activeAvatar;
+            console.log(this.activatedAvatar);
+            sessionStorage.setItem('userAvatar', this.activatedAvatar);
+        },
         loadUserInfo(){
             console.log(this.value); 
             console.log(this.passwordValue);
 
             sessionStorage.setItem('username', this.value);
-            sessionStorage.setItem('password', this.passwordValue);
            
             axios.post('/api/loginApi',{
                 nickname: this.value,
@@ -96,7 +108,7 @@ export default{
 
                 if (code === 200){
                     this.toHomePage();
-                    alert("successfully sign in");
+                    alert("successfully login");
                 }else if (code === 400){
                     alert("cannot find the user");      
                 }else{

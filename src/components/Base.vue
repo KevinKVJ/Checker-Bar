@@ -18,11 +18,12 @@
 </template>
 
 <style lang="scss" scoped>
-.wrapper{
+.wrapper {
     height: 100%;
 }
-.container{
+.container {
     height: 100%;
+    overflow: auto;
 }
 
 .header {
@@ -44,12 +45,16 @@
     }
 }
 
+.contentarea {
+    min-height: calc(100% - 75px);
+    padding-bottom: 75px;
+    padding-top: 10px;
 
-.contentarea{
-    height: calc(100% - 75px);
-    padding-bottom: 65px;
-
-    background: url("@/assets/img/bkg.png") center center;
+    background: url('@/assets/img/bkg.png') center center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 .footer {
     /* width: 100%; */
@@ -66,21 +71,21 @@
     .prompts {
         color: #fff;
         display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
     }
 
     .copyright {
         margin-right: 30px;
     }
 
-    .groupmember{
+    /* .groupmember {
         white-space: pre;
-    }
+    } */
 }
 </style>
 
 <script setup>
 import { ref } from 'vue';
-const groupmembers = ref(
-    'From Group 26: Karim Beyk   Boxiao Li   Kaiwen Jia   Shude Li'
-);
+const groupmembers = ref('From Group 26: Karim Beyk   Boxiao Li   Kaiwen Jia   Shude Li');
 </script>
