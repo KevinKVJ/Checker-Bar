@@ -1,3 +1,7 @@
+/**
+    TODO: inputbar in chatting box and "vmin" in Move History
+ */
+
 <template>
     <Base>
         <div class="main">
