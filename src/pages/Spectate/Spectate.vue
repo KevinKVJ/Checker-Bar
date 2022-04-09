@@ -1,72 +1,11 @@
 <template>
     <Base>
+
         <div class="main">
-            <div class="left">
-                <div class="checkerboardbase">
-                    <CheckerBoard></CheckerBoard>
-                </div>
-            </div>
-
             <div class="middle">
-                <div class="sectionOne">
-                    <FightWith />
-                </div>
-
-                <div class="sectionAvatar">
-                    <ul id="userAvatarArray">
-                        <li v-for="(value, key) in avatarList" :key="key">
-                            <UserAvatarList :iconName="value"> </UserAvatarList>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="sectionTwo">
-                    <ul id="messageArray">
-                        <li v-for="(item, index) in items" :key="index">
-                            <RightMessage v-if="item.name">
-                                <div>
-                                    {{ item.message }}
-                                </div>
-                            </RightMessage>
-                            <LeftMessage v-else>
-                                <div>
-                                    {{ item.message }}
-                                </div>
-                            </LeftMessage>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="sectionThree">
-                    <MessageInputForm :sendFunc="sendMessage" />
-                </div>
-            </div>
-
-            <div class="right">
-                <div class="moveHistory">
-                    <div class="moveHistoryContent">
-                        <h4>Move History</h4>
-                        <div class="divide-line"></div>
-                        <ul id="moveHistoryList">
-                            ..............
-                        </ul>
-                    </div>
-                    <div class="buttonSection">
-                        <!-- <button class="buttons" id="buttonOne">Rules</button> -->
+                <div class="buttonSection">
                         <n-button @click="showModal = true" class="buttons" id="buttonOne"> Rules </n-button>
                         <n-modal v-model:show="showModal">
-                            <!-- <n-card
-                                style="width: 600px"
-                                title="模态框"
-                                :bordered="false"
-                                size="huge"
-                                role="dialog"
-                                aria-modal="true"
-                            >
-                                <template #header-extra> 噢！ </template>
-                                内容
-                                <template #footer> 尾部 </template>
-                            </n-card> -->
                             <div class="lalala">
                                 <ul id="ruleList">
                                     <li>This game is for two players. Each player starts with 12 colored discs (of the same color).</li>
@@ -95,9 +34,23 @@
                             </div>
                         </n-modal>
                         <button @click="toHomePage()" class="buttons" id="buttonTwo">Home</button>
-                    </div>
+                </div>
+                <div class="checkerboardbase">
+                    <CheckerBoard></CheckerBoard>
                 </div>
             </div>
+
+            <div class="right">
+                <div class="sectionAvatar">
+                    <ul id="userAvatarArray">
+                        <li v-for="(value, key) in avatarList" :key="key">
+                            <UserAvatarList :iconName="value"> </UserAvatarList>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            
         </div>
     </Base>
 </template>
@@ -115,117 +68,28 @@
 }
 
 .main {
-    /* position: fixed;
-    top: 75px;
-    bottom: 65px;
-    right: 0; */
-    left: 0;
-    /* height: 100%; */
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    height: 80vh;
+    justify-content: center;
+}
+/* ------ checkerboardbase float in center of screen ------ */
+.middle {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    margin-right: 10px;
+}
+
+.buttonSection{
+    margin-bottom: 10px;
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-around;
-}
-/* ------ checkerboardbase float at left ------ */
-.left {
-    /* float: left;
-    width: 50%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center; */
-    width: 40%;
-    
-}
-.checkerboardbase {
-    width: 36vw;
-    height: 36vw;
-    max-width: 550px;
-    max-height: 550px;
-    background: rgb(141, 114, 81);
-    border-radius: 40px;
-    padding: 40px;
-}
-
-/* ------ message window ------ */
-.middle {
-    /* float: left;
-    width: 28%;
-    height: 96%;
-    padding: 10px;
-    margin-top: 10px;
-    background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 8px; */
-    width: 25%;
-    background-color: rgba(255, 255, 255, 0.5);
-    height: 72vmin;
-}
-.sectionOne {
-    float: left;
-    width: 80%;
-    height: 13%;
-}
-.sectionTwo {
-    float: left;
-    width: 80%;
-    height: 80%;
-    padding-bottom: 10px;
-    padding-top: 10px;
-    overflow: scroll;
-}
-#messageArray {
-    list-style-type: none;
-}
-.sectionThree {
-    float: left;
-    width: 80%;
-    height: 7%;
-    background: white;
-    padding: 5px;
-}
-.sectionAvatar {
-    float: right;
-    width: 18%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.5);
-    border-radius: 10px;
-    overflow: scroll;
-}
-#userAvatarArray {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-
-/* ------ move history ------ */
-/* .right { */
-    /* float: left;
-    width: 22%;
-    height: 100%;
-    display: flex;
-    align-items: center;
     justify-content: center;
-    height: 100%; */
+}
 
-/* } */
-.moveHistoryContent {
-    width: 35vmin;
-    height: 68vmin;
-    background: rgb(204, 177, 128);
-    border-radius: 10px;
-}
-h4 {
-    font-size: 20px;
-    text-align: center;
-    margin-top: 0;
-    padding-top: 10px;
-    margin-bottom: 3px;
-}
-.divide-line {
-    height: 2px;
-    width: 100%;
-    background: black;
-}
 .buttons {
     font-size: 25px;
     border: none;
@@ -242,79 +106,93 @@ h4 {
     width: 90px;
 }
 
+.checkerboardbase {
+    width: 40vw;
+    height: 40vw;
+    max-width: 550px;
+    max-height: 550px;
+    background: rgb(141, 114, 81);
+    border-radius: 40px;
+    padding: 40px;
+}
+/* ------ user list float at right ------ */
+.right{
+    align-self: center;
+    height: 80vh;
+    width: 8vw;
+    background: rgba(255, 255, 255, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sectionAvatar {
+    float: right;
+    width: 88%;
+    height: 95%;
+    border-radius: 10px;
+    overflow: scroll;
+    background: rgba(255, 255, 255, 0.5);
+}
+#userAvatarArray {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+li {
+    float: left;
+    list-style-type: none;
+}
 
 
-@media (max-width: 850px) {
-   .main {
+@media (max-width: 700px) {
+    .main{
         display: flex;
         flex-direction: column;
-        overflow:scroll;
+    }
+    .middle {
+        display: flex;
+        flex-direction: column;
+        align-self: center;
+    }
+    .checkerboardbase {
+        width: 90vw;
+        height: 90vw;
+        max-width: 550px;
+        max-height: 550px;
+        background: rgb(141, 114, 81);
+        border-radius: 40px;
+        padding: 40px;
+    }
+    .right{
+        align-self: center;
+        height: 15vw;
+        width: 90vw;
+        background: rgba(255, 255, 255, 0.5);
+        display: flex;
         align-items: center;
         justify-content: center;
     }
-    .left{
-        width: 100%;
-        height: 100vw;
-    }
-    .checkerboardbase {
-        width: 100%;
-        height: 100vw;
-        background: rgb(141, 114, 81);
-        border-radius: 40px;   
-    }
-
-    .middle{
-        width: 80%;
-        height: 80vmin;
-        background-color: rgba(255, 255, 255, 0.5);
-    }
-    .sectionOne {
-        float: left;
-        width: 80%;
-        height: 13%;
-    }
     .sectionAvatar {
-        float: right;
-        width: 18%;
-        height: 100%;
-        background: rgba(255, 255, 255, 0.5);
+        width: 88%;
+        height: 95%;
         border-radius: 10px;
         overflow: scroll;
+        background: rgba(255, 255, 255, 0.5);
     }
     #userAvatarArray {
         list-style-type: none;
         margin: 0;
         padding: 0;
     }
-    .sectionTwo {
-        float: left;
-        width: 80%;
-        height: 80%;
-        padding-bottom: 10px;
-        padding-top: 10px;
-        overflow: scroll;
-    }
-    #messageArray {
-        list-style-type: none;
-    }
-    .sectionThree {
-        float: left;
-        width: 80%;
-        height: 7%;
-        background: white;
-        padding: 5px;
-    }
-
-    .right{
-        height: 80vw;
-        width: 80%;
-    }
 
 }
+
 
 </style>
 
 <script>
+// import { io } from "socket.io-client";
 import { NButton, NModal } from 'naive-ui';
 
 import Base from '@/components/Base.vue';
