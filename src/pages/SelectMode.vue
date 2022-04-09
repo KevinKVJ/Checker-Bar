@@ -2,7 +2,7 @@
 <template>
     <Base>
         <div class="content">
-            <BigButton @click="toCompetePage()" fontSize="40px" title="Compete" />
+            <BigButton @click="toCompetePage()" fontSize="40px" title="Compete" id="buttonOne" />
             <BigButton @click="toCompetePage()" fontSize="40px" title="Spectate" />
         </div>
     </Base>
@@ -21,6 +21,16 @@
             margin: 0;
         }
     }
+}
+@media (max-width: 700px){
+    .content {
+        display: flex;
+        flex-direction: column;
+        div {
+            margin: 0px;
+            margin-bottom: 25px;
+        }
+    } 
 }
 </style>
 

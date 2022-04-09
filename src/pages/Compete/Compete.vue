@@ -1,6 +1,38 @@
 <template>
     <Base>
         <div class="main">
+            <div class="mobileButtonSection">
+                        <n-button @click="showModal = true" class="buttons" id="buttonOne"> Rules </n-button>
+                        <n-modal v-model:show="showModal">
+                            <div class="lalala">
+                                <ul id="ruleList">
+                                    <li>This game is for two players. Each player starts with 12 colored discs (of the same color).</li>
+                                    <li>
+                                        Players place their discs (pieces) on the dark squares on their side of the board. Black has first
+                                        play, after turns alternate.
+                                    </li>
+                                    <li>
+                                        Moves can only be made on black squares, so the pieces move diagonally. Pieces can only move in a
+                                        forward direction, toward their opponent.
+                                    </li>
+                                    <li>
+                                        If you are moving your disc forward, and not capturing your opponent’s piece in the move, you may
+                                        only move it forward one square.
+                                    </li>
+                                    <li>After a piece is captured, it is removed from the board, and collected by the opponent.</li>
+                                    <li>
+                                        If you have the ability to jump your opponents pieces, you must. However, in the even there are more
+                                        than one capture possible from a single square, you may jump whichever piece is preferable.
+                                    </li>
+                                    <li>
+                                        The game is won when the opponent is unable to make a move, which means the entirety of a player’s
+                                        pieces were captured by the opponent.
+                                    </li>
+                                </ul>
+                            </div>
+                        </n-modal>
+                        <button @click="toHomePage()" class="buttons" id="buttonTwo">Home</button>
+                    </div>
             <div class="left">
                 <div class="checkerboardbase">
                     <CheckerBoard></CheckerBoard>
@@ -52,21 +84,8 @@
                         </ul>
                     </div>
                     <div class="buttonSection">
-                        <!-- <button class="buttons" id="buttonOne">Rules</button> -->
                         <n-button @click="showModal = true" class="buttons" id="buttonOne"> Rules </n-button>
                         <n-modal v-model:show="showModal">
-                            <!-- <n-card
-                                style="width: 600px"
-                                title="模态框"
-                                :bordered="false"
-                                size="huge"
-                                role="dialog"
-                                aria-modal="true"
-                            >
-                                <template #header-extra> 噢！ </template>
-                                内容
-                                <template #footer> 尾部 </template>
-                            </n-card> -->
                             <div class="lalala">
                                 <ul id="ruleList">
                                     <li>This game is for two players. Each player starts with 12 colored discs (of the same color).</li>
@@ -127,6 +146,9 @@
     justify-content: space-around;
 }
 /* ------ checkerboardbase float at left ------ */
+.mobileButtonSection{
+    display: none;
+}
 .left {
     /* float: left;
     width: 50%;
@@ -198,16 +220,7 @@
 }
 
 /* ------ move history ------ */
-/* .right { */
-    /* float: left;
-    width: 22%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%; */
 
-/* } */
 .moveHistoryContent {
     width: 35vmin;
     height: 68vmin;
@@ -244,7 +257,7 @@ h4 {
 
 
 
-@media (max-width: 850px) {
+@media (max-width: 700px) {
    .main {
         display: flex;
         flex-direction: column;
@@ -252,21 +265,27 @@ h4 {
         align-items: center;
         justify-content: center;
     }
+    .mobileButtonSection{
+        display:block;
+        margin-bottom: 10px;
+    }
     .left{
         width: 100%;
-        height: 100vw;
+        /* height: 100vw; */
     }
     .checkerboardbase {
-        width: 100%;
-        height: 100vw;
+        width: 95vw;
+        height: 95vw;
         background: rgb(141, 114, 81);
         border-radius: 40px;   
+        margin:0 auto;
     }
 
     .middle{
         width: 80%;
-        height: 80vmin;
+        height: 120vmin;
         background-color: rgba(255, 255, 255, 0.5);
+        margin-top: 10px;
     }
     .sectionOne {
         float: left;
@@ -306,8 +325,40 @@ h4 {
     }
 
     .right{
-        height: 80vw;
+        margin-top: 10px;
+        height: 120vw;
         width: 80%;
+    }
+    .moveHistoryContent {
+        width: 100%;
+        height: 120vw;
+        background: rgb(204, 177, 128);
+        border-radius: 10px;
+    }
+    h4 {
+        font-size: 20px;
+        text-align: center;
+        margin-top: 0;
+        padding-top: 10px;
+        margin-bottom: 3px;
+    }
+    .divide-line {
+        height: 2px;
+        width: 100%;
+        background: black;
+    }
+    .buttons {
+        font-size: 25px;
+        border: none;
+        background: white;
+    }
+    .buttonSection{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        margin-top: 10px;
+        display: none;
     }
 
 }

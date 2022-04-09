@@ -14,7 +14,7 @@
     </Base>
 </template>
 
-<style>
+<style scoped>
 .content {
     display: flex;
     align-items: center;

@@ -21,7 +21,7 @@
     </div>
 </template>
 
-<style>
+<style scoped>
 .loginForm {
     padding-bottom: 20px;
 }
