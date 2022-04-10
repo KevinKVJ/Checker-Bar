@@ -436,7 +436,7 @@ import FightWith from './Components/FightWith.vue';
 import LeftMessage from './Components/LeftMessage.vue';
 import RightMessage from './Components/RightMessage.vue';
 import MessageInputForm from './Components/MessageInputForm.vue';
-import CheckerBoard from '@/components/Checker/CheckerBoard2.vue';
+import CheckerBoard from '@/components/Checker/CheckerBoard3.vue';
 
 export default {
     data() {
