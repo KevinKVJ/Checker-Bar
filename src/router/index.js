@@ -77,6 +77,12 @@ const router = createRouter({
             component: () => import('@/components/Checker/CheckerBoard3.vue'),
         },
         {
+            path: '/csb4',
+            name: 'chessboard4',
+            title: 'chessboard',
+            component: () => import('@/components/Checker/CheckerBoard4.vue'),
+        },
+        {
             path: '/:pathMatch(.*)*',
             name: 'NotFound',
             component: () => import('@/pages/NotFound.vue'),
