@@ -11,7 +11,7 @@
                     <div class="lalala">
                         <ul id="ruleList">
                             <li>This game is for two players. Each player starts with 12 colored discs (of the same color).</li>
-                            <li>Players place their discs (pieces) on the dark squares on their side of the board. Black has first play, after turns alternate.</li>
+                            <li>Players place their discs (pieces) on the dark squares on their side of the board. Red has first play, after turns alternate.</li>
                             <li>Moves can only be made on black squares, so the pieces move diagonally. Pieces can only move in a forward direction, toward their opponent.</li>
                             <li>If you are moving your disc forward, and not capturing your opponent’s piece in the move, you may only move it forward one square.</li>
                             <li>After a piece is captured, it is removed from the board, and collected by the opponent.</li>
@@ -24,8 +24,12 @@
                     </div>
                 </n-modal>
                 <button @click="toHomePage()" class="buttons">Home</button>
+                <button v-bind:class="{'white': !clicked, 'red': clicked}" v-on:click ="clicked = !clicked"> Ready </button>
             </div>
             <div class="left">
+                <div class="webReadyButton">
+                    <button v-bind:class="{'white': !clicked, 'red': clicked}" v-on:click ="clicked = !clicked"> Ready </button>
+                </div>
                 <div class="checkerboardbase">
                     <CheckerBoard></CheckerBoard>
                 </div>
@@ -154,13 +158,35 @@
     padding-right: 20px;
 }
 
+.white{
+    background: white;
+    height: 40px;
+    width: 90px;
+    font-size: 25px;
+    border: none;
+    margin-right: 40px;
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
+.white:hover {
+    color: rgb(182, 113, 113);
+}
+.red{
+    background: rgb(182, 113, 113);
+    height: 40px;
+    width: 90px;
+    font-size: 25px;
+    border: none;
+    margin-right: 40px;
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
+.red:hover {
+    color: white;
+}
+
 .main {
-    /* position: fixed;
-    top: 75px;
-    bottom: 65px;
-    right: 0; */
     left: 0;
-    /* height: 100%; */
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -170,14 +196,13 @@
 .mobileButtonSection {
     display: none;
 }
+
 .left {
-    /* float: left;
-    width: 50%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center; */
     width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 .checkerboardbase {
     width: 36vw;
@@ -191,13 +216,6 @@
 
 /* ------ message window ------ */
 .middle {
-    /* float: left;
-    width: 28%;
-    height: 96%;
-    padding: 10px;
-    margin-top: 10px;
-    background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 8px; */
     width: 30%;
     background-color: rgba(255, 255, 255, 0.5);
     height: 72vmin;
@@ -218,9 +236,7 @@
 .messageArray {
     list-style: none;
     padding: 0 10px;
-
     margin: 0;
-
     &List {
         width: 100%;
         margin-bottom: 10px;
@@ -290,6 +306,9 @@
         align-items: center;
         justify-content: center;
     }
+    .webReadyButton{
+        display: none;
+    }
     .mobileButtonSection {
         display: block;
         margin-bottom: 10px;
@@ -316,6 +335,7 @@
         height: 70vmin;
         background-color: rgba(255, 255, 255, 0.5);
         margin-top: 10px;
+        margin-bottom: 10px;
     }
     .sectionOne {
         float: left;
@@ -406,7 +426,7 @@
 </style>
 
 <script>
-// import { io } from "socket.io-client";
+import { io } from "socket.io-client";
 import { NButton, NModal } from 'naive-ui';
 
 import Base from '@/components/Base.vue';
@@ -422,6 +442,7 @@ export default {
     data() {
         return {
             // show: false,
+            clicked: false,
             popupActivo: false,
             showModal: false,
             messages: [
@@ -473,28 +494,30 @@ export default {
         let userAvatar = sessionStorage.getItem('userAvatar');
         var userObj = { myname: username, myid: userid, myavatar: userAvatar };
 
-        // const sock = io('http://10.12.187.218:8000');
-        // this.socket = sock;
+        const sock = io('http://10.13.110.27:8000');
+        this.socket = sock;
 
-        // sock.on('echo', data => {
-        //     console.log(data);
-        //     this.items.push({ message: data, name: true });
-        // });
+        sock.on('echo', data => {
+            console.log(data);
+            this.items.push({ message: data, name: true });
+        });
 
-        // sock.on('data', data => {
-        //     console.log(data);
-        //     this.items.push({ message: data, name: false });
-        // });
+        sock.on('data', data => {
+            console.log(data);
+            this.items.push({ message: data, name: false });
+        });
 
-        // sock.emit('avatarInfor', userObj);
+        sock.emit('setAvatarInfo', userObj);
+        console.log(userObj);
 
-        // sock.on('returnInf', data => {
-        //     console.log(data);
-        //     this.avatarList = data.map(obj => {
-        //         return obj.myavatar;
-        //     });
-        //     console.log(this.avatarList);
-        // });
+        sock.on('returnInf', data => {
+            console.log("lalala");
+            console.log(data);
+            data.map((item,index) => {
+                this.avatarList.push(item.myavatar);
+            })
+            console.log(this.avatarList);
+        });
     },
 
     unmounted() {

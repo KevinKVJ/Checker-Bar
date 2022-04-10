@@ -99,26 +99,31 @@ export default{
                 //get login code and user id 
                 var code = res.data[Object.keys(res.data)[0]];
                 console.log(code);
-                var id = res.data[Object.keys(res.data)[2]];
-                var userId = id[Object.keys(id)[0]]
-                console.log(userId);
+                // var id = res.data[Object.keys(res.data)[2]];
+                // var userId = id[Object.keys(id)[0]];
+                //console.log(userId);
 
-                // save userId into session
                 sessionStorage.setItem('userid', userId);
 
                 if (code === 200){
+                    var id = res.data[Object.keys(res.data)[2]];
+                    var userId = id[Object.keys(id)[0]];
+                    console.log(userId);
+                    sessionStorage.setItem('userid', userId);
                     this.toHomePage();
                     alert("successfully login");
-                }else if (code === 400){
+                }
+                if (code === 400){
                     alert("cannot find the user");      
-                }else{
+                }
+                if(code === 401){
                     alert("password incorrect");
                 }
                 
             })
             .catch((error)=>{
                 console.log(error);
-            });
+            })
             
             
 

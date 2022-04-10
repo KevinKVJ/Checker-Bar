@@ -1,21 +1,14 @@
 <template>
-    <!-- <div class="profileForm">
-        <form>
-            <label for="username">Change Username:</label><br>
-            <input type="text" id="username" name="username" placeholder="Enter here"><br>
-            <label for="psw">Change Password:</label><br>
-            <input type="text" id="psw" name="psw" placeholder="Enter here"><br><br>
-        </form>
-    </div> -->
     <div class="changeInfoForm">
         <div class="userName">
             <label class="label">Change Username</label> <br>
-            <input type="text" v-model="username" placeholder="Enter here" />
+            <input type="text" placeholder="Enter here" :value="modelValue" @input='$emit("update:modelValue", $event.target.value)' />
         </div>
         <div class="password">
             <label class="label"> Change Password </label> <br>
-            <input type="text" v-model="psw" placeholder="Enter here" />
+            <input type="text" placeholder="Enter here" :value="passwordValue" @input='$emit("update:passwordValue", $event.target.value)' />
         </div>
+        
     </div>
 </template>
 
@@ -33,5 +26,11 @@
 </style>
 
 
-<script setup>
+<script>
+export default {
+  props: {
+    modelValue: String,
+    passwordValue: String,
+  }
+}
 </script>

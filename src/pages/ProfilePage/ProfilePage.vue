@@ -5,7 +5,8 @@
                 <h4>{{ titleName }}'s Profile</h4>
                 <div class="divide-line"></div>
                 <!-- <SelectAvatar /> -->
-                <ChangeUsernameForm />
+                <ChangeUsernameForm v-model='value' v-model:passwordValue='passwordValue' />
+                <SmallButton @click="updateUserInfo()" fontSize="18px" title="Submit"/>
             </div>
             <div class="button">
                 <BigButton @click="toHomePage()" fontSize="18px" title="Home" />
@@ -55,28 +56,65 @@ p {
 import Base from '@/components/Base.vue';
 import BigButton from '@/components/BigButton.vue';
 import ChangeUsernameForm from './Components/ChangeUsernameForm.vue';
+import SmallButton from '@/components/SmallButton.vue';
+import axios from 'axios';
 
 export default {
     data() {
         return {
-            titleName: 'abc',
+            titleName: 'default',
+            value:'',
+            passwordValue:'',
+            userid:'',
         };
     },
     components:{
         Base,
         BigButton,
-        ChangeUsernameForm
+        ChangeUsernameForm,
+        SmallButton,
     },
     mounted() {
         let username = sessionStorage.getItem('username');
         console.log(username);
         this.titleName = username;
+        this.userid = sessionStorage.getItem('userid');
+        console.log(this.userid);
     },
 
     methods: {
         toHomePage() {
             this.$router.push({ path: '/homePage' });
         },
+
+        updateUserInfo(){
+            console.log(this.value); 
+            console.log(this.passwordValue);
+            console.log(this.userid);
+
+            axios.post('/api/modifyUserInfoApi',{
+                nickname: this.value,
+                password: this.passwordValue,
+                id: this.userid,
+            })
+            .then((res) => {
+                console.log(res.data);
+                var code = res.data[Object.keys(res.data)[0]];
+                console.log(code);
+                if(code === 200){
+                    alert("SignUp successful");
+                    sessionStorage.setItem('username', this.value);
+                    window.location.reload();
+                }else{
+                    alert("duplicate username");
+                }
+            })
+            .catch((error)=>{
+                console.log(error);
+            })
+        },
+
+
     },
 };
 </script>

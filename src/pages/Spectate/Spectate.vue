@@ -2,6 +2,9 @@
     <Base>
         <div class="main">
             <div class="middle">
+                <div class="fightInfoSection">
+                    <div class="fightInfo"> nina is fighting with lalala</div>
+                </div>
                 <div class="buttonSection">
                         <n-button @click="showModal = true" class="buttons" id="buttonOne"> Rules </n-button>
                         <n-modal v-model:show="showModal">
@@ -81,6 +84,20 @@
     margin-right: 10px;
 }
 
+.fightInfoSection{
+    width: 32vw;
+    height: 4vw;
+    background:rgb(141, 114, 81);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fightInfo{
+    font-size: 18px;
+}
+
 .buttonSection{
     margin-bottom: 10px;
     display: flex;
@@ -106,8 +123,8 @@
 }
 
 .checkerboardbase {
-    width: 40vw;
-    height: 40vw;
+    width: 32vw;
+    height: 32vw;
     max-width: 550px;
     max-height: 550px;
     background: rgb(141, 114, 81);
@@ -117,7 +134,7 @@
 /* ------ user list float at right ------ */
 .right{
     align-self: center;
-    height: 80vh;
+    height: 75vh;
     width: 8vw;
     background: rgba(255, 255, 255, 0.5);
     display: flex;
@@ -154,9 +171,17 @@ li {
         flex-direction: column;
         align-self: center;
     }
+
+    .fightInfoSection{
+        width: 90vw;
+        height:10vw;
+    }
+
     .checkerboardbase {
         width: 90vw;
         height: 90vw;
+        /* width: 50vw;
+        height: 50vw; */
         max-width: 550px;
         max-height: 550px;
         background: rgb(141, 114, 81);
@@ -165,7 +190,7 @@ li {
     }
     .right{
         align-self: center;
-        height: 15vw;
+        height: 17vw;
         width: 90vw;
         background: rgba(255, 255, 255, 0.5);
         display: flex;
@@ -191,7 +216,7 @@ li {
 </style>
 
 <script>
-// import { io } from "socket.io-client";
+import { io } from "socket.io-client";
 import { NButton, NModal } from 'naive-ui';
 
 import Base from '@/components/Base.vue';
@@ -237,28 +262,18 @@ export default {
         let userAvatar = sessionStorage.getItem('userAvatar');
         var userObj = { myname: username, myid: userid, myavatar: userAvatar };
 
-        // const sock = io('http://10.12.187.218:8000');
-        // this.socket = sock;
+        const sock = io('http://10.13.110.27:8000');
+        this.socket = sock;
 
-        // sock.on('echo', data => {
-        //     console.log(data);
-        //     this.items.push({ message: data, name: true });
-        // });
+        sock.emit('getAvatarInfo');
 
-        // sock.on('data', data => {
-        //     console.log(data);
-        //     this.items.push({ message: data, name: false });
-        // });
-
-        // sock.emit('avatarInfor', userObj);
-
-        // sock.on('returnInf', data => {
-        //     console.log(data);
-        //     this.avatarList = data.map(obj => {
-        //         return obj.myavatar;
-        //     });
-        //     console.log(this.avatarList);
-        // });
+        sock.on('returnInf', data => {
+            console.log(data);
+            this.avatarList = data.map(obj => {
+                return obj.myavatar;
+            });
+            console.log(this.avatarList);
+        });
     },
 
     unmounted() {

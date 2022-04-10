@@ -3,7 +3,7 @@
     <Base>
         <div class="content">
             <BigButton @click="this.$router.push({ path: '/compete' })" fontSize="40px" title="Compete" />
-            <BigButton @click="this.$router.push({ path: '/compete' })" fontSize="40px" title="Spectate" />
+            <BigButton @click="this.$router.push({ path: '/spectate' })" fontSize="40px" title="Spectate" />
         </div>
     </Base>
 </template>

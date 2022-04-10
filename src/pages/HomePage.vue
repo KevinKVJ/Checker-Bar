@@ -7,7 +7,7 @@
                 </div>
                 <div class="contentTwo">
                     <BigButton @click="toProfilePage()" id="button_two" fontSize="18px" title="Profile"/>
-                    <BigButton @click="toRecordsPage()" id="button_two" fontSize="18px" title="Records"/>
+                    <BigButton @click="toRecordsPage()" id="button_three" fontSize="18px" title="Records"/>
                 </div>
             </div>
         </div>
