@@ -47,8 +47,7 @@
 
 .contentarea {
     min-height: calc(100% - 75px);
-    padding-bottom: 75px;
-    padding-top: 10px;
+    padding: 10px 15px 75px 15px;
 
     background: url('@/assets/img/bkg.png') center center;
     display: flex;
@@ -73,15 +72,17 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
+
+        padding: 0 10px;
     }
 
     .copyright {
         margin-right: 30px;
     }
 
-    /* .groupmember {
-        white-space: pre;
-    } */
+    .groupmember {
+        text-align: center;
+    }
 }
 </style>
 

@@ -56,7 +56,7 @@ const router = createRouter({
             path: '/spectate',
             name: 'spectate',
             title: 'Spectate',
-            component: () => import('@/pages/Compete/Compete.vue'),
+            component: () => import('@/pages/Spectate/Spectate.vue'),
         },
         {
             path: '/csb',
@@ -75,6 +75,12 @@ const router = createRouter({
             name: 'chessboard3',
             title: 'chessboard',
             component: () => import('@/components/Checker/CheckerBoard3.vue'),
+        },
+        {
+            path: '/csb4',
+            name: 'chessboard4',
+            title: 'chessboard',
+            component: () => import('@/components/Checker/CheckerBoard4.vue'),
         },
         {
             path: '/:pathMatch(.*)*',
