@@ -52,7 +52,7 @@
                     <ul class="messageArray">
                         <li v-for="({ message, name }, index) in messages" :key="index" class="messageArrayList">
                             <!-- <RightMessage v-if="name === " :chatterName="name"> -->
-                            <RightMessage v-if="name === 'Nina'" :chatterName="name">
+                            <RightMessage v-if="name === this.username" :chatterName="name">
                                 <div>
                                     {{ message }}
                                 </div>
@@ -442,15 +442,18 @@ export default {
     data() {
         return {
             // show: false,
+            userid: "",
+            username: "",
+            userAvatar: "",
             isReady: false,
             popupActivo: false,
             showModal: false,
             messages: [
-                { message: 'FooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFoo', name: 'Nina' },
-                { message: 'FooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFoo', name: 'Nina' },
-                { message: 'FooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFoo', name: 'Nina' },
-                { message: 'FooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFoo', name: 'Nina' },
-                { message: 'BarBarBarBar', name: 'Boxiao' },
+                // { message: 'FooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFoo', name: 'Nina' },
+                // { message: 'FooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFoo', name: 'Nina' },
+                // { message: 'FooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFoo', name: 'Nina' },
+                // { message: 'FooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFoo', name: 'Nina' },
+                // { message: 'BarBarBarBar', name: 'Boxiao' },
             ],
             //items: ['message', 'name'],
             socket: null,
@@ -489,23 +492,18 @@ export default {
     },
 
     mounted() {
-        let userid = sessionStorage.getItem('userid');
-        let username = sessionStorage.getItem('username');
-        let userAvatar = sessionStorage.getItem('userAvatar');
-        var userObj = { myname: username, myid: userid, myavatar: userAvatar };
+        this.userid = sessionStorage.getItem('userid');
+        this.username = sessionStorage.getItem('username');
+        this.userAvatar = sessionStorage.getItem('userAvatar');
+        var userObj = { myname: this.username, myid: this.userid, myavatar: this.userAvatar };
 
         //const sock = io('http://10.13.110.27:8000');
         const sock = io('http://localhost:8000');
         this.socket = sock;
 
-        sock.on('echo', data => {
+        sock.on('message-data', data => {
             console.log(data);
-            this.items.push({ message: data, name: true });
-        });
-
-        sock.on('data', data => {
-            console.log(data);
-            this.items.push({ message: data, name: false });
+            this.messages.push(data);
         });
 
         sock.emit('addUser', userObj);
@@ -542,8 +540,8 @@ export default {
         },
 
         sendMessage(mess) {
-            this.socket.emit('boardmessage', mess);
-            console.log(mess);
+            this.socket.emit('boardmessage', { message: mess, name: sessionStorage.getItem('username') });
+            console.log("Sent!!");
         },
 
         addMoveHistory(moveHistory) {
