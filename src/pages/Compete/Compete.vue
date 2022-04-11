@@ -24,11 +24,11 @@
                     </div>
                 </n-modal>
                 <button @click="toHomePage()" class="buttons">Home</button>
-                <button v-bind:class="{'white': !clicked, 'red': clicked}" v-on:click ="clicked = !clicked"> Ready </button>
+                <button v-bind:class="{'white': !isReady, 'red': isReady}" v-on:click ="isReady = !isReady"> Ready </button>
             </div>
             <div class="left">
                 <div class="webReadyButton">
-                    <button v-bind:class="{'white': !clicked, 'red': clicked}" v-on:click ="clicked = !clicked"> Ready </button>
+                    <button v-bind:class="{'white': !isReady, 'red': isReady}" v-on:click ="isReady = !isReady"> Ready </button>
                 </div>
                 <div class="checkerboardbase">
                     <CheckerBoard></CheckerBoard>
@@ -442,7 +442,7 @@ export default {
     data() {
         return {
             // show: false,
-            clicked: false,
+            isReady: false,
             popupActivo: false,
             showModal: false,
             messages: [
@@ -494,7 +494,8 @@ export default {
         let userAvatar = sessionStorage.getItem('userAvatar');
         var userObj = { myname: username, myid: userid, myavatar: userAvatar };
 
-        const sock = io('http://10.13.110.27:8000');
+        //const sock = io('http://10.13.110.27:8000');
+        const sock = io('http://localhost:8000');
         this.socket = sock;
 
         sock.on('echo', data => {
@@ -507,17 +508,27 @@ export default {
             this.items.push({ message: data, name: false });
         });
 
-        sock.emit('setAvatarInfo', userObj);
+        sock.emit('addUser', userObj);
         console.log(userObj);
-
-        sock.on('returnInf', data => {
-            console.log("lalala");
+        sock.on('toBeReady', data =>{
             console.log(data);
-            data.map((item,index) => {
-                this.avatarList.push(item.myavatar);
-            })
-            console.log(this.avatarList);
-        });
+        })
+        sock.on('inQueryOrGoToSpectate', goToSpectate=>{
+            alert("Please go to Spectate page");
+        })
+
+        // sock.emit('setAvatarInfo', userObj);
+        // console.log(userObj);
+
+        // sock.on('returnInf', data => {
+        //     console.log("lalala");
+        //     console.log(data);
+        //     data.map((item,index) => {
+        //         this.avatarList.push(item.myavatar);
+        //     })
+        //     console.log(this.avatarList);
+        // });
+
     },
 
     unmounted() {
