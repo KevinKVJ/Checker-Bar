@@ -497,7 +497,6 @@ export default {
         this.userAvatar = sessionStorage.getItem('userAvatar');
         var userObj = { myname: this.username, myid: this.userid, myavatar: this.userAvatar };
 
-        //const sock = io('http://10.13.110.27:8000');
         const sock = io('http://localhost:8000');
         this.socket = sock;
 
