@@ -3,42 +3,33 @@
         <div class="main">
             <div class="middle">
                 <div class="fightInfoSection">
-                    <div class="fightInfo"> nina is fighting with lalala</div>
+                    <div class="fightInfo">nina is fighting with lalala</div>
                 </div>
                 <div class="buttonSection">
-                        <n-button @click="showModal = true" class="buttons" id="buttonOne"> Rules </n-button>
-                        <n-modal v-model:show="showModal">
-                            <div class="lalala">
-                                <ul id="ruleList">
-                                    <li>This game is for two players. Each player starts with 12 colored discs (of the same color).</li>
-                                    <li>
-                                        Players place their discs (pieces) on the dark squares on their side of the board. Black has first
-                                        play, after turns alternate.
-                                    </li>
-                                    <li>
-                                        Moves can only be made on black squares, so the pieces move diagonally. Pieces can only move in a
-                                        forward direction, toward their opponent.
-                                    </li>
-                                    <li>
-                                        If you are moving your disc forward, and not capturing your opponent’s piece in the move, you may
-                                        only move it forward one square.
-                                    </li>
-                                    <li>After a piece is captured, it is removed from the board, and collected by the opponent.</li>
-                                    <li>
-                                        If you have the ability to jump your opponents pieces, you must. However, in the even there are more
-                                        than one capture possible from a single square, you may jump whichever piece is preferable.
-                                    </li>
-                                    <li>
-                                        The game is won when the opponent is unable to make a move, which means the entirety of a player’s
-                                        pieces were captured by the opponent.
-                                    </li>
-                                </ul>
-                            </div>
-                        </n-modal>
-                        <button @click="toHomePage()" class="buttons" id="buttonTwo">Home</button>
+                    <n-button @click="showModal = true" class="buttons" id="buttonOne"> Rules </n-button>
+                    <n-modal v-model:show="showModal">
+                        <div class="lalala">
+                            <ul id="ruleList">
+                                <li>This game is for two players. Each player starts with 12 colored discs (of the same color).</li>
+                                <li>Players place their discs (pieces) on the dark squares on their side of the board. Black has first play, after turns alternate.</li>
+                                <li>Moves can only be made on black squares, so the pieces move diagonally. Pieces can only move in a forward direction, toward their opponent.</li>
+                                <li>If you are moving your disc forward, and not capturing your opponent’s piece in the move, you may only move it forward one square.</li>
+                                <li>After a piece is captured, it is removed from the board, and collected by the opponent.</li>
+                                <li>
+                                    If you have the ability to jump your opponents pieces, you must. However, in the even there are more than one capture possible from a single
+                                    square, you may jump whichever piece is preferable.
+                                </li>
+                                <li>The game is won when the opponent is unable to make a move, which means the entirety of a player’s pieces were captured by the opponent.</li>
+                            </ul>
+                        </div>
+                    </n-modal>
+                    <button @click="toHomePage()" class="buttons" id="buttonTwo">Home</button>
                 </div>
                 <div class="checkerboardbase">
                     <CheckerBoard></CheckerBoard>
+                </div>
+                <div class="getReady">
+                    <button v-bind:class="{ white: !waitlisted, red: waitlisted }" v-on:click="waitlisted = !waitlisted" @click="checkStatus()">Join the waitlist</button>
                 </div>
             </div>
 
@@ -51,8 +42,6 @@
                     </ul>
                 </div>
             </div>
-
-            
         </div>
     </Base>
 </template>
@@ -84,21 +73,21 @@
     margin-right: 10px;
 }
 
-.fightInfoSection{
+.fightInfoSection {
     width: 32vw;
     height: 4vw;
-    background:rgb(141, 114, 81);
+    background: rgb(141, 114, 81);
     margin-bottom: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.fightInfo{
+.fightInfo {
     font-size: 18px;
 }
 
-.buttonSection{
+.buttonSection {
     margin-bottom: 10px;
     display: flex;
     flex-direction: row;
@@ -121,6 +110,25 @@
     height: 40px;
     width: 90px;
 }
+.getReady {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.white {
+    background: white;
+    border: none;
+    margin-top: 10px;
+    font-size: 25px;
+    margin-bottom: 6px;
+}
+.red {
+    background: rgb(180, 135, 135);
+    border: none;
+    margin-top: 10px;
+    font-size: 25px;
+    margin-bottom: 6px;
+}
 
 .checkerboardbase {
     width: 32vw;
@@ -132,7 +140,7 @@
     padding: 40px;
 }
 /* ------ user list float at right ------ */
-.right{
+.right {
     align-self: center;
     height: 75vh;
     width: 8vw;
@@ -160,9 +168,8 @@ li {
     list-style-type: none;
 }
 
-
 @media (max-width: 700px) {
-    .main{
+    .main {
         display: flex;
         flex-direction: column;
     }
@@ -172,9 +179,9 @@ li {
         align-self: center;
     }
 
-    .fightInfoSection{
+    .fightInfoSection {
         width: 90vw;
-        height:10vw;
+        height: 10vw;
     }
 
     .checkerboardbase {
@@ -188,7 +195,7 @@ li {
         border-radius: 40px;
         padding: 40px;
     }
-    .right{
+    .right {
         align-self: center;
         height: 17vw;
         width: 90vw;
@@ -209,14 +216,11 @@ li {
         margin: 0;
         padding: 0;
     }
-
 }
-
-
 </style>
 
 <script>
-import { io } from "socket.io-client";
+import { io } from 'socket.io-client';
 import { NButton, NModal } from 'naive-ui';
 
 import Base from '@/components/Base.vue';
@@ -232,6 +236,7 @@ export default {
     data() {
         return {
             // show: false,
+            waitlisted: false,
             popupActivo: false,
             showModal: false,
             items: [
@@ -241,6 +246,7 @@ export default {
             //items: ['message', 'name'],
             socket: null,
             avatarList: [],
+            userObj:{myname: '', myid: '', myavatar: ''},
         };
     },
     components: {
@@ -257,23 +263,34 @@ export default {
     },
 
     mounted() {
-        let userid = sessionStorage.getItem('userid');
-        let username = sessionStorage.getItem('username');
-        let userAvatar = sessionStorage.getItem('userAvatar');
-        var userObj = { myname: username, myid: userid, myavatar: userAvatar };
+        this.userObj.myid = sessionStorage.getItem('userid');
+        this.userObj.myname = sessionStorage.getItem('username');
+        this.userObj.myavatar = sessionStorage.getItem('userAvatar');
+        // console.log(userid);
+        // console.log(username);
+        //console.log(userAvatar);
+        //var userObj = { myname: username, myid: userid, myavatar: userAvatar };
 
-        const sock = io('http://10.13.110.27:8000');
+        const sock = io('http://localhost:8000');
         this.socket = sock;
 
-        sock.emit('getAvatarInfo');
+        sock.emit('getAvatarInfo', this.userObj);
+        console.log(this.userObj);
 
-        sock.on('returnInf', data => {
+        sock.on('queryInfo', data => {
+            console.log('lalala');
             console.log(data);
-            this.avatarList = data.map(obj => {
-                return obj.myavatar;
+            this.avatarList = [];
+            data.map((item, index) => {
+                this.avatarList.push(item.myavatar);
             });
             console.log(this.avatarList);
         });
+
+        sock.on('waitforjoin', data => {
+            console.log('wait for join');
+        });
+
     },
 
     unmounted() {
@@ -289,6 +306,14 @@ export default {
         sendMessage(mess) {
             this.socket.emit('boardmessage', mess);
             console.log(mess);
+        },
+
+        checkStatus() {
+            console.log(this.waitlisted);
+            if (this.waitlisted === true) {
+                this.socket.emit('addUser', this.userObj);
+                console.log(this.userObj);
+            }
         },
     },
 };
