@@ -73,11 +73,11 @@
     opacity: 0;
 }
 
-.cgrid{
+.cgrid {
     position: relative;
 }
 
-.cchess{
+.cchess {
     position: absolute;
 }
 </style>
@@ -95,7 +95,7 @@
                 :column="colIndex"
                 @emit-grid-coord="moveByGridCoord"
                 v-for="({ gridType, chessObj, cAnima, gridActive }, colIndex) in row"
-                class="cgrid"                
+                class="cgrid"
             >
                 <!-- :key="rowIndex * 8 + colIndex" -->
                 <transition>
@@ -120,7 +120,7 @@
 
 <script setup>
 import ChessGrid from './ChessGrid.vue';
-import { ref, reactive, watch,onUpdated,onMounted,onBeforeUpdate } from 'vue';
+import { ref, reactive, watch, onUpdated, onMounted, onBeforeUpdate } from 'vue';
 import lodash from 'lodash';
 import CheckerChess from './CheckerChess.vue';
 
@@ -232,134 +232,98 @@ const moveByGridCoord = newCoord => {
     const { row, column } = activeChess.value;
     // console.log(row,column);
 
-      moveChess([row, column], newCoord);
-
-
+    moveChess([row, column], newCoord);
 };
 let canGo = false;
-
-
 
 watch(activeChess, (newAC, OriAC) => {
     if (newAC !== null) {
         const { chessType, csIndex, row, column } = newAC;
 
-
-
-        // for (const rows of RealChessboard) {
-        //     for (let col of rows) {
-        //         !!col.gridActive && (col.gridActive = false);
-        //     }
-        // }
-
-
-            // bcred
-            if (chessType=== 0){
-              console.log(RealChessboard[row ][column ])
-              if(column>0&&!((row+1)>=8||(column-1)<0)){
-
-                if( RealChessboard[row + 1][column - 1].chessObj===null){
-
+        // bcred
+        if (chessType === 0) {
+            console.log(RealChessboard[row][column]);
+            if (column > 0 && !(row + 1 >= 8 || column - 1 < 0)) {
+                if (RealChessboard[row + 1][column - 1].chessObj === null) {
                     RealChessboard[row + 1][column - 1].gridActive = true;
-                  }
-
-                else if(RealChessboard[row + 1][column - 1].chessObj[1]===2 || RealChessboard[row + 1][column - 1].chessObj[1]===3){
-
-                  if (!((row+2)>=8||(column-2)<0)) {
-                    if (RealChessboard[row + 2][column - 2].chessObj === null) {
-                      //RealChessboard[row + 2][column - 2].chessObj=null;
-                      RealChessboard[row + 2][column - 2].gridActive = true;
-                      if(conToMove){
-                          console.log("work as position");
-                          secondaryMove(row,column,row + 2,column - 2, "nr");
+                } else if (RealChessboard[row + 1][column - 1].chessObj[1] === 2 || RealChessboard[row + 1][column - 1].chessObj[1] === 3) {
+                    if (!(row + 2 >= 8 || column - 2 < 0)) {
+                        if (RealChessboard[row + 2][column - 2].chessObj === null) {
+                            //RealChessboard[row + 2][column - 2].chessObj=null;
+                            RealChessboard[row + 2][column - 2].gridActive = true;
+                            if (conToMove) {
+                                console.log('work as position');
+                                secondaryMove(row, column, row + 2, column - 2, 'nr');
+                            }
                         }
                     }
-                  }
                 }
-              }
-              if(column<7&&!((row+1)>=8||(column+1)>=8)){
-                if(RealChessboard[row + 1][column + 1].chessObj===null){
-                  RealChessboard[row + 1][column + 1].gridActive = true;
-                }
-                else if(RealChessboard[row + 1][column + 1].chessObj[1]===2 || RealChessboard[row + 1][column + 1].chessObj[1]===3){{
-                  if (!((row+2)>=8||(column+2)>=8)){
-
-
-                    if(RealChessboard[row + 2][column + 2].chessObj===null){
-                      //RealChessboard[row + 2][column + 2].chessObj=null;
-                      RealChessboard[row + 2][column + 2].gridActive = true;
-                      if(conToMove){
-                        console.log("work as position");
-                        secondaryMove(row,column,row + 2,column + 2, "nr");
-                      }
-                    }
-                  }
-                  else {
-                    console.log("error, out of range");
-                  }
-                }
-
-                }
-              }
-
             }
-            else if(chessType===2){
-
-              if(column>0&&!((row-1)<0||(column-1)<0)){
-                if( RealChessboard[row - 1][column - 1].chessObj===null){
-                  RealChessboard[row - 1][column - 1].gridActive = true;
-                }
-                else if(RealChessboard[row - 1][column - 1].chessObj[1]===0 || RealChessboard[row - 1][column - 1].chessObj[1]===1){
-                  if (!((row-2)<0||(column-2)<0)) {
-
-                    if (RealChessboard[row - 2][column - 2].chessObj === null) {
-                      //RealChessboard[row - 1][column - 1].chessObj=null;
-                      RealChessboard[row - 2][column - 2].gridActive = true;
-
+            if (column < 7 && !(row + 1 >= 8 || column + 1 >= 8)) {
+                if (RealChessboard[row + 1][column + 1].chessObj === null) {
+                    RealChessboard[row + 1][column + 1].gridActive = true;
+                } else if (RealChessboard[row + 1][column + 1].chessObj[1] === 2 || RealChessboard[row + 1][column + 1].chessObj[1] === 3) {
+                    {
+                        if (!(row + 2 >= 8 || column + 2 >= 8)) {
+                            if (RealChessboard[row + 2][column + 2].chessObj === null) {
+                                //RealChessboard[row + 2][column + 2].chessObj=null;
+                                RealChessboard[row + 2][column + 2].gridActive = true;
+                                if (conToMove) {
+                                    console.log('work as position');
+                                    secondaryMove(row, column, row + 2, column + 2, 'nr');
+                                }
+                            }
+                        } else {
+                            console.log('error, out of range');
+                        }
                     }
-                  }
                 }
-              }
-              if(column<7&&!((row-1)<0||(column+1)>=8)){
-                if(RealChessboard[row - 1][column + 1].chessObj===null){
-                  RealChessboard[row - 1][column + 1].gridActive = true;
-                }
-                else if(RealChessboard[row - 1][column + 1].chessObj[1]===0 || RealChessboard[row - 1][column + 1].chessObj[1]===1){
-
-                  if (!((row-2)<0||(column+2)>=8)) {
-                    if (RealChessboard[row - 2][column + 2].chessObj === null) {
-                      //RealChessboard[row - 1][column + 1].chessObj=null;
-                      RealChessboard[row - 2][column + 2].gridActive = true;
-
-                    }
-                  }
-                }
-              }
-
-
-
-
             }
-            // bcblue
-
-            // bkred
-            // bkblue
-            else if (chessType===1){
-              if(row === 0 && column === 7){
-                if(RealChessboard[row + 1][column - 1].chessObj===null) {
-                  RealChessboard[row + 1][column - 1].gridActive = true;
+        } else if (chessType === 2) {
+            if (column > 0 && !(row - 1 < 0 || column - 1 < 0)) {
+                if (RealChessboard[row - 1][column - 1].chessObj === null) {
+                    RealChessboard[row - 1][column - 1].gridActive = true;
+                } else if (RealChessboard[row - 1][column - 1].chessObj[1] === 0 || RealChessboard[row - 1][column - 1].chessObj[1] === 1) {
+                    if (!(row - 2 < 0 || column - 2 < 0)) {
+                        if (RealChessboard[row - 2][column - 2].chessObj === null) {
+                            //RealChessboard[row - 1][column - 1].chessObj=null;
+                            RealChessboard[row - 2][column - 2].gridActive = true;
+                        }
+                    }
                 }
-                    // if (RealChessboard[row + 2][column - 2].chessObj === null) {
-                    //   if(RealChessboard[row + 1][column - 1].chessObj[1]===2||RealChessboard[row + 1][column - 1].chessObj[1]===3){
-                    //     RealChessboard[row + 2][column - 2].gridActive = true;
-                    //   }
-                    //
-                    // }
+            }
+            if (column < 7 && !(row - 1 < 0 || column + 1 >= 8)) {
+                if (RealChessboard[row - 1][column + 1].chessObj === null) {
+                    RealChessboard[row - 1][column + 1].gridActive = true;
+                } else if (RealChessboard[row - 1][column + 1].chessObj[1] === 0 || RealChessboard[row - 1][column + 1].chessObj[1] === 1) {
+                    if (!(row - 2 < 0 || column + 2 >= 8)) {
+                        if (RealChessboard[row - 2][column + 2].chessObj === null) {
+                            //RealChessboard[row - 1][column + 1].chessObj=null;
+                            RealChessboard[row - 2][column + 2].gridActive = true;
+                        }
+                    }
+                }
+            }
+        }
+        // bcblue
 
-              }else if(row === 7 && column === 0){
-                if(RealChessboard[row - 1][column + 1].chessObj===null){
-                  console.log("at this point");
-                  RealChessboard[row - 1][column + 1].gridActive = true;
+        // bkred
+        // bkblue
+        else if (chessType === 1) {
+            if (row === 0 && column === 7) {
+                if (RealChessboard[row + 1][column - 1].chessObj === null) {
+                    RealChessboard[row + 1][column - 1].gridActive = true;
+                }
+                // if (RealChessboard[row + 2][column - 2].chessObj === null) {
+                //   if(RealChessboard[row + 1][column - 1].chessObj[1]===2||RealChessboard[row + 1][column - 1].chessObj[1]===3){
+                //     RealChessboard[row + 2][column - 2].gridActive = true;
+                //   }
+                //
+                // }
+            } else if (row === 7 && column === 0) {
+                if (RealChessboard[row - 1][column + 1].chessObj === null) {
+                    console.log('at this point');
+                    RealChessboard[row - 1][column + 1].gridActive = true;
                 }
                 // if (RealChessboard[row - 2][column + 2].chessObj === null) {
                 //   if(RealChessboard[row - 1][column + 1].chessObj[1]===2||RealChessboard[row - 1][column + 1].chessObj[1]===3){
@@ -367,323 +331,324 @@ watch(activeChess, (newAC, OriAC) => {
                 //   }
                 //
                 // }
-              }
-
-
-              else if (row !== 0 && row !== 7 && column !== 0 && column !== 7) {
-                if(RealChessboard[row - 1][column + 1].chessObj === null){
-                  RealChessboard[row - 1][column + 1].gridActive = true;
-                }
-                if(RealChessboard[row - 1][column - 1].chessObj === null){
-                  RealChessboard[row - 1][column - 1].gridActive = true;
-                }
-                if(RealChessboard[row + 1][column + 1].chessObj === null){
-                  RealChessboard[row + 1][column + 1].gridActive = true;
-                }
-                if(RealChessboard[row + 1][column - 1].chessObj === null){
-                  RealChessboard[row + 1][column - 1].gridActive = true;
-                }
-              } else {
-                if (column === 0) {
-                  if(RealChessboard[row - 1][column + 1].chessObj === null){
+            } else if (row !== 0 && row !== 7 && column !== 0 && column !== 7) {
+                if (RealChessboard[row - 1][column + 1].chessObj === null) {
                     RealChessboard[row - 1][column + 1].gridActive = true;
-                  }
-
-
-                  if(RealChessboard[row + 1][column + 1].chessObj === null&&row!==7){
+                }
+                if (RealChessboard[row - 1][column - 1].chessObj === null) {
+                    RealChessboard[row - 1][column - 1].gridActive = true;
+                }
+                if (RealChessboard[row + 1][column + 1].chessObj === null) {
                     RealChessboard[row + 1][column + 1].gridActive = true;
-                  }
+                }
+                if (RealChessboard[row + 1][column - 1].chessObj === null) {
+                    RealChessboard[row + 1][column - 1].gridActive = true;
+                }
+            } else {
+                if (column === 0) {
+                    if (RealChessboard[row - 1][column + 1].chessObj === null) {
+                        RealChessboard[row - 1][column + 1].gridActive = true;
+                    }
 
-
+                    if (RealChessboard[row + 1][column + 1].chessObj === null && row !== 7) {
+                        RealChessboard[row + 1][column + 1].gridActive = true;
+                    }
                 }
                 if (column === 7) {
-                  if(RealChessboard[row + 1][column - 1].chessObj === null){
-                    RealChessboard[row + 1][column - 1].gridActive = true;
-                  }
-                  if(RealChessboard[row - 1][column - 1].chessObj === null && row !==0){
-                    RealChessboard[row - 1][column - 1].gridActive = true;
-                  }
-                  // RealChessboard[row + 1][column - 1].gridActive = true;
-                  // row !== 0 && (RealChessboard[row - 1][column - 1].gridActive = true);
-                }
-
-                if(row===7){
-                  if(RealChessboard[row - 1][column + 1].chessObj === null){
-                    RealChessboard[row - 1][column + 1].gridActive = true;
-                  }
-                  if(RealChessboard[row - 1][column - 1].chessObj === null){
-                    RealChessboard[row - 1][column - 1].gridActive = true;
-                  }
-                }
-                if (row===0){
-                  if(RealChessboard[row + 1][column - 1].chessObj === null){
-                    RealChessboard[row + 1][column - 1].gridActive = true;
-                  }
-                  if(RealChessboard[row + 1][column + 1].chessObj === null){
-                    RealChessboard[row + 1][column + 1].gridActive = true;
-                  }
-                }
-              }
-              if(column<=5&&row<=5){
-                if (RealChessboard[row + 2][column + 2].chessObj === null) {
-                  if(RealChessboard[row + 1][column + 1].chessObj !=null){
-                    if(RealChessboard[row + 1][column + 1].chessObj[1]===2||RealChessboard[row + 1][column + 1].chessObj[1]===3){
-                      RealChessboard[row + 2][column + 2].gridActive = true;
+                    if (RealChessboard[row + 1][column - 1].chessObj === null) {
+                        RealChessboard[row + 1][column - 1].gridActive = true;
                     }
-                  }
-
-
+                    if (RealChessboard[row - 1][column - 1].chessObj === null && row !== 0) {
+                        RealChessboard[row - 1][column - 1].gridActive = true;
                     }
-              }
-              if(column<=5&&row>=2){
-
-                if (RealChessboard[row - 2][column + 2].chessObj === null) {
-                  if(RealChessboard[row - 1][column + 1].chessObj !=null) {
-                    if (RealChessboard[row - 1][column + 1].chessObj[1] === 2 || RealChessboard[row - 1][column + 1].chessObj[1] === 3) {
-                      RealChessboard[row - 2][column + 2].gridActive = true;
-                    }
-                  }
-
-                }
-              }
-
-              if(column>=2&& row<=5){
-
-                if (RealChessboard[row + 2][column - 2].chessObj === null) {
-                  if(RealChessboard[row + 1][column - 1].chessObj !=null) {
-                    if (RealChessboard[row + 1][column - 1].chessObj[1] === 2 || RealChessboard[row + 1][column - 1].chessObj[1] === 3) {
-                      RealChessboard[row + 2][column - 2].gridActive = true;
-                    }
-                  }
-
+                    // RealChessboard[row + 1][column - 1].gridActive = true;
+                    // row !== 0 && (RealChessboard[row - 1][column - 1].gridActive = true);
                 }
 
-              }
-              if(column>=2&& row>=2){
-
-                if (RealChessboard[row - 2][column - 2].chessObj === null) {
-                  if(RealChessboard[row - 1][column - 1].chessObj !=null) {
-                    if (RealChessboard[row - 1][column - 1].chessObj[1] === 2 || RealChessboard[row - 1][column - 1].chessObj[1] === 3) {
-                      RealChessboard[row - 2][column - 2].gridActive = true;
+                if (row === 7) {
+                    if (RealChessboard[row - 1][column + 1].chessObj === null) {
+                        RealChessboard[row - 1][column + 1].gridActive = true;
                     }
-                  }
-
+                    if (RealChessboard[row - 1][column - 1].chessObj === null) {
+                        RealChessboard[row - 1][column - 1].gridActive = true;
+                    }
                 }
-
-              }
-              // if(row === 0&& (column===0||column===1)){
-              //   if (RealChessboard[row + 2][column + 2].chessObj === null) {
-              //     if(RealChessboard[row + 1][column + 1].chessObj[1]===2||RealChessboard[row + 1][column + 1].chessObj[1]===3){
-              //       RealChessboard[row + 2][column + 2].gridActive = true;
-              //     }
-              //
-              //   }
-              // }else if(row === 7 && (column===7||column===6)){
-              //   if (RealChessboard[row - 2][column - 2].chessObj === null) {
-              //     if(RealChessboard[row - 1][column - 1].chessObj[1]===2||RealChessboard[row - 1][column - 1].chessObj[1]===3){
-              //       RealChessboard[row - 2][column - 2].gridActive = true;
-              //     }
-              //
-              //   }
-              // }else if(row === 0 && column === 7)
-
-
-
-
+                if (row === 0) {
+                    if (RealChessboard[row + 1][column - 1].chessObj === null) {
+                        RealChessboard[row + 1][column - 1].gridActive = true;
+                    }
+                    if (RealChessboard[row + 1][column + 1].chessObj === null) {
+                        RealChessboard[row + 1][column + 1].gridActive = true;
+                    }
+                }
             }
-            else {
-              if(row === 0 && column === 7){
-                if(RealChessboard[row + 1][column - 1].chessObj===null){
-                  RealChessboard[row + 1][column - 1].gridActive = true;
+            if (column <= 5 && row <= 5) {
+                if (RealChessboard[row + 2][column + 2].chessObj === null) {
+                    if (RealChessboard[row + 1][column + 1].chessObj != null) {
+                        if (
+                            RealChessboard[row + 1][column + 1].chessObj[1] === 2 ||
+                            RealChessboard[row + 1][column + 1].chessObj[1] === 3
+                        ) {
+                            RealChessboard[row + 2][column + 2].gridActive = true;
+                        }
+                    }
                 }
-              }else if(row === 7 && column === 0){
-                if(RealChessboard[row - 1][column + 1].chessObj===null){
-                  RealChessboard[row - 1][column + 1].gridActive = true;
+            }
+            if (column <= 5 && row >= 2) {
+                if (RealChessboard[row - 2][column + 2].chessObj === null) {
+                    if (RealChessboard[row - 1][column + 1].chessObj != null) {
+                        if (
+                            RealChessboard[row - 1][column + 1].chessObj[1] === 2 ||
+                            RealChessboard[row - 1][column + 1].chessObj[1] === 3
+                        ) {
+                            RealChessboard[row - 2][column + 2].gridActive = true;
+                        }
+                    }
                 }
-              }else if (row !== 0 && row !== 7 && column !== 0 && column !== 7) {
-                  if(RealChessboard[row - 1][column + 1].chessObj === null){
-                    RealChessboard[row - 1][column + 1].gridActive = true;
-                  }
-                  if(RealChessboard[row - 1][column - 1].chessObj === null){
-                    RealChessboard[row - 1][column - 1].gridActive = true;
-                  }
-                  if(RealChessboard[row + 1][column + 1].chessObj === null){
-                    RealChessboard[row + 1][column + 1].gridActive = true;
-                  }
-                  if(RealChessboard[row + 1][column - 1].chessObj === null){
+            }
+
+            if (column >= 2 && row <= 5) {
+                if (RealChessboard[row + 2][column - 2].chessObj === null) {
+                    if (RealChessboard[row + 1][column - 1].chessObj != null) {
+                        if (
+                            RealChessboard[row + 1][column - 1].chessObj[1] === 2 ||
+                            RealChessboard[row + 1][column - 1].chessObj[1] === 3
+                        ) {
+                            RealChessboard[row + 2][column - 2].gridActive = true;
+                        }
+                    }
+                }
+            }
+            if (column >= 2 && row >= 2) {
+                if (RealChessboard[row - 2][column - 2].chessObj === null) {
+                    if (RealChessboard[row - 1][column - 1].chessObj != null) {
+                        if (
+                            RealChessboard[row - 1][column - 1].chessObj[1] === 2 ||
+                            RealChessboard[row - 1][column - 1].chessObj[1] === 3
+                        ) {
+                            RealChessboard[row - 2][column - 2].gridActive = true;
+                        }
+                    }
+                }
+            }
+            /* if(row === 0&& (column===0||column===1)){
+              if (RealChessboard[row + 2][column + 2].chessObj === null) {
+                if(RealChessboard[row + 1][column + 1].chessObj[1]===2||RealChessboard[row + 1][column + 1].chessObj[1]===3){
+                  RealChessboard[row + 2][column + 2].gridActive = true;
+                }
+            
+              }
+            }else if(row === 7 && (column===7||column===6)){
+              if (RealChessboard[row - 2][column - 2].chessObj === null) {
+                if(RealChessboard[row - 1][column - 1].chessObj[1]===2||RealChessboard[row - 1][column - 1].chessObj[1]===3){
+                  RealChessboard[row - 2][column - 2].gridActive = true;
+                }
+            
+              }
+            }else if(row === 0 && column === 7) */
+        
+        } else {
+            if (row === 0 && column === 7) {
+                if (RealChessboard[row + 1][column - 1].chessObj === null) {
                     RealChessboard[row + 1][column - 1].gridActive = true;
-                  }
-              } else {
-
-                if (column === 0) {
-                  if(RealChessboard[row - 1][column + 1].chessObj === null){
+                }
+            } else if (row === 7 && column === 0) {
+                if (RealChessboard[row - 1][column + 1].chessObj === null) {
                     RealChessboard[row - 1][column + 1].gridActive = true;
-                  }
-
-
-                  if(RealChessboard[row + 1][column + 1].chessObj === null&&row!==7){
+                }
+            } else if (row !== 0 && row !== 7 && column !== 0 && column !== 7) {
+                if (RealChessboard[row - 1][column + 1].chessObj === null) {
+                    RealChessboard[row - 1][column + 1].gridActive = true;
+                }
+                if (RealChessboard[row - 1][column - 1].chessObj === null) {
+                    RealChessboard[row - 1][column - 1].gridActive = true;
+                }
+                if (RealChessboard[row + 1][column + 1].chessObj === null) {
                     RealChessboard[row + 1][column + 1].gridActive = true;
-                  }
+                }
+                if (RealChessboard[row + 1][column - 1].chessObj === null) {
+                    RealChessboard[row + 1][column - 1].gridActive = true;
+                }
+            } else {
+                if (column === 0) {
+                    if (RealChessboard[row - 1][column + 1].chessObj === null) {
+                        RealChessboard[row - 1][column + 1].gridActive = true;
+                    }
+
+                    if (RealChessboard[row + 1][column + 1].chessObj === null && row !== 7) {
+                        RealChessboard[row + 1][column + 1].gridActive = true;
+                    }
                 }
                 if (column === 7) {
-                  if(RealChessboard[row + 1][column - 1].chessObj === null){
-                    RealChessboard[row + 1][column - 1].gridActive = true;
-                  }
-                  if(RealChessboard[row - 1][column - 1].chessObj === null&& row !==0){
-                    RealChessboard[row - 1][column - 1].gridActive = true;
-                  }
+                    if (RealChessboard[row + 1][column - 1].chessObj === null) {
+                        RealChessboard[row + 1][column - 1].gridActive = true;
+                    }
+                    if (RealChessboard[row - 1][column - 1].chessObj === null && row !== 0) {
+                        RealChessboard[row - 1][column - 1].gridActive = true;
+                    }
                 }
-                if(row===7){
-                  if(RealChessboard[row - 1][column + 1].chessObj === null){
-                    RealChessboard[row - 1][column + 1].gridActive = true;
-                  }
-                  if(RealChessboard[row - 1][column - 1].chessObj === null){
-                    RealChessboard[row - 1][column - 1].gridActive = true;
-                  }
+                if (row === 7) {
+                    if (RealChessboard[row - 1][column + 1].chessObj === null) {
+                        RealChessboard[row - 1][column + 1].gridActive = true;
+                    }
+                    if (RealChessboard[row - 1][column - 1].chessObj === null) {
+                        RealChessboard[row - 1][column - 1].gridActive = true;
+                    }
                 }
-                if (row===0){
-                  if(RealChessboard[row + 1][column - 1].chessObj === null){
-                    RealChessboard[row + 1][column - 1].gridActive = true;
-                  }
-                  if(RealChessboard[row + 1][column + 1].chessObj === null){
-                    RealChessboard[row + 1][column + 1].gridActive = true;
-                  }
+                if (row === 0) {
+                    if (RealChessboard[row + 1][column - 1].chessObj === null) {
+                        RealChessboard[row + 1][column - 1].gridActive = true;
+                    }
+                    if (RealChessboard[row + 1][column + 1].chessObj === null) {
+                        RealChessboard[row + 1][column + 1].gridActive = true;
+                    }
                 }
-              }
-              if(column<5&&row<=5){
+            }
+            if (column < 5 && row <= 5) {
                 if (RealChessboard[row + 2][column + 2].chessObj === null) {
-                  if(RealChessboard[row + 1][column + 1].chessObj !=null){
-                    if(RealChessboard[row + 1][column + 1].chessObj[1]===0||RealChessboard[row + 1][column + 1].chessObj[1]===1){
-                      RealChessboard[row + 2][column + 2].gridActive = true;
+                    if (RealChessboard[row + 1][column + 1].chessObj != null) {
+                        if (
+                            RealChessboard[row + 1][column + 1].chessObj[1] === 0 ||
+                            RealChessboard[row + 1][column + 1].chessObj[1] === 1
+                        ) {
+                            RealChessboard[row + 2][column + 2].gridActive = true;
+                        }
                     }
-                  }
-
-
                 }
-              }
-              if(column<=5&&row>=2){
-
+            }
+            if (column <= 5 && row >= 2) {
                 if (RealChessboard[row - 2][column + 2].chessObj === null) {
-                  if(RealChessboard[row - 1][column + 1].chessObj !=null) {
-                    if (RealChessboard[row - 1][column + 1].chessObj[1] === 0 || RealChessboard[row - 1][column + 1].chessObj[1] === 1) {
-                      RealChessboard[row - 2][column + 2].gridActive = true;
+                    if (RealChessboard[row - 1][column + 1].chessObj != null) {
+                        if (
+                            RealChessboard[row - 1][column + 1].chessObj[1] === 0 ||
+                            RealChessboard[row - 1][column + 1].chessObj[1] === 1
+                        ) {
+                            RealChessboard[row - 2][column + 2].gridActive = true;
+                        }
                     }
-                  }
-
                 }
-              }
-
-              if(column>=2&& row<=5){
-
-                if (RealChessboard[row + 2][column - 2].chessObj === null) {
-                  if(RealChessboard[row + 1][column - 1].chessObj !=null) {
-                    if (RealChessboard[row + 1][column - 1].chessObj[1] === 0 || RealChessboard[row + 1][column - 1].chessObj[1] === 1) {
-                      RealChessboard[row + 2][column - 2].gridActive = true;
-                    }
-                  }
-
-                }
-
-              }
-              if(column>=2&& row>=2){
-
-                if (RealChessboard[row - 2][column - 2].chessObj === null) {
-                  if(RealChessboard[row - 1][column - 1].chessObj !=null) {
-                    if (RealChessboard[row - 1][column - 1].chessObj[1] === 0 || RealChessboard[row - 1][column - 1].chessObj[1] === 1) {
-                      RealChessboard[row - 2][column - 2].gridActive = true;
-                    }
-                  }
-
-                }
-
-              }
             }
 
+            if (column >= 2 && row <= 5) {
+                if (RealChessboard[row + 2][column - 2].chessObj === null) {
+                    if (RealChessboard[row + 1][column - 1].chessObj != null) {
+                        if (
+                            RealChessboard[row + 1][column - 1].chessObj[1] === 0 ||
+                            RealChessboard[row + 1][column - 1].chessObj[1] === 1
+                        ) {
+                            RealChessboard[row + 2][column - 2].gridActive = true;
+                        }
+                    }
+                }
+            }
+            if (column >= 2 && row >= 2) {
+                if (RealChessboard[row - 2][column - 2].chessObj === null) {
+                    if (RealChessboard[row - 1][column - 1].chessObj != null) {
+                        if (
+                            RealChessboard[row - 1][column - 1].chessObj[1] === 0 ||
+                            RealChessboard[row - 1][column - 1].chessObj[1] === 1
+                        ) {
+                            RealChessboard[row - 2][column - 2].gridActive = true;
+                        }
+                    }
+                }
+            }
+        }
     } else {
         //console.log('lalala111');
         // setTimeout(() => {
-            for (const rows of RealChessboard) {
-                for (let col of rows) {
-                    !!col.gridActive && (col.gridActive = false);
-                }
+        for (const rows of RealChessboard) {
+            for (let col of rows) {
+                !!col.gridActive && (col.gridActive = false);
             }
+        }
         // },300)
     }
     // console.log(newAC === null);
 });
 
-
-
-
-
 let conToMove = true;
-function secondaryMove(oR,oC,nR,nC,type){
+function secondaryMove(oR, oC, nR, nC, type) {
+    if (type === 'nr') {
+        if (
+            nR + (nR - oR) < 8 &&
+            nC + (nC - oC) < 8 &&
+            nC - (nC - oC) >= 0 &&
+            nC - (nC - oC) < 8 &&
+            nC + (nC - oC) >= 0 &&
+            RealChessboard[nR + (nR - oR) / 2][nC + (nC - oC) / 2].chessObj != null &&
+            RealChessboard[nR + (nR - oR) / 2][nC - (nC - oC) / 2].chessObj != null
+        ) {
+            console.log('meiwenti');
 
-  if(type === "nr"){
-    if(nR+(nR-oR)<8&&nC+(nC-oC)<8&&nC-(nC-oC)>=0&&nC-(nC-oC)<8&&nC+(nC-oC)>=0&&
-        RealChessboard[nR+(nR-oR)/2][nC+(nC-oC)/2].chessObj!=null&&RealChessboard[nR+(nR-oR)/2][nC-(nC-oC)/2].chessObj!=null){
+            if (
+                RealChessboard[nR + (nR - oR)][nC + (nC - oC)].chessObj === null &&
+                (RealChessboard[nR + (nR - oR / 2)][nC + (nC - oC) / 2].chessObj[1] === 2 ||
+                    RealChessboard[nR + (nR - oR) / 2][nC + (nC - oC) / 2].chessObj[1] === 3)
+            ) {
+                RealChessboard[nR + (nR - oR)][nC + (nC - oC)].gridActive = true;
+                conToMove = true;
+                console.log('meiwenti1');
+                //secondaryMove(nR,nC,nR+(nR-oR),nC+(nC-oC),"nr");
+            }
 
-      console.log("meiwenti");
+            if (
+                RealChessboard[nR + (nR - oR)][nC - (nC - oC)].chessObj === null &&
+                (RealChessboard[nR + (nR - oR) / 2][nC - (nC - oC) / 2].chessObj[1] === 2 ||
+                    RealChessboard[nR + (nR - oR) / 2][nC - (nC - oC) / 2].chessObj[1] === 3)
+            ) {
+                RealChessboard[nR + (nR - oR)][nC - (nC - oC)].gridActive = true;
+                conToMove = true;
+                //secondaryMove(nR,nC,nR+(nR-oR),nC-(nC-oC),"nr");
+            }
+        }
 
-
-      if(RealChessboard[nR+(nR-oR)][nC+(nC-oC)].chessObj === null&&
-          (RealChessboard[nR+(nR-oR/2)][nC+(nC-oC)/2].chessObj[1]===2||RealChessboard[nR+(nR-oR)/2][nC+(nC-oC)/2].chessObj[1]===3)){
-        RealChessboard[nR+(nR-oR)][nC+(nC-oC)].gridActive = true;
-        conToMove =true;
-        console.log("meiwenti1");
-        //secondaryMove(nR,nC,nR+(nR-oR),nC+(nC-oC),"nr");
-      }
-
-
-      if(RealChessboard[nR+(nR-oR)][nC-(nC-oC)].chessObj === null&&
-          (RealChessboard[nR+(nR-oR)/2][nC-(nC-oC)/2].chessObj[1]===2||RealChessboard[nR+(nR-oR)/2][nC-(nC-oC)/2].chessObj[1]===3)){
-        RealChessboard[nR+(nR-oR)][nC-(nC-oC)].gridActive = true;
-        conToMove =true;
-        //secondaryMove(nR,nC,nR+(nR-oR),nC-(nC-oC),"nr");
-      }
-
+        // return false;
     }
 
-    // return false;
-  }
+    if (type === 'nb') {
+        if (
+            nR + (nR - oR) >= 0 &&
+            nC + (nC - oC) >= 0 &&
+            nC + (nC - oC) < 8 &&
+            nC - (nC - oC) < 8 &&
+            nC - (nC - oC) >= 0 &&
+            nR + (nR - oR) < 8 &&
+            RealChessboard[nR + (nR - oR) / 2][nC + (nC - oC) / 2].chessObj != null &&
+            RealChessboard[nR + (nR - oR) / 2][nC + (nC - oC) / 2].chessObj != null
+        ) {
+            console.log('meiwenti');
 
+            if (
+                RealChessboard[nR + (nR - oR)][nC + (nC - oC)].chessObj === null &&
+                (RealChessboard[nR + (nR - oR / 2)][nC + (nC - oC) / 2].chessObj[1] === 0 ||
+                    RealChessboard[nR + (nR - oR) / 2][nC + (nC - oC) / 2].chessObj[1] === 1)
+            ) {
+                RealChessboard[nR + (nR - oR)][nC + (nC - oC)].gridActive = true;
+                conToMove = true;
+                0;
+                console.log('meiwenti1');
+                //secondaryMove(nR,nC,nR+(nR-oR),nC+(nC-oC),"nr");
+            }
 
-  if(type === "nb"){
-    if(nR+(nR-oR)>=0&&nC+(nC-oC)>=0&&nC+(nC-oC)<8&&nC-(nC-oC)<8&&nC-(nC-oC)>=0&&nR+(nR-oR)<8&&
-        RealChessboard[nR+(nR-oR)/2][nC+(nC-oC)/2].chessObj!=null&&RealChessboard[nR+(nR-oR)/2][nC+(nC-oC)/2].chessObj!=null){
+            if (
+                RealChessboard[nR + (nR - oR)][nC - (nC - oC)].chessObj === null &&
+                (RealChessboard[nR + (nR - oR) / 2][nC - (nC - oC) / 2].chessObj[1] === 0 ||
+                    RealChessboard[nR + (nR - oR) / 2][nC - (nC - oC) / 2].chessObj[1] === 1)
+            ) {
+                RealChessboard[nR + (nR - oR)][nC - (nC - oC)].gridActive = true;
+                conToMove = true;
+                //secondaryMove(nR,nC,nR+(nR-oR),nC-(nC-oC),"nr");
+            }
+        }
 
-      console.log("meiwenti");
-
-
-      if(RealChessboard[nR+(nR-oR)][nC+(nC-oC)].chessObj === null&&
-          (RealChessboard[nR+(nR-oR/2)][nC+(nC-oC)/2].chessObj[1]===0||RealChessboard[nR+(nR-oR)/2][nC+(nC-oC)/2].chessObj[1]===1)){
-        RealChessboard[nR+(nR-oR)][nC+(nC-oC)].gridActive = true;
-        conToMove =true;0
-        console.log("meiwenti1");
-        //secondaryMove(nR,nC,nR+(nR-oR),nC+(nC-oC),"nr");
-      }
-
-
-      if(RealChessboard[nR+(nR-oR)][nC-(nC-oC)].chessObj === null&&
-          (RealChessboard[nR+(nR-oR)/2][nC-(nC-oC)/2].chessObj[1]===0||RealChessboard[nR+(nR-oR)/2][nC-(nC-oC)/2].chessObj[1]===1)){
-        RealChessboard[nR+(nR-oR)][nC-(nC-oC)].gridActive = true;
-        conToMove =true;
-        //secondaryMove(nR,nC,nR+(nR-oR),nC-(nC-oC),"nr");
-      }
-
+        // return false;
     }
 
-    // return false;
-  }
-
-  // conToMove=false;
+    // conToMove=false;
 }
 
-function secondMove(oR,oC,type){
-
-
-
-}
+// function secondMove(oR, oC, type) {}
 
 let blueScore = 0;
 let redScore = 0;
@@ -694,104 +659,84 @@ const moveChess = ([oriRow, oriCol], [newRow, newCol]) => {
     RealChessboard[newRow][newCol].cAnima = 'rightup';
     RealChessboard[oriRow][oriCol].cAnima = 'rightup';
 
+    if (RealChessboard[oriRow][oriCol].chessObj != null) {
+        if (!canGo) {
+            if (RealChessboard[oriRow][oriCol].chessObj[1] === 1 || RealChessboard[oriRow][oriCol].chessObj[1] === 0) {
+                console.log('work well');
+                RealChessboard[newRow][newCol].chessObj = RealChessboard[oriRow][oriCol].chessObj;
+                // setTimeout(() => {
+                RealChessboard[oriRow][oriCol].chessObj = null;
 
-    if(RealChessboard[oriRow][oriCol].chessObj!=null){
+                if (Math.abs(newRow - oriRow) === 2 && Math.abs(newCol - oriCol) === 2) {
+                    RealChessboard[oriRow + (newRow - oriRow) / 2][oriCol + (newCol - oriCol) / 2].chessObj = null;
+                    redScore += 1;
+                    if (redScore === 12) {
+                        console.log('Game Finished! Red Wins');
+                    }
+                    console.log('red Scores are:' + redScore);
+                }
 
-      if(!canGo){
+                if (Math.abs(newRow - oriRow) === 4 && Math.abs(newCol - oriCol) === 4) {
+                    RealChessboard[oriRow + (newRow - oriRow) / 4][oriCol + (newCol - oriCol) / 4].chessObj = null;
+                    RealChessboard[oriRow + (newRow - oriRow) - 1][oriCol + (newCol - oriCol) - 1].chessObj = null;
+                    redScore += 2;
 
-        if(RealChessboard[oriRow][oriCol].chessObj[1]===1||RealChessboard[oriRow][oriCol].chessObj[1]===0){
+                    if (redScore === 12) {
+                        console.log('Game Finished! Red Wins');
+                    }
+                    console.log('red Scores are:' + redScore);
+                }
 
+                if (newRow === 7) {
+                    RealChessboard[newRow][newCol].chessObj[1] = 1;
+                    console.log('this is ' + RealChessboard[newRow][newCol]);
+                }
+                // },300)
 
-
-          console.log("work well");
-          RealChessboard[newRow][newCol].chessObj = RealChessboard[oriRow][oriCol].chessObj;
-          // setTimeout(() => {
-          RealChessboard[oriRow][oriCol].chessObj = null;
-
-          if(Math.abs(newRow-oriRow)===2&&Math.abs(newCol-oriCol)===2){
-            RealChessboard[oriRow+(newRow-oriRow)/2][oriCol+(newCol-oriCol)/2].chessObj = null;
-            redScore+=1;
-            if(redScore===12){
-              console.log("Game Finished! Red Wins");
+                canGo = true;
             }
-            console.log("red Scores are:"+redScore);
-          }
+        } else {
+            if (RealChessboard[oriRow][oriCol].chessObj[1] === 2 || RealChessboard[oriRow][oriCol].chessObj[1] === 3) {
+                console.log('work well');
+                RealChessboard[newRow][newCol].chessObj = RealChessboard[oriRow][oriCol].chessObj;
+                // setTimeout(() => {
+                RealChessboard[oriRow][oriCol].chessObj = null;
 
-          if(Math.abs(newRow-oriRow)===4&&Math.abs(newCol-oriCol)===4){
-            RealChessboard[oriRow+(newRow-oriRow)/4][oriCol+(newCol-oriCol)/4].chessObj = null;
-            RealChessboard[oriRow+(newRow-oriRow)-1][oriCol+(newCol-oriCol)-1].chessObj = null;
-            redScore+=2;
+                if (Math.abs(newRow - oriRow) === 2 && Math.abs(newCol - oriCol) === 2) {
+                    RealChessboard[oriRow + (newRow - oriRow) / 2][oriCol + (newCol - oriCol) / 2].chessObj = null;
+                    blueScore += 1;
+                    console.log('blue Scores are:' + blueScore);
+                    if (blueScore === 12) {
+                        console.log('Game Finished! Blue Wins!');
+                    }
+                }
+                // if(Math.abs(newRow-oriRow)===4&&Math.abs(newCol-oriCol)===4){
+                //   RealChessboard[oriRow+(newRow-oriRow)/4][oriCol+(newCol-oriCol)/4].chessObj = null;
+                //   RealChessboard[oriRow+(newRow-oriRow)+1][oriCol+(newCol-oriCol)+1].chessObj = null;
+                //   blueScore+=2;
+                //
+                //   if(blueScore===12){
+                //     console.log("Game Finished! Blue Wins");
+                //   }
+                //   console.log("Blue Scores are:"+blueScore);
+                // }
 
-            if(redScore===12){
-              console.log("Game Finished! Red Wins");
+                if (newRow === 0) {
+                    RealChessboard[newRow][newCol].chessObj[1] = 3;
+                    console.log('this is ' + RealChessboard[newRow][newCol]);
+                }
+                canGo = false;
+                // },300)
             }
-            console.log("red Scores are:"+redScore);
-          }
-
-          if(newRow===7){
-            RealChessboard[newRow][newCol].chessObj[1] =1;
-            console.log("this is "+RealChessboard[newRow][newCol])
-          }
-          // },300)
-
-
-          canGo=true;
         }
-
-      }
-      else {
-
-        if(RealChessboard[oriRow][oriCol].chessObj[1]===2||RealChessboard[oriRow][oriCol].chessObj[1]===3){
-
-          console.log("work well");
-          RealChessboard[newRow][newCol].chessObj = RealChessboard[oriRow][oriCol].chessObj;
-          // setTimeout(() => {
-          RealChessboard[oriRow][oriCol].chessObj = null;
-
-          if(Math.abs(newRow-oriRow)===2&&Math.abs(newCol-oriCol)===2){
-            RealChessboard[oriRow+(newRow-oriRow)/2][oriCol+(newCol-oriCol)/2].chessObj = null;
-            blueScore+=1;
-            console.log("blue Scores are:" + blueScore);
-            if(blueScore===12){
-              console.log("Game Finished! Blue Wins!");
-            }
-
-          }
-          // if(Math.abs(newRow-oriRow)===4&&Math.abs(newCol-oriCol)===4){
-          //   RealChessboard[oriRow+(newRow-oriRow)/4][oriCol+(newCol-oriCol)/4].chessObj = null;
-          //   RealChessboard[oriRow+(newRow-oriRow)+1][oriCol+(newCol-oriCol)+1].chessObj = null;
-          //   blueScore+=2;
-          //
-          //   if(blueScore===12){
-          //     console.log("Game Finished! Blue Wins");
-          //   }
-          //   console.log("Blue Scores are:"+blueScore);
-          // }
-
-          if(newRow===0){
-            RealChessboard[newRow][newCol].chessObj[1] =3;
-            console.log("this is " + RealChessboard[newRow][newCol])
-          }
-          canGo = false;
-          // },300)
-        }
-      }
-
-
-  }
-
-
-
-
+    }
 };
 
-onUpdated(() => {
-    //console.log("lalala");
-})
+// onUpdated(() => {
+//     //console.log("lalala");
+// });
 
-onBeforeUpdate(() => {
-    //console.log("beforelalala")
-})
-
-
+// onBeforeUpdate(() => {
+//     //console.log("beforelalala")
+// });
 </script>

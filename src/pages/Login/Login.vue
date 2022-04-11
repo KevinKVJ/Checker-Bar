@@ -90,7 +90,11 @@ export default{
 
             sessionStorage.setItem('username', this.value);
            
-            axios.post('/api/loginApi',{
+            // axios.post('/api/loginApi',{
+            //     nickname: this.value,
+            //     password: this.passwordValue
+            // })
+            axios.post('/loginApi',{
                 nickname: this.value,
                 password: this.passwordValue
             })

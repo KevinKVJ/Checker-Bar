@@ -92,7 +92,12 @@ export default {
             console.log(this.passwordValue);
             console.log(this.userid);
 
-            axios.post('/api/modifyUserInfoApi',{
+            // axios.post('/api/modifyUserInfoApi',{
+            //     nickname: this.value,
+            //     password: this.passwordValue,
+            //     id: this.userid,
+            // })
+            axios.post('/modifyUserInfoApi',{
                 nickname: this.value,
                 password: this.passwordValue,
                 id: this.userid,

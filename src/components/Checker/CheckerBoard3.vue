@@ -1,4 +1,5 @@
 <style lang="scss" scoped>
+
 .checkerboard {
   width: 100%;
   height: 100%;
