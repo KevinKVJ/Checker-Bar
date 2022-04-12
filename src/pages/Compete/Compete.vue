@@ -26,8 +26,14 @@
                 <button @click="toHomePage()" class="buttons">Home</button>
                 <button v-bind:class="{'white': !isReady, 'red': isReady}" v-on:click ="isReady = !isReady" @click="checkReadyStatus()"> Ready </button>
             </div>
+            <div class="mobileGameInfo">
+                <div>Your color: {{yourColor}}</div>
+                <div>{{turnColor}}</div>
+            </div>
             <div class="left">
                 <div class="webReadyButton">
+                    <div>Your color: {{yourColor}}</div>
+                    <div>{{turnColor}}</div>
                     <button v-bind:class="{'white': !isReady, 'red': isReady}" v-on:click ="isReady = !isReady" @click="checkReadyStatus()"> Ready </button>
                 </div>
                 <div class="checkerboardbase">
@@ -198,6 +204,10 @@
     display: none;
 }
 
+.mobileGameInfo{
+    display: none;
+}
+
 .left {
     width: 40%;
     display: flex;
@@ -314,6 +324,9 @@
     }
     .webReadyButton{
         display: none;
+    }
+    .mobileGameInfo{
+        display: block;
     }
     .mobileButtonSection {
         display: block;
@@ -448,6 +461,8 @@ export default {
     data() {
         return {
             // show: false,
+            yourColor:"wait for start...",
+            turnColor:"wait for start...",
             userid: "",
             username: "",
             userAvatar: "",
@@ -517,6 +532,12 @@ export default {
         console.log(userObj);
         this.socket.on('toBeReady', data =>{
             console.log(data);
+            if (data.blue.name === this.username){
+                this.yourColor = "Blue"
+            }
+            if (data.red.name === this.username){
+                this.yourColor = "Red"
+            }
         })
         this.socket.on('inQueryOrGoToSpectate', goToSpectate=>{
             alert("Please go to Spectate page");
@@ -524,18 +545,15 @@ export default {
         
         console.log(this.isReady);
         
+        this.socket.on('getStart', ({Turn})=>{
+            console.log(Turn);
+            this.turnColor = "It's " + Turn +"'s turn now";
+        })
 
-        // this.socket.emit('setAvatarInfo', userObj);
-        // console.log(userObj);
-
-        // this.socket.on('returnInf', data => {
-        //     console.log("lalala");
+        // this.socket.on('cbStatus', (data)=>{
         //     console.log(data);
-        //     data.map((item,index) => {
-        //         this.avatarList.push(item.myavatar);
-        //     })
-        //     console.log(this.avatarList);
-        // });
+        // })
+        
 
     },
 
@@ -552,7 +570,7 @@ export default {
         checkReadyStatus(){
             console.log(this.isReady);
             if (this.isReady == true){
-                this.socket.emit('i-am-ready')
+                this.socket.emit('i-am-ready');
             }
         },
 
