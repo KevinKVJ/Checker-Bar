@@ -85,12 +85,9 @@ export default{
             sessionStorage.setItem('userAvatar', this.activatedAvatar);
         },
         loadUserInfo(){
-            let userAvatar = sessionStorage.getItem("userAvatar");
-            if (userAvatar === null){
-                alert("Please choose your avatar!")
-            }else{
             console.log(this.value); 
             console.log(this.passwordValue);
+
             sessionStorage.setItem('username', this.value);
            
             axios.post('/api/loginApi',{
@@ -106,6 +103,10 @@ export default{
                 //get login code and user id 
                 var code = res.data[Object.keys(res.data)[0]];
                 console.log(code);
+                // var id = res.data[Object.keys(res.data)[2]];
+                // var userId = id[Object.keys(id)[0]];
+                //console.log(userId);
+
                 sessionStorage.setItem('userid', userId);
 
                 if (code === 200){
@@ -128,7 +129,7 @@ export default{
                 console.log(error);
             })
             
-            }
+            
 
 
             }
