@@ -345,14 +345,13 @@ export default {
             }
         });
 
-        this.socket.on('spectateChessMove', {competeUserInfo} => {
+        this.socket.on('spectateChessMove', ({competeUserInfo}) => {
             const {chessBoard} = competeUserInfo;
             console.log(competeUserInfo);
             console.log('gameStart!!!!lalalala');
-            // if (JSON.stringfy(currChessBoard) !== '[]') {
-            //     console.log('gameStart!!!!');
-            //     this.$ref.cb.assignChessBoard(currChessBoard);
-            // }
+            if (JSON.stringify(chessBoard) !== '[]') {
+                this.$refs.cb.assignChessBoard(chessBoard);
+            }
         });
     },
 

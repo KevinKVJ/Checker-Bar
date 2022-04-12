@@ -56,7 +56,7 @@
                         </div>
                     </div>
 
-                    <CheckerBoard :sock="socket"></CheckerBoard>
+                    <CheckerBoard :sock="socket" @add-move-history="addMoveHistory" @add-opponent-history="addOpponentHistory"></CheckerBoard>
                 </div>
             </div>
 
@@ -102,11 +102,11 @@
                         <h4>Move History</h4>
                         <div class="divide-line"></div>
                         <ul
-                            v-for="({ name, oriCoord: [oriRow, oriCol], newCoord: [newRow, newCol] }, index) in moveHistoryList"
+                            v-for="({ name, newCoord: [newRow, newCol] }, index) in moveHistoryList"
                             :key="index"
                         >
                             <li>
-                                <pre>{{ `${name} : [${oriRow},${oriCol}]  ==>  [${newRow},${newCol}]` }}</pre>
+                                <pre>{{ `${name} :  [${newRow},${newCol}]` }}</pre>
                             </li>
                         </ul>
                     </div>
@@ -540,10 +540,10 @@ export default {
             socket: null,
             avatarList: [],
             moveHistoryList: [
-                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
-                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
-                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
-                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
+                // { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
+                // { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
+                // { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
+                // { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
             ], //method: addMoveHistory(moveHistory)
             checkerMaskSwitch: true,
         };
@@ -634,12 +634,15 @@ export default {
             console.log('Sent!!');
         },
 
-        addMoveHistory(moveHistory) {
-            // Type:Object:
-            // {name:String,oriCoord: [oriRow, oriCol], newCoord:[newRow, newCol]}
+        addMoveHistory([row,col]) {
+            const moveHistory = {newCoord:[row,col],name:this.username}
             this.moveHistoryList.push(moveHistory);
         },
 
+        addOpponentHistory([row,col]){
+            const moveHistory = {newCoord:[row,col],name:this.opponent_name}
+            this.moveHistoryList.push(moveHistory); 
+        }
 
     },
 };
