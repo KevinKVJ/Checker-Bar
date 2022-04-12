@@ -24,11 +24,11 @@
                     </div>
                 </n-modal>
                 <button @click="toHomePage()" class="buttons">Home</button>
-                <button v-bind:class="{'white': !isReady, 'red': isReady}" v-on:click ="isReady = !isReady"> Ready </button>
+                <button v-bind:class="{'white': !isReady, 'red': isReady}" v-on:click ="isReady = !isReady" @click="checkReadyStatus()"> Ready </button>
             </div>
             <div class="left">
                 <div class="webReadyButton">
-                    <button v-bind:class="{'white': !isReady, 'red': isReady}" v-on:click ="isReady = !isReady"> Ready </button>
+                    <button v-bind:class="{'white': !isReady, 'red': isReady}" v-on:click ="isReady = !isReady" @click="checkReadyStatus()"> Ready </button>
                 </div>
                 <div class="checkerboardbase">
                     <CheckerBoard></CheckerBoard>
@@ -503,7 +503,7 @@ export default {
         this.userAvatar = sessionStorage.getItem('userAvatar');
         var userObj = { myname: this.username, myid: this.userid, myavatar: this.userAvatar };
 
-        const sock = io('http://10.12.99.36:8000');
+        const sock = io('http://10.12.66.107:8000');
         this.socket = sock;
 
         sock.on('message-data', data => {
@@ -520,6 +520,7 @@ export default {
             alert("Please go to Spectate page");
         })
         
+        console.log(this.isReady);
         
 
         // sock.emit('setAvatarInfo', userObj);
@@ -544,6 +545,13 @@ export default {
     methods: {
         toHomePage() {
             this.$router.push({ path: '/homePage' });
+        },
+
+        checkReadyStatus(){
+            console.log(this.isReady);
+            if (this.isReady == true){
+                this.socket.emit('i-am-ready')
+            }
         },
 
         sendMessage(mess) {

@@ -272,7 +272,7 @@ export default {
         //console.log(userAvatar);
         //var userObj = { myname: username, myid: userid, myavatar: userAvatar };
 
-        const sock = io('http://10.12.99.36:8000');
+        const sock = io('http://10.12.66.107:8000');
         this.socket = sock;
 
         sock.emit('getAvatarInfo', this.userObj);
