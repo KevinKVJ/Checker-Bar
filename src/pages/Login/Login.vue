@@ -90,14 +90,14 @@ export default{
 
             sessionStorage.setItem('username', this.value);
            
-            // axios.post('/api/loginApi',{
-            //     nickname: this.value,
-            //     password: this.passwordValue
-            // })
-            axios.post('/loginApi',{
+            axios.post('/api/loginApi',{
                 nickname: this.value,
                 password: this.passwordValue
             })
+            // axios.post('/loginApi',{
+            //     nickname: this.value,
+            //     password: this.passwordValue
+            // })
             .then((res)=>{
                 console.log(res.data);
                 //get login code and user id 

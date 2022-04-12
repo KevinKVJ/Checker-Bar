@@ -3,7 +3,7 @@
         <div class="main">
             <div class="middle">
                 <div class="fightInfoSection">
-                    <div class="fightInfo">nina is fighting with lalala</div>
+                    <div class="fightInfo">{{fightInfoString}}</div>
                 </div>
                 <div class="buttonSection">
                     <n-button @click="showModal = true" class="buttons" id="buttonOne"> Rules </n-button>
@@ -247,6 +247,7 @@ export default {
             socket: null,
             avatarList: [],
             userObj:{myname: '', myid: '', myavatar: ''},
+            fightInfoString:'',
         };
     },
     components: {
@@ -271,7 +272,7 @@ export default {
         //console.log(userAvatar);
         //var userObj = { myname: username, myid: userid, myavatar: userAvatar };
 
-        const sock = io('http://localhost:8000');
+        const sock = io('http://10.12.99.36:8000');
         this.socket = sock;
 
         sock.emit('getAvatarInfo', this.userObj);
@@ -291,6 +292,26 @@ export default {
             console.log('wait for join');
         });
 
+        sock.emit('getChessboardStatus');
+        sock.on('cbStatus', cbStatus =>{
+            console.log(cbStatus);
+            var isFull = cbStatus.full;
+            var isBlueReady = cbStatus.blueReady;
+            var isRedReady = cbStatus.redReady;
+            var blueInfo = cbStatus.blue.name;
+            var redInfo = cbStatus.red.name;
+            console.log(isFull);
+            console.log(isBlueReady);
+            console.log(isRedReady);
+            console.log(blueInfo);
+            console.log(redInfo);
+            if(isFull == false || isBlueReady == false || isRedReady == false){
+                this.fightInfoString = "Waiting for the users........"
+            }
+            if(isFull == true && isBlueReady == true && isRedReady == true){
+                this.fightInfoString = blueInfo + " is fighting with " + redInfo;
+            }
+        })
     },
 
     unmounted() {

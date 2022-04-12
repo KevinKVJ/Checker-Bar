@@ -5,9 +5,9 @@ import 'normalize.css';
 import 'virtual:svg-icons-register';
 import {Popup} from 'vant';
 import '@vant/touch-emulator'
-import axios from 'axios'
+// import axios from 'axios'
 
-axios.defaults.baseURL = 'http://localhost:8000'
+// axios.defaults.baseURL = 'http://localhost:8000'
 
 
 if (import.meta.hot) {

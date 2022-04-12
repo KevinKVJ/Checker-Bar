@@ -83,16 +83,16 @@ export default {
         this.titleName = username;
 
         axios
-            // .get('/api/statusInfo', {
-            //     params: {
-            //         id: userid,
-            //     },
-            // })
-            .get('/statusInfo', {
+            .get('/api/statusInfo', {
                 params: {
                     id: userid,
                 },
             })
+            // .get('/statusInfo', {
+            //     params: {
+            //         id: userid,
+            //     },
+            // })
             .then(res => {
                 var statisInfo = res.data[Object.keys(res.data)[2]];
                 var variable_one = statisInfo[Object.keys(statisInfo)[0]];

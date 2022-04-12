@@ -70,15 +70,7 @@ export default{
             console.log(this.value); 
             console.log(this.passwordValue);
             
-            // axios.post('/api/signInApi',{
-            //     nickname: this.value,
-            //     password: this.passwordValue
-            //     // nickname: 'lalala9',
-            //     // password: 'password2'
-            //     // nickname: 'lalala99',
-            //     // password: 'password22'
-            // })
-            axios.post('/signInApi',{
+            axios.post('/api/signInApi',{
                 nickname: this.value,
                 password: this.passwordValue
                 // nickname: 'lalala9',
@@ -86,6 +78,14 @@ export default{
                 // nickname: 'lalala99',
                 // password: 'password22'
             })
+            // axios.post('/signInApi',{
+            //     nickname: this.value,
+            //     password: this.passwordValue
+            //     // nickname: 'lalala9',
+            //     // password: 'password2'
+            //     // nickname: 'lalala99',
+            //     // password: 'password22'
+            // })
             .then((res)=>{
                 console.log(res.data);
                 var code = res.data[Object.keys(res.data)[0]];

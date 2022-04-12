@@ -191,6 +191,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
+    // padding: 10px;
 }
 /* ------ checkerboardbase float at left ------ */
 .mobileButtonSection {
@@ -284,6 +285,11 @@
         background: black;
     }
 } */
+.right{
+    width: 30%;
+    height: 72vmin;
+}
+
 .buttons {
     height: 40px;
     width: 90px;
@@ -497,7 +503,7 @@ export default {
         this.userAvatar = sessionStorage.getItem('userAvatar');
         var userObj = { myname: this.username, myid: this.userid, myavatar: this.userAvatar };
 
-        const sock = io('http://localhost:8000');
+        const sock = io('http://10.12.99.36:8000');
         this.socket = sock;
 
         sock.on('message-data', data => {
@@ -513,6 +519,8 @@ export default {
         sock.on('inQueryOrGoToSpectate', goToSpectate=>{
             alert("Please go to Spectate page");
         })
+        
+        
 
         // sock.emit('setAvatarInfo', userObj);
         // console.log(userObj);
