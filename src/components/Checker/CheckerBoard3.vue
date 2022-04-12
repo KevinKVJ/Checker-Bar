@@ -1,3 +1,6 @@
+<!--import { Client } from 'socket.io';-->
+
+
 <style lang="scss" scoped>
 
 .checkerboard {
@@ -129,15 +132,9 @@ import lodash from 'lodash';
 import CheckerChess from './CheckerChess.vue';
 
 const props = defineProps({
-    sock:Object,
+  sock:Object
 })
-
 const socket = props.sock;
-
-onMounted(() => {
-    console.log(socket);
-})
-
 
 const activeChess = ref(null);
 
@@ -248,7 +245,65 @@ const InitialChessboard = [
   ],
 ];
 
+let oriPosition = [];
+let newPosition = [];
+let eatChess = [];
 
+socket.on('moveChessInfo', ({origin,newPo}) =>{
+  // const ([or,oc],[nr,nc],eatChess) = data;
+  socketMove(origin,newPo);
+})
+//1. 移动chess， 消除chess，变王
+const socketMove = ([or,oc],[nr,nc])=>{
+
+  if (RealChessboard[or][oc].chessObj != null&&RealChessboard[nr][nc].chessObj === null) {
+    if (Math.abs(nr - or) === 1) {
+      RealChessboard[nr][nc].chessObj = RealChessboard[or][oc].chessObj;
+      RealChessboard[or][oc].chessObj = null;
+
+      if (RealChessboard[nr][nc].chessObj[1] ===0){
+
+        if(nr === 7){
+          RealChessboard[nr][nc].chessObj[1] =1;
+        }
+
+      }
+      if (RealChessboard[nr][nc].chessObj[1] ===2){
+
+        if(nr === 0){
+          RealChessboard[nr][nc].chessObj[1] =3;
+        }
+
+      }
+    }
+
+    if (Math.abs(nr - or) === 2) {
+
+      RealChessboard[nr][nc] = RealChessboard[or][oc];
+      RealChessboard[or][oc] = null;
+      RealChessboard[or + (nr - or) / 2][oc + (nc - oc) / 2].chessObj = null
+
+      if (RealChessboard[nr][nc].chessObj[1] ===0){
+
+        if(nr === 7){
+          RealChessboard[nr][nc].chessObj[1] =1;
+        }
+
+      }
+      if (RealChessboard[nr][nc].chessObj[1] ===2){
+
+        if(nr === 0){
+          RealChessboard[nr][nc].chessObj[1] =3;
+        }
+
+      }
+
+    }
+
+  }
+
+
+};
 
 const RealChessboard = reactive(lodash.cloneDeep(InitialChessboard));
 // let redMove = falSse;
@@ -263,11 +318,15 @@ let redScore = 0;
 
 // import {moveChess} from './logic.js'
 const moveChess = ([oriRow, oriCol], [newRow, newCol],RealChessboard,activeChess) => {
-  activeChess.value = null;
+  // activeChess.value = null;
 
   if (RealChessboard[oriRow][oriCol].chessObj != null) {
 
     if (!canGo) {
+
+      socket.emit('chessMESend',{
+        origin:[oriRow, oriCol], newPo:[newRow, newCol]
+      });
 
       if (RealChessboard[oriRow][oriCol].chessObj[1] === 1 || RealChessboard[oriRow][oriCol].chessObj[1] === 0) {
 
@@ -285,6 +344,35 @@ const moveChess = ([oriRow, oriCol], [newRow, newCol],RealChessboard,activeChess
 
           console.log("red Scores are:" + redScore);
         }
+
+        oriPosition[0] = oriRow;
+        oriPosition[1] = oriCol;
+        newPosition[0] = newCol;
+
+
+
+
+
+        //const sock = io('http://localhost:8000');
+        // const sock = io('http://localhost:8000');
+        // this.socket = sock;
+        //
+        // sock.on('chessMESend', MEInfo => {
+        //
+        //   competeUserInfo.red.ID === socket.id
+        //
+        //       ? io.to(oriRow).emit('moveChessInfo', MEInfo)
+        //           ? io.to(oriCol).emit('moveChessInfo', MEInfo)
+        //               ? io.to(newRow).emit('moveChessInfo', MEInfo)
+        //                   ? io.to(newCol).emit('moveChessInfo', MEInfo)
+        //                       ? io.to(oriRow + (newRow - oriRow) / 2).emit('moveChessInfo', MEInfo)
+        //                           ? io.to(oriCol + (newCol - oriCol) / 2).emit('moveChessInfo', MEInfo)
+        //       : io.to(competeUserInfo.red.ID).emit('moveChessInfo', MEInfo);
+        //
+        //
+        // });
+
+
 
 
 
@@ -1078,5 +1166,8 @@ onBeforeUpdate(() => {
   //console.log("beforelalala")
 })
 
+onMounted(() => {
+  console.log(props.sock);
+})
 
 </script>

@@ -498,7 +498,7 @@ export default {
     },
 
     created(){
-        const sock = io('http://10.13.92.158:8000');
+        const sock = io('http://localhost:8000');
         this.socket = sock;
     },
 
