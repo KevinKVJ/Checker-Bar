@@ -619,6 +619,8 @@ export default {
             // {name:String,oriCoord: [oriRow, oriCol], newCoord:[newRow, newCol]}
             this.moveHistoryList.push(moveHistory);
         },
+
+
     },
 };
 </script>

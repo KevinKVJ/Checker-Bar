@@ -26,7 +26,7 @@
                     <button @click="toHomePage()" class="buttons" id="buttonTwo">Home</button>
                 </div>
                 <div class="checkerboardbase">
-                    <CheckerBoard></CheckerBoard>
+                    <CheckerBoard ref="cb" :sock="socket"></CheckerBoard>
                 </div>
                 <div class="getReady">
                     <button v-bind:class="{ white: !waitlisted, red: waitlisted }" @click="checkStatus()">Join the waitlist</button>
@@ -230,7 +230,7 @@ import FightWith from './Components/FightWith.vue';
 import LeftMessage from './Components/LeftMessage.vue';
 import RightMessage from './Components/RightMessage.vue';
 import MessageInputForm from './Components/MessageInputForm.vue';
-import CheckerBoard from '@/components/Checker/CheckerBoard2.vue';
+import CheckerBoard from '@/components/Checker/CheckerBoard3.vue';
 
 export default {
     data() {
@@ -263,6 +263,11 @@ export default {
         SvgIcon,
     },
 
+    created() {
+        const sock = io('http://10.13.92.158:8000');
+        this.socket = sock;
+    },
+
     mounted() {
         this.userObj.myid = sessionStorage.getItem('userid');
         this.userObj.myname = sessionStorage.getItem('username');
@@ -272,13 +277,10 @@ export default {
         //console.log(userAvatar);
         //var userObj = { myname: username, myid: userid, myavatar: userAvatar };
 
-        const sock = io('http://localhost:8000');
-        this.socket = sock;
-
-        sock.emit('getAvatarInfo', this.userObj);
+        this.socket.emit('getAvatarInfo', this.userObj);
         console.log(this.userObj);
 
-        sock.on('queryInfo', data => {
+        this.socket.on('queryInfo', data => {
             console.log('lalala');
             console.log(data);
             const newData = JSON.parse(data);
@@ -291,12 +293,12 @@ export default {
             console.log(this.avatarList);
         });
 
-        sock.on('waitforjoin', data => {
+        this.socket.on('waitforjoin', data => {
             console.log('wait for join');
         });
 
-        sock.emit('getChessboardStatus');
-        sock.on('cbStatus', cbStatus => {
+        this.socket.emit('getChessboardStatus');
+        this.socket.on('cbStatus', cbStatus => {
             console.log(cbStatus);
             let isFull = cbStatus.full;
             let isBlueReady = cbStatus.blueReady;
@@ -325,6 +327,10 @@ export default {
                 this.toCompetePage();
             }
         });
+
+        this.socket.on('spectateChessMove', data => {
+            console.log(data);
+        })
     },
 
     unmounted() {

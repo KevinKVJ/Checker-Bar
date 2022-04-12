@@ -337,8 +337,9 @@ let redScore = 0;
 let theOnlyChess = -1;
 
 
+
 // import {moveChess} from './logic.js'
-const moveChess = ([oriRow, oriCol], [newRow, newCol],RealChessboard,activeChess) => {
+const moveChess = ([oriRow, oriCol], [newRow, newCol],activeChess) => {
   // activeChess.value = null;
 
   if (RealChessboard[oriRow][oriCol].chessObj != null) {
@@ -479,6 +480,9 @@ const moveByGridCoord = newCoord => {
   letGridNoActive();
 };
 
+defineExpose({
+    moveChess
+})
 
 // import {letActive} from './logic.js'
 // import {secondMove} from './logic.js'
