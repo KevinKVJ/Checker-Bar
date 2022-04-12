@@ -41,8 +41,8 @@
                 <div>{{ turnColor }}</div>
             </div>
             <div class="left">
-                <div>Your color: {{ yourColor }}</div>
-                <div>{{ turnColor }}</div>
+                <div class="webGameInfo">Your color: {{ yourColor }}</div>
+                <div class="webGameInfo">{{ turnColor }}</div>
                 <div class="checkerboardbase">
                     <div class="checker-mask" v-if="checkerMaskSwitch">
                         <div class="webReadyButton">
@@ -65,13 +65,13 @@
                     <FightWith v-bind:opponentName = "opponent_name" />
                 </div>
 
-                <div class="sectionAvatar">
+                <!-- <div class="sectionAvatar">
                     <ul class="userAvatarArray">
                         <li v-for="(value, key) in avatarList" :key="key">
                             <UserAvatarList :iconName="value"> </UserAvatarList>
                         </li>
                     </ul>
-                </div>
+                </div> -->
 
                 <div class="sectionTwo">
                     <ul class="messageArray">
@@ -203,6 +203,7 @@
     /* margin-right: 40px; */
     border-radius: 4px;
     /* margin-bottom: 5px; */
+
 }
 .white:hover {
     color: rgb(182, 113, 113);
@@ -280,12 +281,12 @@
 }
 .sectionOne {
     float: left;
-    width: 80%;
+    width: 100%;
     height: 13%;
 }
 .sectionTwo {
     float: left;
-    width: 80%;
+    width: 100%;
     height: 80%;
     padding-bottom: 10px;
     padding-top: 10px;
@@ -302,46 +303,25 @@
 }
 .sectionThree {
     float: left;
-    width: 80%;
+    width: 100%;
     height: 7%;
     background: white;
     padding: 5px;
 }
-.sectionAvatar {
-    float: right;
-    width: 18%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.5);
-    border-radius: 10px;
-    overflow: auto;
-}
+// .sectionAvatar {
+//     float: right;
+//     width: 18%;
+//     height: 100%;
+//     background: rgba(255, 255, 255, 0.5);
+//     border-radius: 10px;
+//     overflow: auto;
+// }
 .userAvatarArray {
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
-/* ------ move history ------ */
-
-/* .moveHistoryContent {
-    width: 35vmin;
-    height: 68vmin;
-    background: rgb(204, 177, 128);
-    border-radius: 10px;
-
-    h4 {
-        font-size: 20px;
-        text-align: center;
-        margin-top: 0;
-        padding-top: 10px;
-        margin-bottom: 3px;
-    }
-    .divide-line {
-        height: 2px;
-        width: 100%;
-        background: black;
-    }
-} */
 .right {
     width: 30%;
     height: 72vmin;
@@ -370,6 +350,9 @@
         justify-content: center;
     }
     .webReadyButton {
+        display: none;
+    }
+    .webGameInfo{
         display: none;
     }
     .mobileGameInfo {
@@ -405,17 +388,17 @@
     }
     .sectionOne {
         float: left;
-        width: 80%;
-        height: 13%;
+        width: 100%;
+        height: 14%;
     }
-    .sectionAvatar {
-        float: right;
-        width: 18%;
-        height: 100%;
-        background: rgba(255, 255, 255, 0.5);
-        border-radius: 10px;
-        overflow: scroll;
-    }
+    // .sectionAvatar {
+    //     float: right;
+    //     width: 18%;
+    //     height: 100%;
+    //     background: rgba(255, 255, 255, 0.5);
+    //     border-radius: 10px;
+    //     overflow: scroll;
+    // }
     .userAvatarArray {
         list-style: none;
         margin: 0;
@@ -423,7 +406,7 @@
     }
     .sectionTwo {
         float: left;
-        width: 80%;
+        width: 100%;
         height: 80%;
         padding: 10px;
         overflow: scroll;
@@ -439,8 +422,8 @@
     }
     .sectionThree {
         float: left;
-        width: 80%;
-        height: 7%;
+        width: 100%;
+        height: 12%;
         background: white;
         padding: 5px;
     }
@@ -472,6 +455,29 @@
         background: white;
         height: 7vmin;
         width: 15.75vmin;
+    }
+    .white {
+        background: white;
+        height: 7vmin;
+        width: 15.75vmin;
+        font-size: 4.4vmin;
+        border: none;
+        border-radius: 4px;
+
+    }
+    .white:hover {
+        color: rgb(182, 113, 113);
+    }
+    .red {
+        background: rgb(182, 113, 113);
+        height: 7vmin;
+        width: 15.75vmin;
+        font-size: 4.4vmin;
+        border: none;
+        border-radius: 4px;
+    }
+    .red:hover {
+        color: white;
     }
     .buttonSection {
         display: flex;
