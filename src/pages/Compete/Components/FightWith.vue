@@ -1,7 +1,7 @@
 <template>
     <div class="fightWith">
         <div>You are fighting with</div>
-        <div class="fightWithName">Lucy</div>
+        <div class="fightWithName">{{opponentName}}</div>
     </div>
 </template>
 
@@ -23,5 +23,8 @@
 </style>
 
 
-<script setup>
+<script>
+export default{
+    props:['opponentName']
+}
 </script>

@@ -43,7 +43,7 @@
 
             <div class="middle">
                 <div class="sectionOne">
-                    <FightWith />
+                    <FightWith v-bind:opponentName = "opponent_name" />
                 </div>
 
                 <div class="sectionAvatar">
@@ -461,8 +461,9 @@ export default {
     data() {
         return {
             // show: false,
+            opponent_name:"name",
             yourColor:"wait for start...",
-            turnColor:"wait for start...",
+            turnColor:"Click Ready button and wait for start...",
             userid: "",
             username: "",
             userAvatar: "",
@@ -533,11 +534,14 @@ export default {
         this.socket.on('toBeReady', data =>{
             console.log(data);
             if (data.blue.name === this.username){
-                this.yourColor = "Blue"
+                this.yourColor = "Blue";
+                this.opponent_name = data.red.name;
             }
             if (data.red.name === this.username){
-                this.yourColor = "Red"
+                this.yourColor = "Red";
+                this.opponent_name = data.blue.name;
             }
+
         })
         this.socket.on('inQueryOrGoToSpectate', goToSpectate=>{
             alert("Please go to Spectate page");
