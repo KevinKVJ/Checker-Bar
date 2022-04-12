@@ -37,11 +37,11 @@
                 </button>
             </div>
             <div class="mobileGameInfo">
-                <div>Your color: {{ yourColor }}</div>
+                <div>Color of your pieces: {{ yourColor }}</div>
                 <div>{{ turnColor }}</div>
             </div>
             <div class="left">
-                <div class="webGameInfo">Your color: {{ yourColor }}</div>
+                <div class="webGameInfo">Color of your pieces: {{ yourColor }}</div>
                 <div class="webGameInfo">{{ turnColor }}</div>
                 <div class="checkerboardbase">
                     <div class="checker-mask" v-if="checkerMaskSwitch">
@@ -543,7 +543,7 @@ export default {
     },
 
     created() {
-        const sock = io('http://10.13.92.158:8000');
+        const sock = io('http://localhost:8000');
         this.socket = sock;
     },
 
@@ -580,7 +580,7 @@ export default {
         
         this.socket.on('getStart', ({Turn})=>{
             console.log(Turn);
-            this.turnColor = "It's " + Turn +"'s turn now";
+            this.turnColor = Turn +"pieces moves first";
         })
 
         console.log(this.isReady);

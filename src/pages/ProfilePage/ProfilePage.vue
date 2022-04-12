@@ -107,7 +107,7 @@ export default {
                 var code = res.data[Object.keys(res.data)[0]];
                 console.log(code);
                 if(code === 200){
-                    alert("SignUp successful");
+                    alert("Change your profile successful");
                     sessionStorage.setItem('username', this.value);
                     window.location.reload();
                 }else{

@@ -114,7 +114,7 @@ export default{
                     console.log(userId);
                     sessionStorage.setItem('userid', userId);
                     this.toHomePage();
-                    alert("successfully login");
+                    alert("login successfully ");
                 }
                 if (code === 400){
                     alert("cannot find the user");      
