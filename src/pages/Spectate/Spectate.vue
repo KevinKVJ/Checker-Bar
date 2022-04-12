@@ -155,7 +155,7 @@
     width: 88%;
     height: 95%;
     border-radius: 10px;
-    overflow: scroll;
+    overflow: auto;
     background: rgba(255, 255, 255, 0.5);
 }
 #userAvatarArray {

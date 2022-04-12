@@ -231,7 +231,7 @@
     height: 80%;
     padding-bottom: 10px;
     padding-top: 10px;
-    overflow: scroll;
+    overflow: auto;
 }
 .messageArray {
     list-style: none;
@@ -255,7 +255,7 @@
     height: 100%;
     background: rgba(255, 255, 255, 0.5);
     border-radius: 10px;
-    overflow: scroll;
+    overflow: auto;
 }
 #userAvatarArray {
     list-style-type: none;
@@ -302,7 +302,7 @@
 
         display: flex;
         flex-direction: column;
-        overflow: scroll;
+        overflow: auto;
         align-items: center;
         justify-content: center;
     }
