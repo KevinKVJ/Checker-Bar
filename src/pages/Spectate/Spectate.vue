@@ -3,7 +3,7 @@
         <div class="main">
             <div class="middle">
                 <div class="fightInfoSection">
-                    <div class="fightInfo">{{fightInfoString}}</div>
+                    <div class="fightInfo">{{ fightInfoString }}</div>
                 </div>
                 <div class="buttonSection">
                     <n-button @click="showModal = true" class="buttons" id="buttonOne"> Rules </n-button>
@@ -29,7 +29,7 @@
                     <CheckerBoard></CheckerBoard>
                 </div>
                 <div class="getReady">
-                    <button v-bind:class="{ white: !waitlisted, red: waitlisted }" v-on:click="waitlisted = !waitlisted" @click="checkStatus()">Join the waitlist</button>
+                    <button v-bind:class="{ white: !waitlisted, red: waitlisted }" @click="checkStatus()">Join the waitlist</button>
                 </div>
             </div>
 
@@ -246,8 +246,8 @@ export default {
             //items: ['message', 'name'],
             socket: null,
             avatarList: [],
-            userObj:{myname: '', myid: '', myavatar: ''},
-            fightInfoString:'',
+            userObj: { myname: '', myid: '', myavatar: '' },
+            fightInfoString: '',
         };
     },
     components: {
@@ -272,7 +272,7 @@ export default {
         //console.log(userAvatar);
         //var userObj = { myname: username, myid: userid, myavatar: userAvatar };
 
-        const sock = io('http://10.12.99.36:8000');
+        const sock = io('http://10.13.92.158:8000');
         this.socket = sock;
 
         sock.emit('getAvatarInfo', this.userObj);
@@ -281,10 +281,13 @@ export default {
         sock.on('queryInfo', data => {
             console.log('lalala');
             console.log(data);
+            const newData = JSON.parse(data);
             this.avatarList = [];
-            data.map((item, index) => {
+            newData.map((item, index) => {
                 this.avatarList.push(item.myavatar);
             });
+            this.socket.emit('getChessboardStatus');
+            console.log(this.userObj);
             console.log(this.avatarList);
         });
 
@@ -293,25 +296,35 @@ export default {
         });
 
         sock.emit('getChessboardStatus');
-        sock.on('cbStatus', cbStatus =>{
+        sock.on('cbStatus', cbStatus => {
             console.log(cbStatus);
-            var isFull = cbStatus.full;
-            var isBlueReady = cbStatus.blueReady;
-            var isRedReady = cbStatus.redReady;
-            var blueInfo = cbStatus.blue.name;
-            var redInfo = cbStatus.red.name;
+            let isFull = cbStatus.full;
+            let isBlueReady = cbStatus.blueReady;
+            let isRedReady = cbStatus.redReady;
+            let blueInfo = !!cbStatus.blue && cbStatus.blue['name'];
+            let redInfo = !!cbStatus.red && cbStatus.red['name'];
             console.log(isFull);
             console.log(isBlueReady);
             console.log(isRedReady);
             console.log(blueInfo);
             console.log(redInfo);
-            if(isFull == false || isBlueReady == false || isRedReady == false){
-                this.fightInfoString = "Waiting for the users........"
+            if (isFull == false || isBlueReady == false || isRedReady == false) {
+                this.fightInfoString = 'Waiting for the users........';
             }
-            if(isFull == true && isBlueReady == true && isRedReady == true){
-                this.fightInfoString = blueInfo + " is fighting with " + redInfo;
+            if (isFull == true && isBlueReady == true && isRedReady == true) {
+                this.fightInfoString = blueInfo + ' is fighting with ' + redInfo;
             }
-        })
+            // if(blueInfo === this.userObj.myname || redInfo === this.userObj.myname){
+            //     console.log("enter game");
+            //     alert("go to the compete page");
+            //     this.toCompetePage();
+            // }
+            if (redInfo === this.userObj.myname || blueInfo === this.userObj.myname) {
+                console.log('enter game');
+                alert("go to the compete page");
+                this.toCompetePage();
+            }
+        });
     },
 
     unmounted() {
@@ -323,6 +336,9 @@ export default {
         toHomePage() {
             this.$router.push({ path: '/homePage' });
         },
+        toCompetePage() {
+            this.$router.push({ path: '/compete' });
+        },
 
         sendMessage(mess) {
             this.socket.emit('boardmessage', mess);
@@ -330,11 +346,14 @@ export default {
         },
 
         checkStatus() {
-            console.log(this.waitlisted);
-            if (this.waitlisted === true) {
-                this.socket.emit('addUser', this.userObj);
-                console.log(this.userObj);
-            }
+            // console.log(this.waitlisted);
+            this.socket.emit('addUser', this.userObj);
+            this.waitlisted = true;
+
+            // if (this.waitlisted === true) {
+                // this.socket.emit('getChessboardStatus');
+                // console.log(this.userObj);
+            // }
         },
     },
 };

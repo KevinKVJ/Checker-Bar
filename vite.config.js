@@ -35,7 +35,7 @@ export default defineConfig({
             
             // 选项写法
             '/api': {
-                target: 'http://10.12.99.36:8000',
+                target: 'http://10.13.92.158:8000',
                 
                 changeOrigin: true,
                 rewrite: path => path.replace(/^\/api/, ''),

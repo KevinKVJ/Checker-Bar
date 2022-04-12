@@ -27,6 +27,10 @@ const router = createRouter({
             name: 'login',
             title: 'Login',
             component: () => import('@/pages/Login/Login.vue'),
+            beforeEnter: () => {
+                sessionStorage.clear();
+                return true;
+            },
         },
         {
             path: '/signup',
