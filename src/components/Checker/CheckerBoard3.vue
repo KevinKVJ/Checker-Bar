@@ -296,7 +296,7 @@ const socketMove = ([or,oc],[nr,nc])=>{
         redScore += 1;
         theOnlyChess = RealChessboard[nr][nc].chessObj[0];
         if (redScore === 12) {
-          console.log("Game Finished! Red Wins");
+          alert("Game Finished! Red Wins");
         }
 
         console.log("red Scores are:" + redScore);
@@ -311,7 +311,7 @@ const socketMove = ([or,oc],[nr,nc])=>{
         blueScore += 1;
         theOnlyChess = RealChessboard[nr][nc].chessObj[0];
         if (blueScore === 12) {
-          console.log("Game Finished! Blue Wins");
+          alert("Game Finished! Blue Wins");
         }
 
         console.log("Blue Scores are:" + blueScore);
@@ -371,7 +371,7 @@ const moveChess = ([oriRow, oriCol], [newRow, newCol],RealChessboard,activeChess
           redScore += 1;
           theOnlyChess = RealChessboard[newRow][newCol].chessObj[0];
           if (redScore === 12) {
-            console.log("Game Finished! Red Wins");
+            alert("Game Finished! Red Wins");
           }
 
           console.log("red Scores are:" + redScore);
@@ -433,7 +433,7 @@ const moveChess = ([oriRow, oriCol], [newRow, newCol],RealChessboard,activeChess
           console.log("this is end");
           console.log("blue Scores are:" + blueScore);
           if (blueScore === 12) {
-            console.log("Game Finished! Blue Wins!");
+            alert("Game Finished! Blue Wins!");
           }
 
         }
@@ -1108,7 +1108,7 @@ function secondMove(newAC,RealChessboard) {
         }
       }
     }
-    if (column < 5 && row <= 5) {
+    if (column <= 5 && row <= 5) {
       if (RealChessboard[row + 2][column + 2].chessObj === null) {
         if (RealChessboard[row + 1][column + 1].chessObj != null) {
           if (RealChessboard[row + 1][column + 1].chessObj[1] === 0 || RealChessboard[row + 1][column + 1].chessObj[1] === 1) {
@@ -1163,22 +1163,25 @@ function secondMove(newAC,RealChessboard) {
 
 }
 
-function timeCount(){
-  if (newR!==null){
-    console.log("if");
-    clearInterval();
-
-  }else {
-    canGo=!canGo;
-    console.log("else");
-  }
-}
-
-
+// function timeCount(ac){
+//   if (!activeChess){
+//     canGo=!canGo;
+//     console.log("else");
+//
+//   }else {
+//     console.log("if");
+//     clearTimeout();
+//   }
+// }
+// let timer;
+// timer = setTimeout(() => {
+//   timeCount(activeChess)
+// },3000);
+// clearTimeout();
 
 watch(activeChess, (newAC, OriAC) => {
 
-  //setInterval(timeCount,5000,newAC);
+
 
   if (newAC !== null) {
     const {chessType, csIndex, row, column} = newAC;
