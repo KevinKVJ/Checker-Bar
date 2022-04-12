@@ -3,7 +3,7 @@
         <div class="main">
             <div class="middle">
                 <div class="fightInfoSection">
-                    <div class="fightInfo">{{fightInfoString}}</div>
+                    <div class="fightInfo">{{ fightInfoString }}</div>
                 </div>
                 <div class="buttonSection">
                     <n-button @click="showModal = true" class="buttons" id="buttonOne"> Rules </n-button>
@@ -29,7 +29,7 @@
                     <CheckerBoard></CheckerBoard>
                 </div>
                 <div class="getReady">
-                    <button v-bind:class="{ white: !waitlisted, red: waitlisted }" v-on:click="waitlisted = !waitlisted" @click="checkStatus()">Join the waitlist</button>
+                    <button v-bind:class="{ white: !waitlisted, red: waitlisted }" @click="checkStatus()">Join the waitlist</button>
                 </div>
             </div>
 
@@ -246,8 +246,8 @@ export default {
             //items: ['message', 'name'],
             socket: null,
             avatarList: [],
-            userObj:{myname: '', myid: '', myavatar: ''},
-            fightInfoString:'',
+            userObj: { myname: '', myid: '', myavatar: '' },
+            fightInfoString: '',
         };
     },
     components: {
@@ -286,16 +286,17 @@ export default {
             newData.map((item, index) => {
                 this.avatarList.push(item.myavatar);
             });
+            this.socket.emit('getChessboardStatus');
+            console.log(this.userObj);
             console.log(this.avatarList);
         });
 
         sock.on('waitforjoin', data => {
             console.log('wait for join');
-
         });
 
         sock.emit('getChessboardStatus');
-        sock.on('cbStatus', cbStatus =>{
+        sock.on('cbStatus', cbStatus => {
             console.log(cbStatus);
             let isFull = cbStatus.full;
             let isBlueReady = cbStatus.blueReady;
@@ -307,17 +308,23 @@ export default {
             console.log(isRedReady);
             console.log(blueInfo);
             console.log(redInfo);
-            if(isFull == false || isBlueReady == false || isRedReady == false){
-                this.fightInfoString = "Waiting for the users........"
+            if (isFull == false || isBlueReady == false || isRedReady == false) {
+                this.fightInfoString = 'Waiting for the users........';
             }
-            if(isFull == true && isBlueReady == true && isRedReady == true){
-                this.fightInfoString = blueInfo + " is fighting with " + redInfo;
+            if (isFull == true && isBlueReady == true && isRedReady == true) {
+                this.fightInfoString = blueInfo + ' is fighting with ' + redInfo;
             }
-            if(blueInfo === this.userObj.myname || redInfo === this.userObj.myname){
+            // if(blueInfo === this.userObj.myname || redInfo === this.userObj.myname){
+            //     console.log("enter game");
+            //     alert("go to the compete page");
+            //     this.toCompetePage();
+            // }
+            if (redInfo === this.userObj.myname || blueInfo === this.userObj.myname) {
+                console.log('enter game');
                 alert("go to the compete page");
                 this.toCompetePage();
             }
-        })
+        });
     },
 
     unmounted() {
@@ -339,12 +346,14 @@ export default {
         },
 
         checkStatus() {
-            console.log(this.waitlisted);
-            if (this.waitlisted === true) {
-                this.socket.emit('addUser', this.userObj);
-                this.socket.emit('getChessboardStatus');
-                console.log(this.userObj);
-            }
+            // console.log(this.waitlisted);
+            this.socket.emit('addUser', this.userObj);
+            this.waitlisted = true;
+
+            // if (this.waitlisted === true) {
+                // this.socket.emit('getChessboardStatus');
+                // console.log(this.userObj);
+            // }
         },
     },
 };
