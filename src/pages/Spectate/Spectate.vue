@@ -35,7 +35,7 @@
 
             <div class="right">
                 <div class="sectionAvatar">
-                    <ul id="userAvatarArray">
+                    <ul class="userAvatarArray">
                         <li v-for="(value, key) in avatarList" :key="key">
                             <UserAvatarList :iconName="value"> </UserAvatarList>
                         </li>
@@ -158,8 +158,8 @@
     overflow: auto;
     background: rgba(255, 255, 255, 0.5);
 }
-#userAvatarArray {
-    list-style-type: none;
+.userAvatarArray {
+    list-style: none;
     margin: 0;
     padding: 0;
 }
@@ -211,8 +211,8 @@ li {
         overflow: scroll;
         background: rgba(255, 255, 255, 0.5);
     }
-    #userAvatarArray {
-        list-style-type: none;
+    .userAvatarArray {
+        list-style: none;
         margin: 0;
         padding: 0;
     }
