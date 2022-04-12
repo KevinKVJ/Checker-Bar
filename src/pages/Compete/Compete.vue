@@ -47,6 +47,7 @@
                     <button v-bind:class="{'white': !isReady, 'red': isReady}" v-on:click ="isReady = !isReady" @click="checkReadyStatus()"> Ready </button>
                 </div>
                 <div class="checkerboardbase">
+                    <div class="checker-mask" v-if="checkerMaskSwitch"></div>
                     <CheckerBoard :sock="socket"></CheckerBoard>
                 </div>
             </div>
@@ -253,7 +254,9 @@
         right: 0;
         top: 0;
         bottom: 0;
-        background-color: rgba(255,255,255,0.35);
+        background-color: rgba(255,255,255,0.7);
+        z-index: 500;
+        border-radius: 40px;
     }
 }
 
@@ -503,19 +506,8 @@ export default {
                 { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
                 { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
                 { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
-                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
-                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
-                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
-                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
-                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
-                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
-                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
-                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
-                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
-                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
-                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
-                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
             ], //method: addMoveHistory(moveHistory)
+            checkerMaskSwitch: true,
         };
     },
     components: {
@@ -566,7 +558,8 @@ export default {
         
         this.socket.on('getStart', ({Turn})=>{
             console.log(Turn);
-            this.turnColor = "It's " + Turn +"'s turn now";
+            this.checkerMaskSwitch = false;
+            this.turnColor = `It's ${Turn} s turn now`;
         })
 
         // this.socket.on('cbStatus', (data)=>{
