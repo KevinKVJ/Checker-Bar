@@ -272,7 +272,7 @@ export default {
         //console.log(userAvatar);
         //var userObj = { myname: username, myid: userid, myavatar: userAvatar };
 
-        const sock = io('http://10.12.66.107:8000');
+        const sock = io('http://10.13.92.158:8000');
         this.socket = sock;
 
         sock.emit('getAvatarInfo', this.userObj);
@@ -281,8 +281,9 @@ export default {
         sock.on('queryInfo', data => {
             console.log('lalala');
             console.log(data);
+            const newData = JSON.parse(data);
             this.avatarList = [];
-            data.map((item, index) => {
+            newData.map((item, index) => {
                 this.avatarList.push(item.myavatar);
             });
             console.log(this.avatarList);
@@ -290,16 +291,17 @@ export default {
 
         sock.on('waitforjoin', data => {
             console.log('wait for join');
+
         });
 
         sock.emit('getChessboardStatus');
         sock.on('cbStatus', cbStatus =>{
             console.log(cbStatus);
-            var isFull = cbStatus.full;
-            var isBlueReady = cbStatus.blueReady;
-            var isRedReady = cbStatus.redReady;
-            var blueInfo = cbStatus.blue.name;
-            var redInfo = cbStatus.red.name;
+            let isFull = cbStatus.full;
+            let isBlueReady = cbStatus.blueReady;
+            let isRedReady = cbStatus.redReady;
+            let blueInfo = !!cbStatus.blue && cbStatus.blue['name'];
+            let redInfo = !!cbStatus.red && cbStatus.red['name'];
             console.log(isFull);
             console.log(isBlueReady);
             console.log(isRedReady);
@@ -311,6 +313,9 @@ export default {
             if(isFull == true && isBlueReady == true && isRedReady == true){
                 this.fightInfoString = blueInfo + " is fighting with " + redInfo;
             }
+            // if(blueInfo === this.userObj.myid || redInfo === this.userObj.myid){
+            //     alert("go to the compete page")
+            // }
         })
     },
 
@@ -333,6 +338,7 @@ export default {
             console.log(this.waitlisted);
             if (this.waitlisted === true) {
                 this.socket.emit('addUser', this.userObj);
+                this.socket.emit('getChessboardStatus');
                 console.log(this.userObj);
             }
         },

@@ -503,7 +503,7 @@ export default {
         this.userAvatar = sessionStorage.getItem('userAvatar');
         var userObj = { myname: this.username, myid: this.userid, myavatar: this.userAvatar };
 
-        const sock = io('http://10.12.66.107:8000');
+        const sock = io('http://10.13.92.158:8000');
         this.socket = sock;
 
         sock.on('message-data', data => {

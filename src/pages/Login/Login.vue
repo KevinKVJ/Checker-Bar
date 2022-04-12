@@ -86,7 +86,7 @@ export default{
         },
         loadUserInfo(){
             let userAvatar = sessionStorage.getItem("userAvatar");
-            if (userAvatar === null){
+            if (!!!userAvatar){
                 alert("Please choose your avatar!")
             }else{
             console.log(this.value); 
