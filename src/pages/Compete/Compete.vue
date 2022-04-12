@@ -1,5 +1,3 @@
-/** TODO: inputbar in chatting box and "vmin" in Move History */
-
 <template>
     <Base>
         <div class="main">
@@ -34,20 +32,30 @@
                     </div>
                 </n-modal>
                 <button @click="toHomePage()" class="buttons">Home</button>
-                <button v-bind:class="{'white': !isReady, 'red': isReady}" v-on:click ="isReady = !isReady" @click="checkReadyStatus()"> Ready </button>
+                <button v-bind:class="{ white: !isReady, red: isReady }" v-on:click="isReady = !isReady" @click="checkReadyStatus()">
+                    Ready
+                </button>
             </div>
             <div class="mobileGameInfo">
-                <div>Your color: {{yourColor}}</div>
-                <div>{{turnColor}}</div>
+                <div>Your color: {{ yourColor }}</div>
+                <div>{{ turnColor }}</div>
             </div>
             <div class="left">
-                <div class="webReadyButton">
-                    <div>Your color: {{yourColor}}</div>
-                    <div>{{turnColor}}</div>
-                    <button v-bind:class="{'white': !isReady, 'red': isReady}" v-on:click ="isReady = !isReady" @click="checkReadyStatus()"> Ready </button>
-                </div>
+                <div>Your color: {{ yourColor }}</div>
+                <div>{{ turnColor }}</div>
                 <div class="checkerboardbase">
-                    <div class="checker-mask" v-if="checkerMaskSwitch"></div>
+                    <div class="checker-mask" v-if="checkerMaskSwitch">
+                        <div class="webReadyButton">
+                            <button
+                                v-bind:class="{ white: !isReady, red: isReady }"
+                                v-on:click="isReady = !isReady"
+                                @click="checkReadyStatus()"
+                            >
+                                Ready
+                            </button>
+                        </div>
+                    </div>
+
                     <CheckerBoard :sock="socket"></CheckerBoard>
                 </div>
             </div>
@@ -192,9 +200,9 @@
     width: 90px;
     font-size: 25px;
     border: none;
-    margin-right: 40px;
+    /* margin-right: 40px; */
     border-radius: 4px;
-    margin-bottom: 5px;
+    /* margin-bottom: 5px; */
 }
 .white:hover {
     color: rgb(182, 113, 113);
@@ -205,9 +213,9 @@
     width: 90px;
     font-size: 25px;
     border: none;
-    margin-right: 40px;
+    /* margin-right: 40px; */
     border-radius: 4px;
-    margin-bottom: 5px;
+    /* margin-bottom: 5px; */
 }
 .red:hover {
     color: white;
@@ -226,7 +234,7 @@
     display: none;
 }
 
-.mobileGameInfo{
+.mobileGameInfo {
     display: none;
 }
 
@@ -248,15 +256,19 @@
 
     position: relative;
 
-    > .checker-mask{
+    > .checker-mask {
         position: absolute;
         left: 0;
         right: 0;
         top: 0;
         bottom: 0;
-        background-color: rgba(255,255,255,0.7);
+        background-color: rgba(255, 255, 255, 0.7);
         z-index: 500;
         border-radius: 40px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }
 
@@ -360,7 +372,7 @@
     .webReadyButton {
         display: none;
     }
-    .mobileGameInfo{
+    .mobileGameInfo {
         display: block;
     }
     .mobileButtonSection {
@@ -488,17 +500,15 @@ import CheckerBoard from '@/components/Checker/CheckerBoard3.vue';
 export default {
     data() {
         return {
-            // show: false,
-            yourColor:"wait for start...",
-            turnColor:"wait for start...",
-            userid: "",
-            username: "",
-            userAvatar: "",
+            yourColor: 'wait for start...',
+            turnColor: 'wait for start...',
+            userid: '',
+            username: '',
+            userAvatar: '',
             isReady: false,
             popupActivo: false,
             showModal: false,
             messages: [],
-            //items: ['message', 'name'],
             socket: null,
             avatarList: [],
             moveHistoryList: [
@@ -510,6 +520,7 @@ export default {
             checkerMaskSwitch: true,
         };
     },
+
     components: {
         MessageInputForm,
         NButton,
@@ -523,7 +534,7 @@ export default {
         SvgIcon,
     },
 
-    created(){
+    created() {
         const sock = io('http://10.13.92.158:8000');
         this.socket = sock;
     },
@@ -541,32 +552,26 @@ export default {
 
         this.socket.emit('addUser', userObj);
         console.log(userObj);
-        this.socket.on('toBeReady', data =>{
+        this.socket.on('toBeReady', data => {
             console.log(data);
-            if (data.blue.name === this.username){
-                this.yourColor = "Blue"
+            if (data.blue.name === this.username) {
+                this.yourColor = 'Blue';
             }
-            if (data.red.name === this.username){
-                this.yourColor = "Red"
+            if (data.red.name === this.username) {
+                this.yourColor = 'Red';
             }
-        })
-        this.socket.on('inQueryOrGoToSpectate', goToSpectate=>{
-            alert("Please go to Spectate page");
-        })
-        
+        });
+        this.socket.on('inQueryOrGoToSpectate', goToSpectate => {
+            alert('Please go to Spectate page');
+        });
+
         console.log(this.isReady);
-        
-        this.socket.on('getStart', ({Turn})=>{
+
+        this.socket.on('getStart', ({ Turn }) => {
             console.log(Turn);
             this.checkerMaskSwitch = false;
             this.turnColor = `It's ${Turn} s turn now`;
-        })
-
-        // this.socket.on('cbStatus', (data)=>{
-        //     console.log(data);
-        // })
-        
-
+        });
     },
 
     unmounted() {
@@ -579,9 +584,9 @@ export default {
             this.$router.push({ path: '/homePage' });
         },
 
-        checkReadyStatus(){
+        checkReadyStatus() {
             console.log(this.isReady);
-            if (this.isReady == true){
+            if (this.isReady == true) {
                 this.socket.emit('i-am-ready');
             }
         },
