@@ -128,6 +128,17 @@ import {ref, reactive, watch, onUpdated, onMounted, onBeforeUpdate} from 'vue';
 import lodash from 'lodash';
 import CheckerChess from './CheckerChess.vue';
 
+const props = defineProps({
+    sock:Object,
+})
+
+const socket = props.sock;
+
+onMounted(() => {
+    console.log(socket);
+})
+
+
 const activeChess = ref(null);
 
 const letGridNoActive = () => {

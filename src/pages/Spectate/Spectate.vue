@@ -313,9 +313,10 @@ export default {
             if(isFull == true && isBlueReady == true && isRedReady == true){
                 this.fightInfoString = blueInfo + " is fighting with " + redInfo;
             }
-            // if(blueInfo === this.userObj.myid || redInfo === this.userObj.myid){
-            //     alert("go to the compete page")
-            // }
+            if(blueInfo === this.userObj.myname || redInfo === this.userObj.myname){
+                alert("go to the compete page");
+                this.toCompetePage();
+            }
         })
     },
 
@@ -327,6 +328,9 @@ export default {
     methods: {
         toHomePage() {
             this.$router.push({ path: '/homePage' });
+        },
+        toCompetePage() {
+            this.$router.push({ path: '/compete' });
         },
 
         sendMessage(mess) {

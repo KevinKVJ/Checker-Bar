@@ -31,7 +31,7 @@
                     <button v-bind:class="{'white': !isReady, 'red': isReady}" v-on:click ="isReady = !isReady" @click="checkReadyStatus()"> Ready </button>
                 </div>
                 <div class="checkerboardbase">
-                    <CheckerBoard></CheckerBoard>
+                    <CheckerBoard :sock="socket"></CheckerBoard>
                 </div>
             </div>
 
@@ -497,36 +497,38 @@ export default {
         SvgIcon,
     },
 
+    created(){
+        const sock = io('http://10.13.92.158:8000');
+        this.socket = sock;
+    },
+
     mounted() {
         this.userid = sessionStorage.getItem('userid');
         this.username = sessionStorage.getItem('username');
         this.userAvatar = sessionStorage.getItem('userAvatar');
         var userObj = { myname: this.username, myid: this.userid, myavatar: this.userAvatar };
 
-        const sock = io('http://10.13.92.158:8000');
-        this.socket = sock;
-
-        sock.on('message-data', data => {
+        this.socket.on('message-data', data => {
             console.log(data);
             this.messages.push(data);
         });
 
-        sock.emit('addUser', userObj);
+        this.socket.emit('addUser', userObj);
         console.log(userObj);
-        sock.on('toBeReady', data =>{
+        this.socket.on('toBeReady', data =>{
             console.log(data);
         })
-        sock.on('inQueryOrGoToSpectate', goToSpectate=>{
+        this.socket.on('inQueryOrGoToSpectate', goToSpectate=>{
             alert("Please go to Spectate page");
         })
         
         console.log(this.isReady);
         
 
-        // sock.emit('setAvatarInfo', userObj);
+        // this.socket.emit('setAvatarInfo', userObj);
         // console.log(userObj);
 
-        // sock.on('returnInf', data => {
+        // this.socket.on('returnInf', data => {
         //     console.log("lalala");
         //     console.log(data);
         //     data.map((item,index) => {
