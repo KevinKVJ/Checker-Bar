@@ -339,15 +339,21 @@ let theOnlyChess = -1;
 
 
 // import {moveChess} from './logic.js'
-const moveChess = ([oriRow, oriCol], [newRow, newCol],activeChess) => {
+const moveChess = ([oriRow, oriCol], [newRow, newCol],RealChessboard,activeChess) => {
+
+
+
   // activeChess.value = null;
 
   if (RealChessboard[oriRow][oriCol].chessObj != null) {
+
+
     moveAgain = false;
 
     if (!canGo) {
 
       if (RealChessboard[oriRow][oriCol].chessObj[1] === 1 || RealChessboard[oriRow][oriCol].chessObj[1] === 0) {
+
 
 
         RealChessboard[newRow][newCol].chessObj = RealChessboard[oriRow][oriCol].chessObj;
@@ -486,6 +492,8 @@ defineExpose({
 
 // import {letActive} from './logic.js'
 // import {secondMove} from './logic.js'
+
+
 
 function letActive(newAC,RealChessboard) {
 
@@ -1155,10 +1163,22 @@ function secondMove(newAC,RealChessboard) {
 
 }
 
+function timeCount(){
+  if (newR!==null){
+    console.log("if");
+    clearInterval();
+
+  }else {
+    canGo=!canGo;
+    console.log("else");
+  }
+}
 
 
 
 watch(activeChess, (newAC, OriAC) => {
+
+  //setInterval(timeCount,5000,newAC);
 
   if (newAC !== null) {
     const {chessType, csIndex, row, column} = newAC;
@@ -1188,6 +1208,7 @@ watch(activeChess, (newAC, OriAC) => {
     }
 
 
+
     //moveAgain = false;
 
 
@@ -1196,7 +1217,11 @@ watch(activeChess, (newAC, OriAC) => {
 
 
 
+
+
   }
+
+
 });
 
 
