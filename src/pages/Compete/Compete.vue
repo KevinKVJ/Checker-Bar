@@ -25,7 +25,7 @@
                                 one capture possible from a single square, you may jump whichever piece is preferable.
                             </li>
                             <li>
-                                The game is won when the opponent is unable to make a move, which means the entirety of a player’s pieces
+                                The game is won when the opponent is unable to make a move, or the entirety of a player’s pieces
                                 were captured by the opponent.
                             </li>
                         </ul>

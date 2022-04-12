@@ -11,15 +11,15 @@
                         <div class="lalala">
                             <ul id="ruleList">
                                 <li>This game is for two players. Each player starts with 12 colored discs (of the same color).</li>
-                                <li>Players place their discs (pieces) on the dark squares on their side of the board. Black has first play, after turns alternate.</li>
-                                <li>Moves can only be made on black squares, so the pieces move diagonally. Pieces can only move in a forward direction, toward their opponent.</li>
+                                <li>Players place their discs (pieces) on the dark squares on their side of the board. Red has first play, after turns alternate.</li>
+                                <li>Moves can only be made on black squares, so the pieces move diagonally. Pieces can only move in a forward direction (except the king), toward their opponent.</li>
                                 <li>If you are moving your disc forward, and not capturing your opponent’s piece in the move, you may only move it forward one square.</li>
                                 <li>After a piece is captured, it is removed from the board, and collected by the opponent.</li>
                                 <li>
                                     If you have the ability to jump your opponents pieces, you must. However, in the even there are more than one capture possible from a single
                                     square, you may jump whichever piece is preferable.
                                 </li>
-                                <li>The game is won when the opponent is unable to make a move, which means the entirety of a player’s pieces were captured by the opponent.</li>
+                                <li>The game is won when the opponent is unable to make a move, or the entirety of a player’s pieces were captured by the opponent.</li>
                             </ul>
                         </div>
                     </n-modal>
@@ -314,7 +314,7 @@ export default {
             console.log(blueInfo);
             console.log(redInfo);
             if (isFull == false || isBlueReady == false || isRedReady == false) {
-                this.fightInfoString = 'Waiting for the users........';
+                this.fightInfoString = 'Waiting for the players...';
             }
             if (isFull == true && isBlueReady == true && isRedReady == true) {
                 this.fightInfoString = blueInfo + ' is fighting with ' + redInfo;
@@ -326,7 +326,7 @@ export default {
             // }
             if (redInfo === this.userObj.myname || blueInfo === this.userObj.myname) {
                 console.log('enter game');
-                alert("go to the compete page");
+                alert("It's your turn now!");
                 this.toCompetePage();
             }
         });
