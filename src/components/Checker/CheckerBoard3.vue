@@ -486,8 +486,15 @@ const moveByGridCoord = newCoord => {
   letGridNoActive();
 };
 
+
+const assignChessBoard = acb => {
+    const newAcb = lodash.cloneDeep(acb);
+    Object.assign(RealChessboard, newAcb);
+}
+
 defineExpose({
-    moveChess
+    moveChess,
+    assignChessBoard,
 })
 
 // import {letActive} from './logic.js'
