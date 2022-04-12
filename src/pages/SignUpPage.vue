@@ -91,7 +91,7 @@ export default{
                 var code = res.data[Object.keys(res.data)[0]];
                 console.log(code);
                 if(code === 200){
-                    alert("SignUp successful");
+                    alert("SignUp successfully");
                 }else{
                     alert("User already exists");
                 }
