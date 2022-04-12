@@ -127,12 +127,12 @@
 
 <script setup>
 import ChessGrid from './ChessGrid.vue';
-import {ref, reactive, watch, onUpdated, onMounted, onBeforeUpdate} from 'vue';
+import {ref, reactive, watch, onUpdated, onMounted, onBeforeUpdate, toRaw} from 'vue';
 import lodash from 'lodash';
 import CheckerChess from './CheckerChess.vue';
 
 const props = defineProps({
-  sock:Object
+  sock: Object
 })
 const socket = props.sock;
 
@@ -249,33 +249,36 @@ let oriPosition = [];
 let newPosition = [];
 let eatChess = [];
 
-socket.on('moveChessInfo', ({origin,newPo}) =>{
+socket.on('moveChessInfo', ({origin, newPo}) => {
   // const ([or,oc],[nr,nc],eatChess) = data;
-  socketMove(origin,newPo);
+  socketMove(origin, newPo);
+
 })
 //1. 移动chess， 消除chess，变王
-const socketMove = ([or,oc],[nr,nc])=>{
 
 
-  if (RealChessboard[or][oc].chessObj != null&&RealChessboard[nr][nc].chessObj === null) {
-    moveAgain=false;
+const socketMove = ([or, oc], [nr, nc]) => {
+
+
+  if (RealChessboard[or][oc].chessObj != null && RealChessboard[nr][nc].chessObj === null) {
+
     if (Math.abs(nr - or) === 1) {
       RealChessboard[nr][nc].chessObj = RealChessboard[or][oc].chessObj;
 
       RealChessboard[or][oc].chessObj = null;
 
-      if (RealChessboard[nr][nc].chessObj[1] ===0){
+      if (RealChessboard[nr][nc].chessObj[1] === 0) {
 
-        if(nr === 7){
-          RealChessboard[nr][nc].chessObj[1] =1;
+        if (nr === 7) {
+          RealChessboard[nr][nc].chessObj[1] = 1;
         }
 
 
       }
-      if (RealChessboard[nr][nc].chessObj[1] ===2){
+      if (RealChessboard[nr][nc].chessObj[1] === 2) {
 
-        if(nr === 0){
-          RealChessboard[nr][nc].chessObj[1] =3;
+        if (nr === 0) {
+          RealChessboard[nr][nc].chessObj[1] = 3;
         }
 
       }
@@ -287,11 +290,15 @@ const socketMove = ([or,oc],[nr,nc])=>{
       RealChessboard[or][oc].chessObj = null;
       RealChessboard[or + (nr - or) / 2][oc + (nc - oc) / 2].chessObj = null
 
-      if (RealChessboard[nr][nc].chessObj[1] ===0||RealChessboard[nr][nc].chessObj[1] ===1){
-        moveAgain = true;
 
-        if(nr === 7){
-          RealChessboard[nr][nc].chessObj[1] =1;
+      //moveAgain=true;
+
+
+      if (RealChessboard[nr][nc].chessObj[1] === 0 || RealChessboard[nr][nc].chessObj[1] === 1) {
+
+
+        if (nr === 7) {
+          RealChessboard[nr][nc].chessObj[1] = 1;
         }
         redScore += 1;
         theOnlyChess = RealChessboard[nr][nc].chessObj[0];
@@ -302,11 +309,11 @@ const socketMove = ([or,oc],[nr,nc])=>{
         console.log("red Scores are:" + redScore);
 
       }
-      if (RealChessboard[nr][nc].chessObj[1] ===2||RealChessboard[nr][nc].chessObj[1] ===3){
-        moveAgain = true;
+      if (RealChessboard[nr][nc].chessObj[1] === 2 || RealChessboard[nr][nc].chessObj[1] === 3) {
 
-        if(nr === 0){
-          RealChessboard[nr][nc].chessObj[1] =3;
+
+        if (nr === 0) {
+          RealChessboard[nr][nc].chessObj[1] = 3;
         }
         blueScore += 1;
         theOnlyChess = RealChessboard[nr][nc].chessObj[0];
@@ -318,7 +325,12 @@ const socketMove = ([or,oc],[nr,nc])=>{
 
       }
 
+
     }
+    // if(!moveAgain){
+    //   canGo = !canGo;
+    //   socket.emit('turnSwitch',canGo);
+    // }
 
   }
 
@@ -335,11 +347,11 @@ let canGo = false;
 let blueScore = 0;
 let redScore = 0;
 let theOnlyChess = -1;
+let previousT = -1;
 
 
 // import {moveChess} from './logic.js'
-const moveChess = ([oriRow, oriCol], [newRow, newCol],RealChessboard,activeChess) => {
-
+const moveChess = ([oriRow, oriCol], [newRow, newCol]) => {
 
 
   // activeChess.value = null;
@@ -347,21 +359,15 @@ const moveChess = ([oriRow, oriCol], [newRow, newCol],RealChessboard,activeChess
   if (RealChessboard[oriRow][oriCol].chessObj != null) {
 
 
-    moveAgain = false;
-
     if (!canGo) {
 
       if (RealChessboard[oriRow][oriCol].chessObj[1] === 1 || RealChessboard[oriRow][oriCol].chessObj[1] === 0) {
-
 
 
         RealChessboard[newRow][newCol].chessObj = RealChessboard[oriRow][oriCol].chessObj;
         // setTimeout(() => {
         RealChessboard[oriRow][oriCol].chessObj = null;
 
-        socket.emit('chessMESend',{
-          origin:[oriRow, oriCol], newPo:[newRow, newCol]
-        });
 
         if (Math.abs(newRow - oriRow) === 2 && Math.abs(newCol - oriCol) === 2) {
           RealChessboard[oriRow + (newRow - oriRow) / 2][oriCol + (newCol - oriCol) / 2].chessObj = null;
@@ -377,17 +383,6 @@ const moveChess = ([oriRow, oriCol], [newRow, newCol],RealChessboard,activeChess
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
         if (newRow === 7) {
           RealChessboard[newRow][newCol].chessObj[1] = 1;
           console.log("this is " + RealChessboard[newRow][newCol])
@@ -395,12 +390,10 @@ const moveChess = ([oriRow, oriCol], [newRow, newCol],RealChessboard,activeChess
         // },300)
 
 
-
-
-        if(!moveAgain){
+        if (!moveAgain) {
 
           canGo = true;
-          socket.emit('turnSwitch',true);
+          socket.emit('turnSwitch', true);
 
 
         }
@@ -416,9 +409,6 @@ const moveChess = ([oriRow, oriCol], [newRow, newCol],RealChessboard,activeChess
         // setTimeout(() => {
         RealChessboard[oriRow][oriCol].chessObj = null;
 
-        socket.emit('chessMESend',{
-          origin:[oriRow, oriCol], newPo:[newRow, newCol]
-        });
 
         // RealChessboard[0][1].gridActive = true;
 
@@ -453,14 +443,16 @@ const moveChess = ([oriRow, oriCol], [newRow, newCol],RealChessboard,activeChess
         }
 
 
-        if(!moveAgain){
+        if (!moveAgain) {
           canGo = false;
-          socket.emit('turnSwitch',false)
+          socket.emit('turnSwitch', false)
         }
 
         // },300)
       }
     }
+
+    previousT = RealChessboard[newRow][newCol].chessObj[1];
 
 
   }
@@ -471,16 +463,25 @@ const moveByGridCoord = newCoord => {
   const {row, column} = activeChess.value;
   // console.log(row,column);
 
-  socket.on('moveChessInfo', ({origin,newPo}) =>{
+
+  if (moveAgain === false && previousT === 0 || previousT === 1) {
+    canGo = false;
+  } else if (moveAgain === false && previousT === 2 || previousT === 3) {
+    canGo = true;
+  }
+  moveChess([row, column], newCoord);
+  socket.emit('chessMESend', {
+    MEInfo: {
+      origin: [row, column], newPo: newCoord
+    },
+    chessBoard:toRaw(RealChessboard)
+  });
+  socket.on('moveChessInfo', ({origin, newPo}) => {
     // const ([or,oc],[nr,nc],eatChess) = data;
-    socketMove(origin,newPo);
+    socketMove(origin, newPo);
+
   })
 
-  moveChess([row, column],newCoord,RealChessboard,activeChess,moveAgain);
-  socket.on('moveChessInfo', ({origin,newPo}) =>{
-    // const ([or,oc],[nr,nc],eatChess) = data;
-    socketMove(origin,newPo);
-  })
 
   letGridNoActive();
 };
@@ -490,9 +491,7 @@ const moveByGridCoord = newCoord => {
 // import {secondMove} from './logic.js'
 
 
-
-function letActive(newAC,RealChessboard) {
-
+function letActive(newAC, RealChessboard) {
 
 
   const {chessType, csIndex, row, column} = newAC;
@@ -512,8 +511,6 @@ function letActive(newAC,RealChessboard) {
             RealChessboard[row + 2][column - 2].gridActive = true;
 
 
-
-
           }
         }
       }
@@ -531,7 +528,6 @@ function letActive(newAC,RealChessboard) {
               RealChessboard[row + 2][column + 2].gridActive = true;
 
 
-
             }
           } else {
             console.log("error, out of range");
@@ -541,8 +537,7 @@ function letActive(newAC,RealChessboard) {
       }
     }
 
-  }
-  else if (chessType === 2) {
+  } else if (chessType === 2) {
     if (column > 0 && !((row - 1) < 0 || (column - 1) < 0)) {
       if (RealChessboard[row - 1][column - 1].chessObj === null) {
         RealChessboard[row - 1][column - 1].gridActive = true;
@@ -711,8 +706,7 @@ function letActive(newAC,RealChessboard) {
     // }else if(row === 0 && column === 7)
 
 
-  }
-  else {
+  } else {
     if (row === 0 && column === 7) {
       if (RealChessboard[row + 1][column - 1].chessObj === null) {
         RealChessboard[row + 1][column - 1].gridActive = true;
@@ -825,8 +819,7 @@ function letActive(newAC,RealChessboard) {
   }
 }
 
-function secondMove(newAC,RealChessboard) {
-
+function secondMove(newAC, RealChessboard) {
 
 
   const {chessType, csIndex, row, column} = newAC;
@@ -845,7 +838,6 @@ function secondMove(newAC,RealChessboard) {
           if (RealChessboard[row + 2][column - 2].chessObj === null) {
             //RealChessboard[row + 2][column - 2].chessObj=null;
             RealChessboard[row + 2][column - 2].gridActive = true;
-
 
 
           }
@@ -874,8 +866,7 @@ function secondMove(newAC,RealChessboard) {
       }
     }
 
-  }
-  else if (chessType === 2) {
+  } else if (chessType === 2) {
     if (column > 0 && !((row - 1) < 0 || (column - 1) < 0)) {
       if (RealChessboard[row - 1][column - 1].chessObj === null) {
         //删除了GridActive
@@ -1044,8 +1035,7 @@ function secondMove(newAC,RealChessboard) {
     // }else if(row === 0 && column === 7)
 
 
-  }
-  else {
+  } else {
     if (row === 0 && column === 7) {
       if (RealChessboard[row + 1][column - 1].chessObj === null) {
         //删除了GridActive
@@ -1178,44 +1168,28 @@ function secondMove(newAC,RealChessboard) {
 watch(activeChess, (newAC, OriAC) => {
 
 
-
   if (newAC !== null) {
     const {chessType, csIndex, row, column} = newAC;
 
 
+    if (moveAgain === false) {
 
-
-
-
-
-
-    if(moveAgain===false){
-
-      letActive(newAC,RealChessboard);
-    }
-    else {
-      secondMove(newAC,RealChessboard);
+      letActive(newAC, RealChessboard);
+    } else {
+      secondMove(newAC, RealChessboard);
       console.log(theOnlyChess);
       console.log(csIndex);
-      if(theOnlyChess!==csIndex){
+      if (theOnlyChess !== csIndex) {
         console.log("work");
 
-        canGo=!canGo;
-        moveAgain=false;
+        canGo = !canGo;
+        moveAgain = false;
       }
 
     }
 
 
-
     //moveAgain = false;
-
-
-
-
-
-
-
 
 
   }
@@ -1234,7 +1208,7 @@ onBeforeUpdate(() => {
 
 onMounted(() => {
   console.log(props.sock);
-  socket.on('turn', (switchTurn) =>{
+  socket.on('turn', (switchTurn) => {
     canGo = switchTurn;
   })
 })
