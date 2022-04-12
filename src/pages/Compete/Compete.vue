@@ -1,7 +1,3 @@
-/**
-    TODO: inputbar in chatting box and "vmin" in Move History
- */
-
 <template>
     <Base>
         <div class="main">
@@ -11,32 +7,55 @@
                     <div class="lalala">
                         <ul id="ruleList">
                             <li>This game is for two players. Each player starts with 12 colored discs (of the same color).</li>
-                            <li>Players place their discs (pieces) on the dark squares on their side of the board. Red has first play, after turns alternate.</li>
-                            <li>Moves can only be made on black squares, so the pieces move diagonally. Pieces can only move in a forward direction, toward their opponent.</li>
-                            <li>If you are moving your disc forward, and not capturing your opponent’s piece in the move, you may only move it forward one square.</li>
+                            <li>
+                                Players place their discs (pieces) on the dark squares on their side of the board. Red has first play, after
+                                turns alternate.
+                            </li>
+                            <li>
+                                Moves can only be made on black squares, so the pieces move diagonally. Pieces can only move in a forward
+                                direction, toward their opponent.
+                            </li>
+                            <li>
+                                If you are moving your disc forward, and not capturing your opponent’s piece in the move, you may only move
+                                it forward one square.
+                            </li>
                             <li>After a piece is captured, it is removed from the board, and collected by the opponent.</li>
                             <li>
-                                If you have the ability to jump your opponents pieces, you must. However, in the even there are more than one capture possible from a single square,
-                                you may jump whichever piece is preferable.
+                                If you have the ability to jump your opponents pieces, you must. However, in the even there are more than
+                                one capture possible from a single square, you may jump whichever piece is preferable.
                             </li>
-                            <li>The game is won when the opponent is unable to make a move, which means the entirety of a player’s pieces were captured by the opponent.</li>
+                            <li>
+                                The game is won when the opponent is unable to make a move, which means the entirety of a player’s pieces
+                                were captured by the opponent.
+                            </li>
                         </ul>
                     </div>
                 </n-modal>
                 <button @click="toHomePage()" class="buttons">Home</button>
-                <button v-bind:class="{'white': !isReady, 'red': isReady}" v-on:click ="isReady = !isReady" @click="checkReadyStatus()"> Ready </button>
+                <button v-bind:class="{ white: !isReady, red: isReady }" v-on:click="isReady = !isReady" @click="checkReadyStatus()">
+                    Ready
+                </button>
             </div>
             <div class="mobileGameInfo">
-                <div>Your color: {{yourColor}}</div>
-                <div>{{turnColor}}</div>
+                <div>Your color: {{ yourColor }}</div>
+                <div>{{ turnColor }}</div>
             </div>
             <div class="left">
-                <div class="webReadyButton">
-                    <div>Your color: {{yourColor}}</div>
-                    <div>{{turnColor}}</div>
-                    <button v-bind:class="{'white': !isReady, 'red': isReady}" v-on:click ="isReady = !isReady" @click="checkReadyStatus()"> Ready </button>
-                </div>
+                <div>Your color: {{ yourColor }}</div>
+                <div>{{ turnColor }}</div>
                 <div class="checkerboardbase">
+                    <div class="checker-mask" v-if="checkerMaskSwitch">
+                        <div class="webReadyButton">
+                            <button
+                                v-bind:class="{ white: !isReady, red: isReady }"
+                                v-on:click="isReady = !isReady"
+                                @click="checkReadyStatus()"
+                            >
+                                Ready
+                            </button>
+                        </div>
+                    </div>
+
                     <CheckerBoard :sock="socket"></CheckerBoard>
                 </div>
             </div>
@@ -47,7 +66,7 @@
                 </div>
 
                 <div class="sectionAvatar">
-                    <ul id="userAvatarArray">
+                    <ul class="userAvatarArray">
                         <li v-for="(value, key) in avatarList" :key="key">
                             <UserAvatarList :iconName="value"> </UserAvatarList>
                         </li>
@@ -82,7 +101,10 @@
                     <div class="moveHistoryContent">
                         <h4>Move History</h4>
                         <div class="divide-line"></div>
-                        <ul v-for="({ name, oriCoord: [oriRow, oriCol], newCoord: [newRow, newCol] }, index) in moveHistoryList" :key="index">
+                        <ul
+                            v-for="({ name, oriCoord: [oriRow, oriCol], newCoord: [newRow, newCol] }, index) in moveHistoryList"
+                            :key="index"
+                        >
                             <li>
                                 <pre>{{ `${name} : [${oriRow},${oriCol}]  ==>  [${newRow},${newCol}]` }}</pre>
                             </li>
@@ -94,18 +116,26 @@
                             <div class="lalala">
                                 <ul id="ruleList">
                                     <li>This game is for two players. Each player starts with 12 colored discs (of the same color).</li>
-                                    <li>Players place their discs (pieces) on the dark squares on their side of the board. Black has first play, after turns alternate.</li>
                                     <li>
-                                        Moves can only be made on black squares, so the pieces move diagonally. Pieces can only move in a forward direction, toward their opponent.
+                                        Players place their discs (pieces) on the dark squares on their side of the board. Black has first
+                                        play, after turns alternate.
                                     </li>
-                                    <li>If you are moving your disc forward, and not capturing your opponent’s piece in the move, you may only move it forward one square.</li>
+                                    <li>
+                                        Moves can only be made on black squares, so the pieces move diagonally. Pieces can only move in a
+                                        forward direction, toward their opponent.
+                                    </li>
+                                    <li>
+                                        If you are moving your disc forward, and not capturing your opponent’s piece in the move, you may
+                                        only move it forward one square.
+                                    </li>
                                     <li>After a piece is captured, it is removed from the board, and collected by the opponent.</li>
                                     <li>
-                                        If you have the ability to jump your opponents pieces, you must. However, in the even there are more than one capture possible from a single
-                                        square, you may jump whichever piece is preferable.
+                                        If you have the ability to jump your opponents pieces, you must. However, in the even there are more
+                                        than one capture possible from a single square, you may jump whichever piece is preferable.
                                     </li>
                                     <li>
-                                        The game is won when the opponent is unable to make a move, which means the entirety of a player’s pieces were captured by the opponent.
+                                        The game is won when the opponent is unable to make a move, which means the entirety of a player’s
+                                        pieces were captured by the opponent.
                                     </li>
                                 </ul>
                             </div>
@@ -164,28 +194,28 @@
     padding-right: 20px;
 }
 
-.white{
+.white {
     background: white;
     height: 40px;
     width: 90px;
     font-size: 25px;
     border: none;
-    margin-right: 40px;
+    /* margin-right: 40px; */
     border-radius: 4px;
-    margin-bottom: 5px;
+    /* margin-bottom: 5px; */
 }
 .white:hover {
     color: rgb(182, 113, 113);
 }
-.red{
+.red {
     background: rgb(182, 113, 113);
     height: 40px;
     width: 90px;
     font-size: 25px;
     border: none;
-    margin-right: 40px;
+    /* margin-right: 40px; */
     border-radius: 4px;
-    margin-bottom: 5px;
+    /* margin-bottom: 5px; */
 }
 .red:hover {
     color: white;
@@ -204,7 +234,7 @@
     display: none;
 }
 
-.mobileGameInfo{
+.mobileGameInfo {
     display: none;
 }
 
@@ -223,6 +253,23 @@
     background: rgb(141, 114, 81);
     border-radius: 40px;
     padding: 40px;
+
+    position: relative;
+
+    > .checker-mask {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background-color: rgba(255, 255, 255, 0.7);
+        z-index: 500;
+        border-radius: 40px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }
 
 /* ------ message window ------ */
@@ -268,8 +315,8 @@
     border-radius: 10px;
     overflow: auto;
 }
-#userAvatarArray {
-    list-style-type: none;
+.userAvatarArray {
+    list-style: none;
     margin: 0;
     padding: 0;
 }
@@ -295,7 +342,7 @@
         background: black;
     }
 } */
-.right{
+.right {
     width: 30%;
     height: 72vmin;
 }
@@ -322,10 +369,10 @@
         align-items: center;
         justify-content: center;
     }
-    .webReadyButton{
+    .webReadyButton {
         display: none;
     }
-    .mobileGameInfo{
+    .mobileGameInfo {
         display: block;
     }
     .mobileButtonSection {
@@ -369,8 +416,8 @@
         border-radius: 10px;
         overflow: scroll;
     }
-    #userAvatarArray {
-        list-style-type: none;
+    .userAvatarArray {
+        list-style: none;
         margin: 0;
         padding: 0;
     }
@@ -414,13 +461,6 @@
         background: rgb(204, 177, 128);
         border-radius: 10px;
     }
-    /* h4 {
-        font-size: 20px;
-        text-align: center;
-        margin-top: 0;
-        padding-top: 10px;
-        margin-bottom: 3px;
-    } */
     .divide-line {
         height: 2px;
         width: 100%;
@@ -445,7 +485,7 @@
 </style>
 
 <script>
-import { io } from "socket.io-client";
+import { io } from 'socket.io-client';
 import { NButton, NModal } from 'naive-ui';
 
 import Base from '@/components/Base.vue';
@@ -470,14 +510,7 @@ export default {
             isReady: false,
             popupActivo: false,
             showModal: false,
-            messages: [
-                // { message: 'FooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFoo', name: 'Nina' },
-                // { message: 'FooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFoo', name: 'Nina' },
-                // { message: 'FooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFoo', name: 'Nina' },
-                // { message: 'FooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFooFoo', name: 'Nina' },
-                // { message: 'BarBarBarBar', name: 'Boxiao' },
-            ],
-            //items: ['message', 'name'],
+            messages: [],
             socket: null,
             avatarList: [],
             moveHistoryList: [
@@ -485,21 +518,11 @@ export default {
                 { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
                 { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
                 { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
-                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
-                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
-                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
-                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
-                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
-                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
-                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
-                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
-                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
-                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
-                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
-                { name: 'lalala', oriCoord: [0, 7], newCoord: [1, 6] },
             ], //method: addMoveHistory(moveHistory)
+            checkerMaskSwitch: true,
         };
     },
+
     components: {
         MessageInputForm,
         NButton,
@@ -513,7 +536,7 @@ export default {
         SvgIcon,
     },
 
-    created(){
+    created() {
         const sock = io('http://10.13.92.158:8000');
         this.socket = sock;
     },
@@ -531,7 +554,7 @@ export default {
 
         this.socket.emit('addUser', userObj);
         console.log(userObj);
-        this.socket.on('toBeReady', data =>{
+        this.socket.on('toBeReady', data => {
             console.log(data);
             if (data.blue.name === this.username){
                 this.yourColor = "Blue";
@@ -554,11 +577,13 @@ export default {
             this.turnColor = "It's " + Turn +"'s turn now";
         })
 
-        // this.socket.on('cbStatus', (data)=>{
-        //     console.log(data);
-        // })
-        
+        console.log(this.isReady);
 
+        this.socket.on('getStart', ({ Turn }) => {
+            console.log(Turn);
+            this.checkerMaskSwitch = false;
+            this.turnColor = `It's ${Turn} s turn now`;
+        });
     },
 
     unmounted() {
@@ -571,16 +596,16 @@ export default {
             this.$router.push({ path: '/homePage' });
         },
 
-        checkReadyStatus(){
+        checkReadyStatus() {
             console.log(this.isReady);
-            if (this.isReady == true){
+            if (this.isReady == true) {
                 this.socket.emit('i-am-ready');
             }
         },
 
         sendMessage(mess) {
             this.socket.emit('boardmessage', { message: mess, name: sessionStorage.getItem('username') });
-            console.log("Sent!!");
+            console.log('Sent!!');
         },
 
         addMoveHistory(moveHistory) {
