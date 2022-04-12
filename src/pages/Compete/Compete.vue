@@ -150,7 +150,7 @@
 
 <style lang="scss" scoped>
 .moveHistoryContent {
-    width: 30vmin;
+    width: 100%;
     height: 68vmin;
     background: rgb(204, 177, 128);
     border-radius: 10px;
@@ -227,7 +227,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     // padding: 10px;
 }
 /* ------ checkerboardbase float at left ------ */
@@ -240,7 +240,7 @@
 }
 
 .left {
-    width: 40%;
+    /* width: 40%; */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -323,8 +323,17 @@
 }
 
 .right {
-    width: 30%;
+    width: 35vmin;
     height: 72vmin;
+}
+
+.buttonSection{
+    display: flex;
+    justify-content: space-around;
+
+    /* &:last-child{
+        margin: 0;
+    } */
 }
 
 .buttons {
@@ -333,8 +342,6 @@
     font-size: 25px;
     border: none;
     background: white;
-
-    margin-right: 40px;
 
     border-radius: 4px;
 }
@@ -360,7 +367,12 @@
     }
     .mobileButtonSection {
         display: block;
+        
         margin-bottom: 10px;
+        
+        button{
+            margin-right: 20px;
+        }
 
         button:last-child {
             margin: 0;
@@ -384,7 +396,7 @@
         height: 70vmin;
         background-color: rgba(255, 255, 255, 0.5);
         margin-top: 10px;
-        margin-bottom: 10px;
+        margin-bottom: 30px;
     }
     .sectionOne {
         float: left;
@@ -409,7 +421,7 @@
         width: 100%;
         height: 80%;
         padding: 10px;
-        overflow: scroll;
+        overflow: auto;
     }
     .messageArray {
         list-style: none;
@@ -423,7 +435,7 @@
     .sectionThree {
         float: left;
         width: 100%;
-        height: 12%;
+        height: 40px;
         background: white;
         padding: 5px;
     }
@@ -486,6 +498,14 @@
         flex-direction: row;
         margin-top: 10px;
         display: none;
+
+        /* > .buttons{
+            margin-right: 40px;
+        } */
+
+        /* > &:last-child{
+            margin: 0;
+        } */
     }
 }
 </style>

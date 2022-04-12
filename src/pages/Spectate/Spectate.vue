@@ -62,7 +62,6 @@
     display: flex;
     flex-direction: row;
     width: 100vw;
-    height: 80vh;
     justify-content: center;
 }
 /* ------ checkerboardbase float in center of screen ------ */
@@ -74,13 +73,16 @@
 }
 
 .fightInfoSection {
-    width: 32vw;
-    height: 4vw;
+    width: 100%;
+    height: 7vmin;
     background: rgb(141, 114, 81);
     margin-bottom: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 0 auto 10px auto;
+
+    margin-bottom: 20px;
 }
 
 .fightInfo {
@@ -131,13 +133,14 @@
 }
 
 .checkerboardbase {
-    width: 32vw;
-    height: 32vw;
+    width: 50vmin;
+    height: 50vmin;
     max-width: 550px;
     max-height: 550px;
     background: rgb(141, 114, 81);
     border-radius: 40px;
     padding: 40px;
+    margin: 0 auto;
 }
 /* ------ user list float at right ------ */
 .right {
@@ -180,7 +183,7 @@ li {
     }
 
     .fightInfoSection {
-        width: 90vw;
+        width: 80vmin;
         height: 10vw;
     }
 
@@ -208,7 +211,7 @@ li {
         width: 88%;
         height: 95%;
         border-radius: 10px;
-        overflow: scroll;
+        overflow: auto;
         background: rgba(255, 255, 255, 0.5);
     }
     .userAvatarArray {
